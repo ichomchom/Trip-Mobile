@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "766894837364",
+    "firebase_url": "https://trip-e1c18.firebaseio.com",
+    "project_id": "trip-e1c18",
+    "storage_bucket": "trip-e1c18.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:766894837364:android:9498656f182a0e1a",
+        "android_client_info": {
+          "package_name": "com.csusb.cse455.trip"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "766894837364-thm1sva94co5sol1hd9d1037p77ccak8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA4GVh4EL-9Gv4cRV0YYjo7Q4p7nDIJJp8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
