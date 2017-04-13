@@ -3,6 +3,10 @@
 
     <group android:checkableBehavior="single">
         <item
+            android:id="@+id/nav_dashboard"
+            android:icon="@drawable/ic_chrome_reader_mode_black_24dp"
+            android:title="Dashboard" />
+        <item
             android:id="@+id/nav_notifications"
             android:icon="@drawable/ic_sms_failed_black_24dp"
             android:title="Notifications" />

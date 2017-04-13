@@ -71,8 +71,11 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_notifications) {
-            // Handle the camera action
+
+        if (id == R.id.nav_dashboard) {
+
+        } else if (id == R.id.nav_notifications) {
+
         } else if (id == R.id.nav_mytrips) {
 
         } else if (id == R.id.nav_otherstrips) {
