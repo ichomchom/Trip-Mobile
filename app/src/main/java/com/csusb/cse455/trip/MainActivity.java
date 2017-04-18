@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity
                 null, "Testing my app.", null, null);
     }
 
-    private static final int TRIP_PERMISSIONS_SEND_SMS = 123;
+    private static final int TRIP_PERMISSIONS_SEND_SMS = 1234;
 
     public void onSendSMSClick(View view) {
 
