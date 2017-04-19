@@ -13,6 +13,8 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        //User register entries
+
         final EditText regFirstName = (EditText) findViewById(R.id.regFirstName);
         final EditText regLastName = (EditText) findViewById(R.id.regLastName);
         final EditText regEmail = (EditText) findViewById(R.id.regEmail);
@@ -21,6 +23,7 @@ public class RegisterActivity extends AppCompatActivity {
         final EditText regRePassword = (EditText) findViewById(R.id.regRePassword);
         final Button regBtn = (Button) findViewById(R.id.regBtn);
 
+        //Register Button
 
         regBtn.setOnClickListener(new View.OnClickListener() {
             @Override

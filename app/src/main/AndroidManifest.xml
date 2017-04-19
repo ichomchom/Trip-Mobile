@@ -5,7 +5,7 @@
     <uses-permission android:name="android.permission.SEND_SMS" />
 
     <uses-feature
-        android:name="andrdoi.hardware.telephony"
+        android:name="android.hardware.telephony"
         android:required="true" />
 
     <!-- To auto-complete the email text field in the login form with the user's emails -->
@@ -39,7 +39,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RegisterActivity"></activity>
+        <activity android:name=".RegisterActivity" />
+        <activity android:name=".PassRecoveryActivity" />
+        <activity android:name=".ResetPasswordActivity"></activity>
     </application>
 
 </manifest>

@@ -30,6 +30,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -91,13 +93,17 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
         });
 
-        final TextView registerLink = (TextView) findViewById(R.id.logRegister);
+
 
 
 
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+
+        //Link Register Activity
+
+        final TextView registerLink = (TextView) findViewById(R.id.logRegister);
 
         registerLink.setOnClickListener(new OnClickListener() {
             @Override
@@ -106,6 +112,19 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 LoginActivity.this.startActivity(registerIntent);
             }
         });
+
+        //Link Pass Recovery Activity
+
+        final TextView passRecoveryLink = (TextView) findViewById(R.id.logRecoveryPass);
+
+        passRecoveryLink.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent recoveryIntent = new Intent(LoginActivity.this, PassRecoveryActivity.class);
+                LoginActivity.this.startActivity(recoveryIntent);
+            }
+        });
+
     }
 
     private void populateAutoComplete() {

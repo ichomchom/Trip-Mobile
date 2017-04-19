@@ -20,12 +20,12 @@
         android:visibility="gone" />
 
     <ScrollView
-        android:id="@+id/login_form"
+        android:id="@+id/pass_recovery_form"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <LinearLayout
-            android:id="@+id/email_login_form"
+            android:id="@+id/email_recovery_form"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -35,7 +35,7 @@
                 android:layout_height="wrap_content">
 
                 <AutoCompleteTextView
-                    android:id="@+id/logEmail"
+                    android:id="@+id/recoveryEmail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/prompt_email"
@@ -45,46 +45,14 @@
 
             </android.support.design.widget.TextInputLayout>
 
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <EditText
-                    android:id="@+id/logPassword"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Password"
-                    android:imeActionId="@+id/login"
-                    android:imeActionLabel="@string/action_sign_in_short"
-                    android:imeOptions="actionUnspecified"
-                    android:inputType="textPassword"
-                    android:maxLines="1"
-                    android:singleLine="true" />
-
-            </android.support.design.widget.TextInputLayout>
-
             <Button
-                android:id="@+id/logBtn"
+                android:id="@+id/recoveryBtn"
                 style="?android:textAppearanceSmall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="Sign In"
+                android:text="Reset Password"
                 android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/logRegister"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Register Here"
-                android:textAlignment="center" />
-
-            <TextView
-                android:id="@+id/logRecoveryPass"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Forgot your password?"
-                android:textAlignment="center" />
 
         </LinearLayout>
     </ScrollView>
