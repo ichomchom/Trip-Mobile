@@ -26,6 +26,8 @@ public class PassRecoveryActivity extends AppCompatActivity {
 
         final Intent resultIntent = new Intent(this, PassRecoveryActivity.class);
 
+        //click the button show notification email has been sent
+
         recoveryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

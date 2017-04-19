@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.telephony.SmsManager;
 import android.view.View;
@@ -19,6 +21,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.Toast;
+
 
 import java.util.jar.*;
 
@@ -35,7 +39,7 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
+        drawer.addDrawerListener(toggle);
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -130,17 +134,58 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
 
+
         if (id == R.id.nav_dashboard) {
+            Toast.makeText(this,"Dashboard",Toast.LENGTH_SHORT).show();
+            setTitle("Dashboard");
+
+           DashboardFragment dashboardFragment = new DashboardFragment();
+            FragmentManager manager = getSupportFragmentManager();
+            manager.beginTransaction().replace(R.id.relativelayout_for_fragment,dashboardFragment,dashboardFragment.getTag()).commit();
+
+
+
 
         } else if (id == R.id.nav_notifications) {
+            Toast.makeText(this,"Notifications",Toast.LENGTH_SHORT).show();
+            setTitle("Notifications");
+
+            NotificationsFragment notificationsFragment = new NotificationsFragment();
+            FragmentManager manager = getSupportFragmentManager();
+            manager.beginTransaction().replace(R.id.relativelayout_for_fragment,notificationsFragment,notificationsFragment.getTag()).commit();
+
+
+
 
         } else if (id == R.id.nav_mytrips) {
+            Toast.makeText(this,"My Trips",Toast.LENGTH_SHORT).show();
+            setTitle("My Trips");
+
+            MyTripsFragment myTripsFragment = new MyTripsFragment();
+            FragmentManager manager = getSupportFragmentManager();
+            manager.beginTransaction().replace(R.id.relativelayout_for_fragment,myTripsFragment,myTripsFragment.getTag()).commit();
+
 
         } else if (id == R.id.nav_otherstrips) {
+            Toast.makeText(this,"Others' Trips",Toast.LENGTH_SHORT).show();
+            setTitle("Others' Trips");
+
+            OthersTripsFragment othersTripsFragment = new OthersTripsFragment();
+            FragmentManager manager = getSupportFragmentManager();
+            manager.beginTransaction().replace(R.id.relativelayout_for_fragment,othersTripsFragment,othersTripsFragment.getTag()).commit();
+
 
         } else if (id == R.id.nav_settings) {
+            Toast.makeText(this,"Settings",Toast.LENGTH_SHORT).show();
+            setTitle("Settings");
+
 
         } else if (id == R.id.nav_feedback) {
+
+            FeedbackFragment feedbackFragment = new FeedbackFragment();
+            FragmentManager manager = getSupportFragmentManager();
+            manager.beginTransaction().replace(R.id.relativelayout_for_fragment,feedbackFragment,feedbackFragment.getTag()).commit();
+
 
         } else if (id == R.id.nav_contactus)
         {
