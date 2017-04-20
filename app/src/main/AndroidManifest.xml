@@ -41,7 +41,10 @@
         </activity>
         <activity android:name=".RegisterActivity" />
         <activity android:name=".PassRecoveryActivity" />
-        <activity android:name=".ResetPasswordActivity"></activity>
+        <activity android:name=".ResetPasswordActivity" />
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/title_activity_settings"></activity>
     </application>
 
 </manifest>

@@ -29,11 +29,24 @@ import java.util.jar.*;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+
+    NavigationView navigationView = null;
+    Toolbar toolbar = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+
+        //Set the fragment initially
+
+        DashboardFragment dashboardFragment = new DashboardFragment();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.relativelayout_for_fragment,dashboardFragment,dashboardFragment.getTag()).commit();
+
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -42,7 +55,7 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
 
@@ -181,6 +194,8 @@ public class MainActivity extends AppCompatActivity
 
 
         } else if (id == R.id.nav_feedback) {
+            Toast.makeText(this,"Feedback",Toast.LENGTH_SHORT).show();
+            setTitle("Feedback");
 
             FeedbackFragment feedbackFragment = new FeedbackFragment();
             FragmentManager manager = getSupportFragmentManager();
@@ -189,6 +204,13 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_contactus)
         {
+            Toast.makeText(this,"Contact Us",Toast.LENGTH_SHORT).show();
+            setTitle("Contact Us");
+
+            ContactUsFragment contactUsFragment = new ContactUsFragment();
+            FragmentManager manager = getSupportFragmentManager();
+            manager.beginTransaction().replace(R.id.relativelayout_for_fragment,contactUsFragment,contactUsFragment.getTag()).commit();
+
 
         }
 
