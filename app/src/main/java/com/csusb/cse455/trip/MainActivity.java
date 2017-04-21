@@ -2,6 +2,7 @@ package com.csusb.cse455.trip;
 
 import android.*;
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -21,14 +22,22 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
+
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.jar.*;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    // Used for logging.
+    private static final String TAG = LoginActivity.class.getSimpleName();
+
+    // Firebase Authentication instance.
+    private FirebaseAuth mAuth;
 
     NavigationView navigationView = null;
     Toolbar toolbar = null;
@@ -38,9 +47,10 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Create a new Firebase Authentication instance.
+        mAuth = FirebaseAuth.getInstance();
 
         //Set the fragment initially
-
         DashboardFragment dashboardFragment = new DashboardFragment();
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.relativelayout_for_fragment,dashboardFragment,dashboardFragment.getTag()).commit();
@@ -57,6 +67,23 @@ public class MainActivity extends AppCompatActivity
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        // Get the navigation header.
+        View navHeader = navigationView.getHeaderView(0);
+        // Set the email in the header.
+        TextView navHeaderEmail = (TextView) navHeader.findViewById(R.id.navHeaderEmail);
+        navHeaderEmail.setText(mAuth.getCurrentUser().getEmail());
+        // Get the logout link.
+        final TextView logoutLink = (TextView) navHeader.findViewById(R.id.navHeaderLogout);
+        // Set logout callback to sign out and return to the login screen.
+        logoutLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mAuth.signOut();
+                Intent logoutIntent = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(logoutIntent);
+            }
+        });
     }
 
     // ---------------------------------------------------------------------------------------------
@@ -146,18 +173,13 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-
-
         if (id == R.id.nav_dashboard) {
             Toast.makeText(this,"Dashboard",Toast.LENGTH_SHORT).show();
             setTitle("Dashboard");
 
-           DashboardFragment dashboardFragment = new DashboardFragment();
+            DashboardFragment dashboardFragment = new DashboardFragment();
             FragmentManager manager = getSupportFragmentManager();
             manager.beginTransaction().replace(R.id.relativelayout_for_fragment,dashboardFragment,dashboardFragment.getTag()).commit();
-
-
-
 
         } else if (id == R.id.nav_notifications) {
             Toast.makeText(this,"Notifications",Toast.LENGTH_SHORT).show();
@@ -166,9 +188,6 @@ public class MainActivity extends AppCompatActivity
             NotificationsFragment notificationsFragment = new NotificationsFragment();
             FragmentManager manager = getSupportFragmentManager();
             manager.beginTransaction().replace(R.id.relativelayout_for_fragment,notificationsFragment,notificationsFragment.getTag()).commit();
-
-
-
 
         } else if (id == R.id.nav_mytrips) {
             Toast.makeText(this,"My Trips",Toast.LENGTH_SHORT).show();
