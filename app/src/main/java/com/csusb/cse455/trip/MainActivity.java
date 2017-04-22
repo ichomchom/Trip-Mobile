@@ -27,6 +27,7 @@ import android.widget.Toast;
 
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.jar.*;
 
@@ -41,6 +42,17 @@ public class MainActivity extends AppCompatActivity
 
     NavigationView navigationView = null;
     Toolbar toolbar = null;
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and verified, and update UI accordingly.
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser == null || !currentUser.isEmailVerified())
+        {
+            transitionToLogin();
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,10 +92,16 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 mAuth.signOut();
-                Intent logoutIntent = new Intent(MainActivity.this, LoginActivity.class);
-                startActivity(logoutIntent);
+                transitionToLogin();
             }
         });
+    }
+
+    // Transitions to login screen.
+    private void transitionToLogin()
+    {
+        Intent logoutIntent = new Intent(MainActivity.this, LoginActivity.class);
+        startActivity(logoutIntent);
     }
 
     // ---------------------------------------------------------------------------------------------
@@ -133,15 +151,17 @@ public class MainActivity extends AppCompatActivity
     // ---------------------------------------------------------------------------------------------
 
 
-
-
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        // If drawer is open, close it.
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
+        // Else, go to user's home (suspends application).
         } else {
-            super.onBackPressed();
+            Intent startMain = new Intent(Intent.ACTION_MAIN);
+            startMain.addCategory(Intent.CATEGORY_HOME);
+            startActivity(startMain);
         }
     }
 

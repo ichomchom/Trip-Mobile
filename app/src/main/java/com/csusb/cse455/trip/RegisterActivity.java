@@ -16,6 +16,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -84,7 +86,7 @@ public class RegisterActivity extends AppCompatActivity {
                                     "An email address verification was sent.",
                                     Toast.LENGTH_LONG).show();
                             // If successful store additional information.
-                            storeInfo(fName, lName, phNumber);
+                            storeInfo(email, fName, lName, phNumber);
                             // Send out verification email.
                             verifyEmail();
                             // Transition to the login screen.
@@ -101,15 +103,20 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     // Store additional information provided in the registration form.
-    private void storeInfo(final String fName, final String lName, final String phNumber)
+    private void storeInfo(final String email, final String fName, final String lName,
+                           final String phNumber)
     {
-        // TODO: Needs to be completed.
+        FirebaseDatabase db = FirebaseDatabase.getInstance();
+        DatabaseReference dbRef = db.getReference("users").push();
+        dbRef.child("email").setValue(email);
+        dbRef.child("first_name").setValue(fName);
+        dbRef.child("last_name").setValue(lName);
+        dbRef.child("phone").setValue(phNumber);
     }
 
     // Sends out a verification email to the newly registered user.
     private void verifyEmail() {
         try {
-
             mAuth.getCurrentUser().sendEmailVerification();
         }
         catch (java.lang.NullPointerException e) {
