@@ -106,8 +106,11 @@ public class RegisterActivity extends AppCompatActivity {
     private void storeInfo(final String email, final String fName, final String lName,
                            final String phNumber)
     {
+        // Get the database instance.
         FirebaseDatabase db = FirebaseDatabase.getInstance();
+        // Get a reference to the users tree with a unique key for the new user.
         DatabaseReference dbRef = db.getReference("users").push();
+        // Store information.
         dbRef.child("email").setValue(email);
         dbRef.child("first_name").setValue(fName);
         dbRef.child("last_name").setValue(lName);
