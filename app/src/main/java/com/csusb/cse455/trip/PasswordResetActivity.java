@@ -1,20 +1,15 @@
 package com.csusb.cse455.trip;
 
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Intent;
-import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.app.NotificationCompat;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 
-public class PassRecoveryActivity extends AppCompatActivity {
+public class PasswordResetActivity extends AppCompatActivity {
     // Firebase Authentication instance.
     private FirebaseAuth mAuth;
 
@@ -57,7 +52,7 @@ public class PassRecoveryActivity extends AppCompatActivity {
     */
     private void tryReset(String email) {
         mAuth.sendPasswordResetEmail(email);
-        Toast.makeText(PassRecoveryActivity.this,
+        Toast.makeText(PasswordResetActivity.this,
                 "An email with password reset instructions was sent.",
                 Toast.LENGTH_LONG).show();
         // Transition to the login screen.

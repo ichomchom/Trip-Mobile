@@ -40,7 +40,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".RegisterActivity" />
-        <activity android:name=".PassRecoveryActivity" />
+        <activity android:name=".PasswordResetActivity" />
         <activity android:name=".ResetPasswordActivity" />
         <activity
             android:name=".SettingsActivity"

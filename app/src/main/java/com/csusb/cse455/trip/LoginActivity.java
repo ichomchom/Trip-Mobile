@@ -132,8 +132,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
 
-        //Link Register Activity
 
+
+        //region Transition to Register Activity
         final TextView registerLink = (TextView) findViewById(R.id.logRegister);
 
         registerLink.setOnClickListener(new OnClickListener() {
@@ -143,18 +144,21 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 LoginActivity.this.startActivity(registerIntent);
             }
         });
+        //endregion
 
-        //Link Pass Recovery Activity
 
+
+        //region Transition to Reset Password Activity
         final TextView passRecoveryLink = (TextView) findViewById(R.id.logRecoveryPass);
 
         passRecoveryLink.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent recoveryIntent = new Intent(LoginActivity.this, PassRecoveryActivity.class);
+                Intent recoveryIntent = new Intent(LoginActivity.this, PasswordResetActivity.class);
                 LoginActivity.this.startActivity(recoveryIntent);
             }
         });
+        //endregion
 
     }
 

@@ -1,12 +1,8 @@
 package com.csusb.cse455.trip;
 
-import android.*;
-import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -28,8 +24,6 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
-import java.util.jar.*;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -62,10 +56,13 @@ public class MainActivity extends AppCompatActivity
         // Create a new Firebase Authentication instance.
         mAuth = FirebaseAuth.getInstance();
 
-        //Set the fragment initially
+
+        //region Set dashboard as main Fragment
         DashboardFragment dashboardFragment = new DashboardFragment();
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.relativelayout_for_fragment,dashboardFragment,dashboardFragment.getTag()).commit();
+        //endregion
+
 
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -193,6 +190,7 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
+        //region Link Fragments, and Activities to Navigation View
         if (id == R.id.nav_dashboard) {
             Toast.makeText(this,"Dashboard",Toast.LENGTH_SHORT).show();
             setTitle("Dashboard");
@@ -209,6 +207,24 @@ public class MainActivity extends AppCompatActivity
             FragmentManager manager = getSupportFragmentManager();
             manager.beginTransaction().replace(R.id.relativelayout_for_fragment,notificationsFragment,notificationsFragment.getTag()).commit();
 
+        } else if (id == R.id.nav_contacts) {
+            Toast.makeText(this,"Contacts",Toast.LENGTH_SHORT).show();
+            setTitle("Contacts");
+
+            ContactsFragment contactsFragment = new ContactsFragment();
+            FragmentManager manager = getSupportFragmentManager();
+            manager.beginTransaction().replace(R.id.relativelayout_for_fragment,contactsFragment,contactsFragment.getTag()).commit();
+
+
+        } else if (id == R.id.nav_locations) {
+            Toast.makeText(this,"Locations",Toast.LENGTH_SHORT).show();
+            setTitle("Locations");
+
+            LocationsFragment locationsFragment = new LocationsFragment();
+            FragmentManager manager = getSupportFragmentManager();
+            manager.beginTransaction().replace(R.id.relativelayout_for_fragment,locationsFragment,locationsFragment.getTag()).commit();
+
+
         } else if (id == R.id.nav_mytrips) {
             Toast.makeText(this,"My Trips",Toast.LENGTH_SHORT).show();
             setTitle("My Trips");
@@ -218,27 +234,18 @@ public class MainActivity extends AppCompatActivity
             manager.beginTransaction().replace(R.id.relativelayout_for_fragment,myTripsFragment,myTripsFragment.getTag()).commit();
 
 
-        } else if (id == R.id.nav_otherstrips) {
-            Toast.makeText(this,"Others' Trips",Toast.LENGTH_SHORT).show();
-            setTitle("Others' Trips");
+        } else if (id == R.id.nav_subscriptions) {
+            Toast.makeText(this,"Subscriptions",Toast.LENGTH_SHORT).show();
+            setTitle("Subscriptions");
 
-            OthersTripsFragment othersTripsFragment = new OthersTripsFragment();
+            SubscriptionsFragment subscriptionsFragment = new SubscriptionsFragment();
             FragmentManager manager = getSupportFragmentManager();
-            manager.beginTransaction().replace(R.id.relativelayout_for_fragment,othersTripsFragment,othersTripsFragment.getTag()).commit();
+            manager.beginTransaction().replace(R.id.relativelayout_for_fragment, subscriptionsFragment, subscriptionsFragment.getTag()).commit();
 
 
         } else if (id == R.id.nav_settings) {
             Toast.makeText(this,"Settings",Toast.LENGTH_SHORT).show();
             setTitle("Settings");
-
-
-        } else if (id == R.id.nav_feedback) {
-            Toast.makeText(this,"Feedback",Toast.LENGTH_SHORT).show();
-            setTitle("Feedback");
-
-            FeedbackFragment feedbackFragment = new FeedbackFragment();
-            FragmentManager manager = getSupportFragmentManager();
-            manager.beginTransaction().replace(R.id.relativelayout_for_fragment,feedbackFragment,feedbackFragment.getTag()).commit();
 
 
         } else if (id == R.id.nav_contactus)
@@ -252,6 +259,7 @@ public class MainActivity extends AppCompatActivity
 
 
         }
+        //endregion
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
