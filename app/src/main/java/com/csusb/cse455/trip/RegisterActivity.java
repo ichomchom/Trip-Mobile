@@ -5,8 +5,10 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -19,10 +21,19 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class RegisterActivity extends AppCompatActivity {
 
     // Used for logging.
     private static final String TAG = RegisterActivity.class.getSimpleName();
+
+
+
+    //Regular Expression for Email
+    public static String emailRegex = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?";
+
 
     // Firebase Authentication instance.
     private FirebaseAuth mAuth;
@@ -51,12 +62,74 @@ public class RegisterActivity extends AppCompatActivity {
         // Get the fields.
         final EditText regFirstName = (EditText) findViewById(R.id.regFirstName);
         final EditText regLastName = (EditText) findViewById(R.id.regLastName);
-        final EditText regEmail = (EditText) findViewById(R.id.regEmail);
-        final EditText regPhoneNum = (EditText) findViewById(R.id.regPhoneNum);
+        final AutoCompleteTextView regEmail = (AutoCompleteTextView) findViewById(R.id.regEmail);
         final EditText regPassword = (EditText) findViewById(R.id.regPassword);
         final EditText regRePassword = (EditText) findViewById(R.id.regRePassword);
 
         // TODO: Perform all the necessary validation checks here.
+
+
+        View focusView = null;
+        boolean cancel = false;
+
+
+        //region Convert the inputs to String
+        String email = regEmail.getText().toString();
+        String fName = regFirstName.getText().toString();
+        String lName = regLastName.getText().toString();
+        String pass1 = regPassword.getText().toString();
+        String pass2 = regRePassword.getText().toString();
+        //endregion
+
+        Pattern pattern = Pattern.compile(emailRegex);
+        Matcher matcher = pattern.matcher(email);
+
+
+
+        //region Check First and Last Name if Empty
+        if (TextUtils.isEmpty(fName)) {
+            regFirstName.setError(getString(R.string.error_field_required));
+            focusView = regFirstName;
+            cancel = true;
+        }
+
+        if (TextUtils.isEmpty(lName)) {
+            regLastName.setError(getString(R.string.error_field_required));
+            focusView = regLastName;
+            cancel = true;
+        }
+        //endregion
+
+        //region Check Passwords if match and length >= 5
+        if(!pass1.equals(pass2)){
+            regRePassword.setError(getString(R.string.error_password_not_match));
+            focusView = regRePassword;
+            cancel = true;
+        }
+
+        if(pass1.length() <= 5 && pass2.length() <= 5 ){
+            regPassword.setError(getString(R.string.error_invalid_password));
+            regRePassword.setError(getString(R.string.error_invalid_password));
+            focusView = regPassword;
+            focusView = regRePassword;
+            cancel = true;
+        }
+        //endregion
+
+
+        //region Check if Email is valid or not
+        if (TextUtils.isEmpty(email)) {
+            regEmail.setError(getString(R.string.error_field_required));
+            focusView = regEmail;
+            cancel = true;
+        } else if(!matcher.matches()){
+            regEmail.setError(getString(R.string.error_invalid_email));
+            focusView = regEmail;
+            cancel = true;
+        }
+        //endregion
+
+
 
 
 
@@ -65,16 +138,14 @@ public class RegisterActivity extends AppCompatActivity {
 
         // If valid, try registering.
         if (valid) {
-            tryRegister(regEmail.getText().toString(), regPassword.getText().toString(),
-                    regFirstName.getText().toString(), regLastName.getText().toString(),
-                    regPhoneNum.getText().toString());
+            tryRegister(email, pass1,fName, lName);
         }
     }
 
     // Attempts to register a user.  If successful, sends out email verification.  If not,
     // notifies the user.
     protected void tryRegister(final String email, final String password,
-                               final String fName, final String lName, final String phNumber) {
+                               final String fName, final String lName) {
         // Attempt to create a user with email and password.
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -90,7 +161,7 @@ public class RegisterActivity extends AppCompatActivity {
                                     "An email address verification was sent.",
                                     Toast.LENGTH_LONG).show();
                             // If successful store additional information.
-                            storeInfo(email, fName, lName, phNumber);
+                            storeInfo(email, fName, lName);
                             // Send out verification email.
                             verifyEmail();
                             // Transition to the login screen.
@@ -107,8 +178,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     // Store additional information provided in the registration form.
-    private void storeInfo(final String email, final String fName, final String lName,
-                           final String phNumber)
+    private void storeInfo(final String email, final String fName, final String lName)
     {
         // Get the database instance.
         FirebaseDatabase db = FirebaseDatabase.getInstance();
@@ -118,7 +188,7 @@ public class RegisterActivity extends AppCompatActivity {
         dbRef.child("email").setValue(email);
         dbRef.child("first_name").setValue(fName);
         dbRef.child("last_name").setValue(lName);
-        dbRef.child("phone").setValue(phNumber);
+
     }
 
     // Sends out a verification email to the newly registered user.

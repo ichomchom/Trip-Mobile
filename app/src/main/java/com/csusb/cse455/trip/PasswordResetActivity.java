@@ -3,15 +3,27 @@ package com.csusb.cse455.trip;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.AutoCompleteTextView;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+
 public class PasswordResetActivity extends AppCompatActivity {
     // Firebase Authentication instance.
     private FirebaseAuth mAuth;
+
+
+    //Regular expression for Email
+    public static String emailRegex = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,25 +34,56 @@ public class PasswordResetActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         // Get the email entered by a user.
-        final TextView email = (TextView) findViewById(R.id.recoveryEmail);
+     //   final TextView email = (TextView) findViewById(R.id.recoveryEmail);
 
         // On click, try reset.
         findViewById(R.id.recoveryBtn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                validate(email.getText().toString());
+              // validate(email.getText().toString());
+                validate();
             }
         });
     }
 
     // Validates email format.
-    private void validate(String email) {
-        // TODO: Check if email is of right format here.
+    private void validate() {
+
+        //Get email Input
+        final TextView email = (TextView) findViewById(R.id.recoveryEmail);
+
+
+        View focusView = null;
+        boolean cancel = false;
+
+
+
+        //Convert email to string
+        String recoveryEmail = email.getText().toString();
+
+
+        Pattern pattern = Pattern.compile(emailRegex);
+        Matcher matcher = pattern.matcher(recoveryEmail);
+
+
+
+        //region Check if Email is valid or not
+        if (TextUtils.isEmpty(recoveryEmail)) {
+            email.setError(getString(R.string.error_field_required));
+            focusView = email;
+            cancel = true;
+        } else if(!matcher.matches()){
+            email.setError(getString(R.string.error_invalid_email));
+            focusView = email;
+            cancel = true;
+        }
+        //endregion
+
         boolean valid = true;
 
         // If valid, attempt to reset.
         if (valid) {
-            tryReset(email);
+            tryReset(recoveryEmail);
         }
     }
 
