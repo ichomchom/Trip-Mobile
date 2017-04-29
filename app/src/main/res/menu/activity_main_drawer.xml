@@ -12,11 +12,11 @@
             android:title="Notifications" />
         <item
             android:id="@+id/nav_contacts"
-            android:icon="@drawable/ic_contacts_black_24dp"
+            android:icon="@drawable/ic_email_black_24dp"
             android:title="Contacts"/>
         <item
             android:id="@+id/nav_locations"
-            android:icon="@drawable/ic_location_on_black_24dp"
+            android:icon="@drawable/ic_map_black_24dp"
             android:title="Locations"/>
         <item
             android:id="@+id/nav_mytrips"
