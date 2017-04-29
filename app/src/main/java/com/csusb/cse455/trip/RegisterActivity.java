@@ -57,6 +57,10 @@ public class RegisterActivity extends AppCompatActivity {
         final EditText regRePassword = (EditText) findViewById(R.id.regRePassword);
 
         // TODO: Perform all the necessary validation checks here.
+
+
+
+
         boolean valid = true;
 
         // If valid, try registering.
