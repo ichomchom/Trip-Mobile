@@ -20,10 +20,8 @@ public class PasswordResetActivity extends AppCompatActivity {
     // Firebase Authentication instance.
     private FirebaseAuth mAuth;
 
-
     //Regular expression for Email
     public static String emailRegex = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?";
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,11 +50,8 @@ public class PasswordResetActivity extends AppCompatActivity {
         //Get email Input
         final TextView email = (TextView) findViewById(R.id.recoveryEmail);
 
-
         View focusView = null;
         boolean cancel = false;
-
-
 
         //Convert email to string
         String recoveryEmail = email.getText().toString();
@@ -66,6 +61,8 @@ public class PasswordResetActivity extends AppCompatActivity {
         Matcher matcher = pattern.matcher(recoveryEmail);
 
 
+        // Valid email flag.
+        boolean valid = false;
 
         //region Check if Email is valid or not
         if (TextUtils.isEmpty(recoveryEmail)) {
@@ -77,9 +74,11 @@ public class PasswordResetActivity extends AppCompatActivity {
             focusView = email;
             cancel = true;
         }
+        else
+        {
+            valid = true;
+        }
         //endregion
-
-        boolean valid = true;
 
         // If valid, attempt to reset.
         if (valid) {
