@@ -14,6 +14,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.csusb.cse455.trip.utils.Format;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -24,9 +26,6 @@ import com.google.firebase.auth.FirebaseUser;
 public class LoginActivity extends AppCompatActivity  {
     // Firebase Authentication instance.
     private FirebaseAuth mAuth;
-
-    // Minimum number of characters in a password.
-    public static final int PASSWORD_LENGTH = 6;
 
     @Override
     // Handles initialization during view creation.
@@ -53,7 +52,7 @@ public class LoginActivity extends AppCompatActivity  {
             @Override
             public void onClick(View view) {
                 // If login information formatting is valid...
-                if (checkEmailFormat(emailView) && checkPasswordFormat(passwordView)) {
+                if (Format.checkEmailFormat(emailView) && Format.checkPasswordFormat(passwordView)) {
                     // Attempt to login.
                     tryLogin(emailView.getText().toString(), passwordView.getText().toString());
                 }
@@ -101,53 +100,6 @@ public class LoginActivity extends AppCompatActivity  {
         Intent startMain = new Intent(Intent.ACTION_MAIN);
         startMain.addCategory(Intent.CATEGORY_HOME);
         startActivity(startMain);
-    }
-
-    // Validates email format.
-    private boolean checkEmailFormat(TextView emailView) {
-        // Get the string from view.
-        final String email = emailView.getText().toString();
-
-        // Check if email format is valid.  If not, return false.
-        if (!isEmailFormatValid(email)) {
-            emailView.setError(getString(R.string.invalidEmailFormat));
-            emailView.requestFocus();
-            return false;
-        }
-        // Otherwise, return true.
-        return true;
-    }
-
-    // Checks if email is formatted properly.
-    private boolean isEmailFormatValid(String email) {
-        // First check if it's empty.  Return false if it is.
-        if (TextUtils.isEmpty(email)) {
-            return false;
-        } else {
-            // Otherwise, confirm it matches an accepted email format.  Return the resulting
-            // boolean value.
-            return Patterns.EMAIL_ADDRESS.matcher(email).matches();
-        }
-    }
-
-    // Validates password format.
-    private boolean checkPasswordFormat(EditText passwordView) {
-        // Get the string from view.
-        final String password = passwordView.getText().toString();
-
-        // Check if password format is valid.  If not, return false.
-        if (!isPasswordFormatValid(password)) {
-            passwordView.setError("Password is too short.  Minimum length is " + PASSWORD_LENGTH);
-            passwordView.requestFocus();
-            return false;
-        }
-        // Otherwise, return true.
-        return true;
-    }
-
-    // Checks if password is formatted properly.
-    private boolean isPasswordFormatValid(String password) {
-        return !TextUtils.isEmpty(password) && password.length() >= PASSWORD_LENGTH;
     }
 
     // Attempts to login using provided credentials.  Return true if successful; otherwise, false.
@@ -200,4 +152,3 @@ public class LoginActivity extends AppCompatActivity  {
         mAuth.getCurrentUser().sendEmailVerification();
     }
 }
-

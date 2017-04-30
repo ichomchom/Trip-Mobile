@@ -2,7 +2,6 @@ package com.csusb.cse455.trip;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -10,10 +9,9 @@ import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
+import com.csusb.cse455.trip.utils.Format;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -104,9 +102,9 @@ public class RegisterActivity extends AppCompatActivity {
             cancel = true;
         } else if (!isPasswordFormatValid(pass1)) {
             regPassword.setError("Invalid password length. It must be a minimum of " +
-                    LoginActivity.PASSWORD_LENGTH + " characters long.");
+                    Format.PASSWORD_LENGTH + " characters long.");
             regRePassword.setError("Invalid password length. It must be a minimum of " +
-                    LoginActivity.PASSWORD_LENGTH + " characters long.");
+                    Format.PASSWORD_LENGTH + " characters long.");
             focusView = regPassword;
             cancel = true;
         } else {
@@ -116,7 +114,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         //region Check if email format is valid.
         if (!isEmailFormatValid(email)) {
-            regEmail.setError(getString(R.string.invalidEmailFormat));
+            regEmail.setError(getString(R.string.invalid_email_format));
             focusView = regEmail;
             cancel = true;
         } else {
@@ -142,7 +140,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     // Checks if password is formatted properly.
     private boolean isPasswordFormatValid(String password) {
-        return !TextUtils.isEmpty(password) && password.length() >= LoginActivity.PASSWORD_LENGTH;
+        return !TextUtils.isEmpty(password) && password.length() >= Format.PASSWORD_LENGTH;
     }
 
     // Attempts to register a user.  If successful, sends out email verification.  If not,
