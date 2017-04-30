@@ -6,8 +6,6 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.util.Patterns;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -15,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.csusb.cse455.trip.utils.Firebase;
 import com.csusb.cse455.trip.utils.Format;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -138,17 +137,11 @@ public class LoginActivity extends AppCompatActivity  {
                     .setPositiveButton("SEND NEW VERIFICATION",
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
-                                    verifyEmail();
+                                    Firebase.sendEmailVerification(LoginActivity.this,
+                                            mAuth.getCurrentUser());
                                 }
                     })
                     .show();
         }
-    }
-
-    // Sends out a verification email to the newly registered user.
-    private void verifyEmail() {
-        Toast.makeText(LoginActivity.this, "An email address verification was sent.",
-                Toast.LENGTH_LONG).show();
-        mAuth.getCurrentUser().sendEmailVerification();
     }
 }
