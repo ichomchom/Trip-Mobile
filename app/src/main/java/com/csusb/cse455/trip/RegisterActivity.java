@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -28,12 +29,6 @@ public class RegisterActivity extends AppCompatActivity {
 
     // Used for logging.
     private static final String TAG = RegisterActivity.class.getSimpleName();
-
-
-
-    //Regular Expression for Email
-    public static String emailRegex = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?";
-
 
     // Firebase Authentication instance.
     private FirebaseAuth mAuth;
@@ -66,12 +61,8 @@ public class RegisterActivity extends AppCompatActivity {
         final EditText regPassword = (EditText) findViewById(R.id.regPassword);
         final EditText regRePassword = (EditText) findViewById(R.id.regRePassword);
 
-        // TODO: Perform all the necessary validation checks here.
-
-
         View focusView = null;
         boolean cancel = false;
-
 
         //region Convert the inputs to String
         String email = regEmail.getText().toString();
@@ -81,65 +72,77 @@ public class RegisterActivity extends AppCompatActivity {
         String pass2 = regRePassword.getText().toString();
         //endregion
 
-        Pattern pattern = Pattern.compile(emailRegex);
-        Matcher matcher = pattern.matcher(email);
-
-
+        // Valid formatting flags.
+        boolean validEmailFormat = false;
+        boolean validFirstNameFormat = false;
+        boolean validLastNameFormat = false;
+        boolean validPasswordFormat = false;
 
         //region Check First and Last Name if Empty
         if (TextUtils.isEmpty(fName)) {
             regFirstName.setError(getString(R.string.error_field_required));
             focusView = regFirstName;
             cancel = true;
+        } else {
+            validFirstNameFormat = true;
         }
 
         if (TextUtils.isEmpty(lName)) {
             regLastName.setError(getString(R.string.error_field_required));
             focusView = regLastName;
             cancel = true;
+        } else {
+            validLastNameFormat = true;
         }
         //endregion
 
-        //region Check Passwords if match and length >= 5
-        if(!pass1.equals(pass2)){
+        //region Check if password matches itself and if format is valid.
+        if (!pass1.equals(pass2)) {
+            regPassword.setError(getString(R.string.error_password_not_match));
             regRePassword.setError(getString(R.string.error_password_not_match));
-            focusView = regRePassword;
-            cancel = true;
-        }
-
-        if(pass1.length() <= 5 && pass2.length() <= 5 ){
-            regPassword.setError(getString(R.string.error_invalid_password));
-            regRePassword.setError(getString(R.string.error_invalid_password));
             focusView = regPassword;
-            focusView = regRePassword;
             cancel = true;
+        } else if (!isPasswordFormatValid(pass1)) {
+            regPassword.setError("Invalid password length. It must be a minimum of " +
+                    LoginActivity.PASSWORD_LENGTH + " characters long.");
+            regRePassword.setError("Invalid password length. It must be a minimum of " +
+                    LoginActivity.PASSWORD_LENGTH + " characters long.");
+            focusView = regPassword;
+            cancel = true;
+        } else {
+            validPasswordFormat = true;
         }
         //endregion
 
-
-        //region Check if Email is valid or not
-        if (TextUtils.isEmpty(email)) {
-            regEmail.setError(getString(R.string.error_field_required));
+        //region Check if email format is valid.
+        if (!isEmailFormatValid(email)) {
+            regEmail.setError(getString(R.string.invalidEmailFormat));
             focusView = regEmail;
             cancel = true;
-        } else if(!matcher.matches()){
-            regEmail.setError(getString(R.string.error_invalid_email));
-            focusView = regEmail;
-            cancel = true;
+        } else {
+            validEmailFormat = true;
         }
         //endregion
-
-
-
-
-
-
-        boolean valid = true;
 
         // If valid, try registering.
-        if (valid) {
+        if (validEmailFormat && validPasswordFormat && validFirstNameFormat &&
+                validLastNameFormat) {
             tryRegister(email, pass1,fName, lName);
         }
+    }
+
+    // Checks if email is formatted properly.
+    private boolean isEmailFormatValid(String email) {
+        if (TextUtils.isEmpty(email)) {
+            return false;
+        } else {
+            return Patterns.EMAIL_ADDRESS.matcher(email).matches();
+        }
+    }
+
+    // Checks if password is formatted properly.
+    private boolean isPasswordFormatValid(String password) {
+        return !TextUtils.isEmpty(password) && password.length() >= LoginActivity.PASSWORD_LENGTH;
     }
 
     // Attempts to register a user.  If successful, sends out email verification.  If not,

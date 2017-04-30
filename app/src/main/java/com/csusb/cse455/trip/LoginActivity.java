@@ -23,6 +23,7 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -55,15 +56,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     // Used for logging.
     private static final String TAG = LoginActivity.class.getSimpleName();
 
-    //Regular Expression for Email
-    public static String emailRegex = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?";
-
-
     // Firebase Authentication instance.
     private FirebaseAuth mAuth;
 
     // Id to identity READ_CONTACTS permission request.
     private static final int REQUEST_READ_CONTACTS = 0;
+
+    // Minimum number of characters in a password.
+    public static final int PASSWORD_LENGTH = 6;
 
     /**
      * A dummy authentication store containing known user names and passwords.
@@ -114,7 +114,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mEmailView = (AutoCompleteTextView) findViewById(R.id.logEmail);
         populateAutoComplete();
 
-
         mPasswordView = (EditText) findViewById(R.id.logPassword);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -138,8 +137,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
 
-
-
         //region Transition to Register Activity
         final TextView registerLink = (TextView) findViewById(R.id.logRegister);
 
@@ -152,8 +149,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         });
         //endregion
 
-
-
         //region Transition to Reset Password Activity
         final TextView passRecoveryLink = (TextView) findViewById(R.id.logRecoveryPass);
 
@@ -165,7 +160,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
         });
         //endregion
-
     }
 
     private void populateAutoComplete() {
@@ -218,6 +212,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             return;
         }
 
+        boolean cancel = false;
+        View focusView = null;
+
         // Reset errors.
         mEmailView.setError(null);
         mPasswordView.setError(null);
@@ -226,39 +223,35 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
 
-        boolean cancel = false;
-        View focusView = null;
+        // Valid format flags.
+        boolean validPasswordFormat = false;
+        boolean validEmailFormat = false;
 
-        // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
-            mPasswordView.setError(getString(R.string.error_invalid_password));
+        // Check if password format is valid.
+        if (!isPasswordFormatValid(password)) {
+            mPasswordView.setError("Invalid password length. It must be a minimum of " +
+                    PASSWORD_LENGTH + " characters long.");
             focusView = mPasswordView;
             cancel = true;
+        } else {
+            validPasswordFormat = true;
         }
 
-        // Check for a valid email address.
-
-        Pattern pattern = Pattern.compile(emailRegex);
-        Matcher matcher = pattern.matcher(email);
-
-        if (TextUtils.isEmpty(email)) {
-            mEmailView.setError(getString(R.string.error_field_required));
+        // Check if email foramt is valid.
+        if (!isEmailFormatValid(email)) {
+            mEmailView.setError(getString(R.string.invalidEmailFormat));
             focusView = mEmailView;
             cancel = true;
-        } else if (!matcher.matches()) {
-            mEmailView.setError(getString(R.string.error_invalid_email));
-            focusView = mEmailView;
-            cancel = true;
+        } else {
+            validEmailFormat = true;
         }
 
-        if (cancel) {
+        if (cancel || !validPasswordFormat || !validEmailFormat) {
             // There was an error; don't attempt login and focus the first
             // form field with an error.
             focusView.requestFocus();
         } else {
-            // Show a progress spinner, and kick off a background task to
-            // perform the user login attempt.
-            //showProgress(true);
+            // If email and password formats were valid, attempt to login.
             attemptLogin(email, password);
         }
     }
@@ -325,14 +318,18 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
     }
 
-    private boolean isEmailValid(String email) {
-        //TODO: Replace this with your own logic
-        return email.contains("@");
+    // Checks if email is formatted properly.
+    private boolean isEmailFormatValid(String email) {
+        if (TextUtils.isEmpty(email)) {
+            return false;
+        } else {
+            return Patterns.EMAIL_ADDRESS.matcher(email).matches();
+        }
     }
 
-    private boolean isPasswordValid(String password) {
-        //TODO: Replace this with your own logic
-        return password.length() > 5;
+    // Checks if password is formatted properly.
+    private boolean isPasswordFormatValid(String password) {
+        return !TextUtils.isEmpty(password) && password.length() >= PASSWORD_LENGTH;
     }
 
     /**

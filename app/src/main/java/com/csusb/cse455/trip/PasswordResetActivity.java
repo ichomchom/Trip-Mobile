@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
@@ -19,9 +20,6 @@ import java.util.regex.Pattern;
 public class PasswordResetActivity extends AppCompatActivity {
     // Firebase Authentication instance.
     private FirebaseAuth mAuth;
-
-    //Regular expression for Email
-    public static String emailRegex = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +44,6 @@ public class PasswordResetActivity extends AppCompatActivity {
 
     // Validates email format.
     private void validate() {
-
         //Get email Input
         final TextView email = (TextView) findViewById(R.id.recoveryEmail);
 
@@ -56,29 +53,17 @@ public class PasswordResetActivity extends AppCompatActivity {
         //Convert email to string
         String recoveryEmail = email.getText().toString();
 
-
-        Pattern pattern = Pattern.compile(emailRegex);
-        Matcher matcher = pattern.matcher(recoveryEmail);
-
-
         // Valid email flag.
         boolean valid = false;
 
-        //region Check if Email is valid or not
-        if (TextUtils.isEmpty(recoveryEmail)) {
-            email.setError(getString(R.string.error_field_required));
+        // Check if Email is valid or not
+        if (!isEmailFormatValid(recoveryEmail)) {
+            email.setError(getString(R.string.invalidEmailFormat));
             focusView = email;
             cancel = true;
-        } else if(!matcher.matches()){
-            email.setError(getString(R.string.error_invalid_email));
-            focusView = email;
-            cancel = true;
-        }
-        else
-        {
+        } else {
             valid = true;
         }
-        //endregion
 
         // If valid, attempt to reset.
         if (valid) {
@@ -106,5 +91,14 @@ public class PasswordResetActivity extends AppCompatActivity {
     {
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
+    }
+
+    // Checks if email is formatted properly.
+    private boolean isEmailFormatValid(String email) {
+        if (TextUtils.isEmpty(email)) {
+            return false;
+        } else {
+            return Patterns.EMAIL_ADDRESS.matcher(email).matches();
+        }
     }
 }
