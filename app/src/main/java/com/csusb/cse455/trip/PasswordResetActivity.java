@@ -5,17 +5,20 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Patterns;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 
-
+// Password reset screen, which allows a user to request a password reset email
+// using a properly formatted email address.  If the email address exists in the
+// system, the user will get reset instructions.
 public class PasswordResetActivity extends AppCompatActivity {
     // Firebase Authentication instance.
     private FirebaseAuth mAuth;
 
     @Override
-    // onCreate event handler.
+    // Handles initialization during view creation.
     protected void onCreate(Bundle savedInstanceState) {
         // Super propagation.
         super.onCreate(savedInstanceState);
@@ -25,15 +28,16 @@ public class PasswordResetActivity extends AppCompatActivity {
         // Get a new Firebase Authentication instance.
         mAuth = FirebaseAuth.getInstance();
 
-        // Get the email entered by a user.
+        // Get UI references.
         final TextView emailView = (TextView) findViewById(R.id.recoveryEmail);
+        final Button resetButton = (Button) findViewById(R.id.recoveryBtn);
 
-        // On click, checks email format.  If valid, attempt resetting.
-        findViewById(R.id.recoveryBtn).setOnClickListener(new View.OnClickListener() {
+        // Set on click listener for the reset button.
+        resetButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // If format is valid, attempt to reset.
-                if (checkFormat(emailView)) {
+                if (checkEmailFormat(emailView)) {
                     tryReset(emailView.getText().toString());
                     // Finish this Activity.
                     finish();
@@ -43,13 +47,14 @@ public class PasswordResetActivity extends AppCompatActivity {
     }
 
     // Validates email format.
-    private boolean checkFormat(TextView emailView) {
+    private boolean checkEmailFormat(TextView emailView) {
         // Get the string from view.
         final String email = emailView.getText().toString();
 
         // Check if email format is valid.  If not, return false.
         if (!isEmailFormatValid(email)) {
             emailView.setError(getString(R.string.invalidEmailFormat));
+            emailView.requestFocus();
             return false;
         }
         // Otherwise, return true.
