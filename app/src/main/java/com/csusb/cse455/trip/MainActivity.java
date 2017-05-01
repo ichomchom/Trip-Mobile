@@ -101,53 +101,6 @@ public class MainActivity extends AppCompatActivity
         startActivity(logoutIntent);
     }
 
-    // ---------------------------------------------------------------------------------------------
-    // BEGINNING OF SMS TEST CODE
-    // COMMENT IT ALL OUT IF WORKING ON THIS ACTIVITY
-    // ---------------------------------------------------------------------------------------------
-    public void sendSMS(View view) {
-        SmsManager smsM = SmsManager.getDefault();
-        smsM.sendTextMessage(((EditText)findViewById(R.id.phoneInput)).getText().toString(),
-                null, "Testing my app.", null, null);
-    }
-
-    private static final int TRIP_PERMISSIONS_SEND_SMS = 1234;
-
-    public void onSendSMSClick(View view) {
-
-        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.SEND_SMS)
-                != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this,
-                    new String[]{android.Manifest.permission.SEND_SMS},
-                    TRIP_PERMISSIONS_SEND_SMS);
-        }
-        else
-        {
-            sendSMS(view);
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[],
-                                           int[] grantResults) {
-        switch (requestCode)
-        {
-            case TRIP_PERMISSIONS_SEND_SMS: {
-                if (grantResults.length > 0 && grantResults[0] ==
-                        PackageManager.PERMISSION_GRANTED) {
-                    sendSMS(getWindow().getDecorView().getRootView());
-                }
-            }
-            default:
-                return;
-        }
-    }
-
-    // ---------------------------------------------------------------------------------------------
-    // END OF SMS TEST CODE
-    // ---------------------------------------------------------------------------------------------
-
-
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
