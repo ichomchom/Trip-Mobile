@@ -96,9 +96,7 @@ public class LoginActivity extends AppCompatActivity  {
     @Override
     // Overrides the default action on back button being pressed by redirecting to device's home.
     public void onBackPressed() {
-        Intent startMain = new Intent(Intent.ACTION_MAIN);
-        startMain.addCategory(Intent.CATEGORY_HOME);
-        startActivity(startMain);
+        finish();
     }
 
     // Attempts to login using provided credentials.  Return true if successful; otherwise, false.

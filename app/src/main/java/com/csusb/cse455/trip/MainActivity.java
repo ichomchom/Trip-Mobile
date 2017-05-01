@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser == null || !currentUser.isEmailVerified())
         {
-            transitionToLogin();
+            finish();
         }
     }
 
@@ -89,16 +89,9 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 mAuth.signOut();
-                transitionToLogin();
+                finish();
             }
         });
-    }
-
-    // Transitions to login screen.
-    private void transitionToLogin()
-    {
-        Intent logoutIntent = new Intent(MainActivity.this, LoginActivity.class);
-        startActivity(logoutIntent);
     }
 
     @Override
