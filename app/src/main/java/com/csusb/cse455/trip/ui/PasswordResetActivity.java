@@ -1,4 +1,4 @@
-package com.csusb.cse455.trip;
+package com.csusb.cse455.trip.ui;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -6,6 +6,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.csusb.cse455.trip.R;
 import com.csusb.cse455.trip.utils.Format;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -16,8 +18,8 @@ public class PasswordResetActivity extends AppCompatActivity {
     // Firebase Authentication instance.
     private FirebaseAuth mAuth;
 
-    @Override
     // Handles initialization during view creation.
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         // Super propagation.
         super.onCreate(savedInstanceState);

@@ -1,4 +1,4 @@
-package com.csusb.cse455.trip;
+package com.csusb.cse455.trip.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,6 +15,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+
+import com.csusb.cse455.trip.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -23,8 +25,8 @@ public class MainActivity extends AppCompatActivity
     // Firebase Authentication instance.
     private FirebaseAuth mAuth;
 
-    @Override
     // onStart event handler.
+    @Override
     public void onStart() {
         // Propagate to super.
         super.onStart();
@@ -37,8 +39,8 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    @Override
     // onCreate event handler.
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         // Propagate to super.
         super.onCreate(savedInstanceState);
@@ -93,8 +95,8 @@ public class MainActivity extends AppCompatActivity
         finish();
     }
 
-    @Override
     // onBackPressed event handler.
+    @Override
     public void onBackPressed() {
         // Get the drawer.
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -110,16 +112,16 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    @Override
     // onCreateOptionsMenu event handler.
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
-    @Override
     // onOptionsItemSelected event handler.
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Action bar clicks handling.
         int id = item.getItemId();
@@ -135,8 +137,8 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
     // onNavigationItemSelected event handler.
+    @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();

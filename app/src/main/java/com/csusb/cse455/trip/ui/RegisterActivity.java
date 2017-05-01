@@ -1,4 +1,4 @@
-package com.csusb.cse455.trip;
+package com.csusb.cse455.trip.ui;
 
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +8,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.csusb.cse455.trip.R;
 import com.csusb.cse455.trip.utils.Firebase;
 import com.csusb.cse455.trip.utils.Format;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -19,8 +21,8 @@ public class RegisterActivity extends AppCompatActivity {
     // Firebase Authentication instance.
     private FirebaseAuth mAuth;
 
-    @Override
     // Handles initialization during view creation.
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         // Super propagation.
         super.onCreate(savedInstanceState);

@@ -1,4 +1,4 @@
-package com.csusb.cse455.trip;
+package com.csusb.cse455.trip.ui;
 
 import android.content.res.Configuration;
 import android.os.Bundle;

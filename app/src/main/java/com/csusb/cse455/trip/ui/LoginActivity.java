@@ -1,4 +1,4 @@
-package com.csusb.cse455.trip;
+package com.csusb.cse455.trip.ui;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.csusb.cse455.trip.R;
 import com.csusb.cse455.trip.utils.Firebase;
 import com.csusb.cse455.trip.utils.Format;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -26,8 +27,8 @@ public class LoginActivity extends AppCompatActivity  {
     // Firebase Authentication instance.
     private FirebaseAuth mAuth;
 
-    @Override
     // Handles initialization during view creation.
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         // Super propagation.
         super.onCreate(savedInstanceState);
@@ -79,8 +80,8 @@ public class LoginActivity extends AppCompatActivity  {
         });
     }
 
-    @Override
     // Handles initialization during view startup.
+    @Override
     protected void onStart() {
         // Super propagation.
         super.onStart();
@@ -93,8 +94,8 @@ public class LoginActivity extends AppCompatActivity  {
         }
     }
 
-    @Override
     // Overrides the default action on back button being pressed by redirecting to device's home.
+    @Override
     public void onBackPressed() {
         finish();
     }
