@@ -73,7 +73,7 @@ public class MyTripsFragment extends Fragment implements ItemClickCallback {
         addItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addItemToList();
+                addNewTrip();
             }
         });
     }
@@ -100,12 +100,27 @@ public class MyTripsFragment extends Fragment implements ItemClickCallback {
         return simpleItemTouchCallback;
     }
 
-    // Add a new item to list.
-    // TODO: Change to real data.
-    private void addItemToList() {
+    // Opens a new trip creation view.
+    private void addNewTrip() {
+        /*
         MyTripItem item = MockDataSource.getMyTripItem();
         mListData.add(item);
         mAdapter.notifyItemInserted(mListData.indexOf(item));
+        */
+
+        // Create a new details fragment.
+        Fragment newFragment = new NewTripFragment();
+
+        // Create a fragment transaction.
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+
+        // Replace this fragment with the new fragment.  Push old fragment onto the stack.
+        transaction.replace(this.getId(), newFragment);
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        transaction.addToBackStack("NEW_TRIP");
+
+        // Commit transaction.
+        transaction.commit();
     }
 
     // Moves an item within the list.

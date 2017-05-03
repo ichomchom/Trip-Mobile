@@ -17,7 +17,7 @@ public class MyTripDetailsFragment extends Fragment {
     private static final String EXTRA_LABEL = "EXTRA_LABEL";
     private static final String EXTRA_DESCRIPTION = "EXTRA_DESCRIPTION";
 
-    // Inflates view with the specified layout.
+    // Inflate the layout for this fragment.
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -25,6 +25,7 @@ public class MyTripDetailsFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_my_trip_details, container, false);
     }
 
+    // Handles bindings after view has been created.
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
