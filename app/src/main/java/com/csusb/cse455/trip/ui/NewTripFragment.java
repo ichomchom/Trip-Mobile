@@ -77,9 +77,6 @@ public class NewTripFragment extends Fragment {
         else {
             // Enable move to user's location action.
             mGoogleMap.setMyLocationEnabled(true);
-
-            // Get user's location.
-            CameraPosition cameraPosition = new CameraPosition.Builder().target(mGoogleMap.getMyLocation())
         }
     }
 
