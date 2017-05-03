@@ -18,10 +18,33 @@ import com.csusb.cse455.trip.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.Stack;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     // Firebase Authentication instance.
     private FirebaseAuth mAuth;
+
+    // Used in conjunction with pushing and popping fragments from their stack.
+    private Stack<String> mTitleStack;
+
+    // Push a title onto the stack.
+    public void pushTitle(String title) {
+        if (mTitleStack != null) {
+            mTitleStack.push(title);
+        }
+    }
+
+    // Pop the stack and return what was on it.
+    public String popTitle() {
+        // If not empty or null, return top.
+        if (mTitleStack != null && !mTitleStack.empty())
+        {
+            return mTitleStack.pop();
+        }
+        // Making a choice not to return null here.  Just return an empty string.
+        return "";
+    }
 
     // onStart event handler.
     @Override
@@ -44,6 +67,9 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         // Set content view layout.
         setContentView(R.layout.activity_main);
+
+        // Initialize title stack.
+        mTitleStack = new Stack<String>();
 
         // Create a new Firebase Authentication instance.
         mAuth = FirebaseAuth.getInstance();
@@ -106,6 +132,7 @@ public class MainActivity extends AppCompatActivity
         // ELse, if there is an entry on fragment stack, pop it.
         } else if (getFragmentManager().getBackStackEntryCount() > 0) {
             getFragmentManager().popBackStack();
+            setTitle(popTitle());
         // Else, go to user's home (suspends application).
         } else {
             Intent startMain = new Intent(Intent.ACTION_MAIN);

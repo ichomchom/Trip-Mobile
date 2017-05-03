@@ -97,4 +97,13 @@ public class NewTripFragment extends Fragment {
             }
         }
     }
+
+    // Add a new item. TODO: WORK IN PROGRESS
+    private void addNew() {
+        /*
+        MyTripItem item = MockDataSource.getMyTripItem();
+        mListData.add(item);
+        mAdapter.notifyItemInserted(mListData.indexOf(item));
+        */
+    }
 }

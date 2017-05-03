@@ -102,12 +102,6 @@ public class MyTripsFragment extends Fragment implements ItemClickCallback {
 
     // Opens a new trip creation view.
     private void addNewTrip() {
-        /*
-        MyTripItem item = MockDataSource.getMyTripItem();
-        mListData.add(item);
-        mAdapter.notifyItemInserted(mListData.indexOf(item));
-        */
-
         // Create a new details fragment.
         Fragment newFragment = new NewTripFragment();
 
@@ -121,6 +115,9 @@ public class MyTripsFragment extends Fragment implements ItemClickCallback {
 
         // Commit transaction.
         transaction.commit();
+
+        // Set new title.
+        setNewTitle("New Trip");
     }
 
     // Moves an item within the list.
@@ -165,5 +162,17 @@ public class MyTripsFragment extends Fragment implements ItemClickCallback {
 
         // Commit transaction.
         transaction.commit();
+
+        // Set new title.
+        setNewTitle("My Trip Details");
+    }
+
+    private void setNewTitle(String title) {
+        // Add existing title to the title stack.
+        MainActivity mainActivity = (MainActivity) getActivity();
+        mainActivity.pushTitle(mainActivity.getTitle().toString());
+
+        // Change title.
+        mainActivity.setTitle(title);
     }
 }
