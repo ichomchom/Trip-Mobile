@@ -25,6 +25,8 @@ public class MyTripsFragment extends Fragment implements ItemClickCallback {
     private static final String EXTRA_LABEL = "EXTRA_LABEL";
     private static final String EXTRA_DESCRIPTION = "EXTRA_DESCRIPTION";
 
+    // Main activity.
+    private MainActivity mMainActivity;
     // Recycler view.
     private RecyclerView mRecView;
     // Data adapter.
@@ -46,6 +48,9 @@ public class MyTripsFragment extends Fragment implements ItemClickCallback {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        // Get the main activity.
+        mMainActivity = (MainActivity) getActivity();
 
         // Get data.
         // TODO: Change to real data.
@@ -102,30 +107,19 @@ public class MyTripsFragment extends Fragment implements ItemClickCallback {
 
     // Opens a new trip creation view.
     private void addNewTrip() {
-        // Create a new details fragment.
-        Fragment newFragment = new NewTripFragment();
-
-        // Create a fragment transaction.
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-
-        // Replace this fragment with the new fragment.  Push old fragment onto the stack.
-        transaction.replace(this.getId(), newFragment);
-        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-        transaction.addToBackStack("NEW_TRIP");
-
-        // Commit transaction.
-        transaction.commit();
-
-        // Set new title.
-        setNewTitle("New Trip");
+        // Load new fragment.
+        mMainActivity.loadFragment(this.getId(), "NEW_TRIP_FRAGMENT", new NewTripFragment(),
+                true, "New Trip");
     }
 
     // Moves an item within the list.
     private void moveItem(int oldPos, int newPos) {
         MyTripItem item = (MyTripItem) mListData.get(oldPos);
-        mListData.remove(oldPos);
-        mListData.add(newPos, item);
-        mAdapter.notifyItemMoved(oldPos, newPos);
+        if (item != null) {
+            mListData.remove(oldPos);
+            mListData.add(newPos, item);
+            mAdapter.notifyItemMoved(oldPos, newPos);
+        }
     }
 
     // Deletes an item from the list.
@@ -152,27 +146,8 @@ public class MyTripsFragment extends Fragment implements ItemClickCallback {
         // Pass bundle.
         newFragment.setArguments(extras);
 
-        // Create a fragment transaction.
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-
-        // Replace this fragment with the new fragment.  Push old fragment onto the stack.
-        transaction.replace(this.getId(), newFragment);
-        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-        transaction.addToBackStack("MY_TRIP_DETAILS");
-
-        // Commit transaction.
-        transaction.commit();
-
-        // Set new title.
-        setNewTitle("My Trip Details");
-    }
-
-    private void setNewTitle(String title) {
-        // Add existing title to the title stack.
-        MainActivity mainActivity = (MainActivity) getActivity();
-        mainActivity.pushTitle(mainActivity.getTitle().toString());
-
-        // Change title.
-        mainActivity.setTitle(title);
+        // Load the new fragment.
+        mMainActivity.loadFragment(this.getId(), "MY_TRIP_DETAILS_FRAGMENT", newFragment,
+                true, "My Trip Details");
     }
 }

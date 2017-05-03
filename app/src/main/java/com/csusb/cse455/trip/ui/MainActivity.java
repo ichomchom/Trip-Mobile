@@ -28,6 +28,9 @@ public class MainActivity extends AppCompatActivity
     // Used in conjunction with pushing and popping fragments from their stack.
     private Stack<String> mTitleStack;
 
+    // Navigation view from the drawer menu.
+    private NavigationView mNavigationView;
+
     // Push a title onto the stack.
     public void pushTitle(String title) {
         if (mTitleStack != null) {
@@ -74,11 +77,10 @@ public class MainActivity extends AppCompatActivity
         // Create a new Firebase Authentication instance.
         mAuth = FirebaseAuth.getInstance();
 
-        // Set dashboard as main Fragment, unless there's already a fragment in saved state.
+        // Load dashboard fragment, unless there's already a fragment in saved state.
         if (savedInstanceState == null) {
-            DashboardFragment dashboardFragment = new DashboardFragment();
-            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.main_content_frame, dashboardFragment).commit();
+            loadFragment(R.id.main_content_frame, "DASHBOARD_FRAGMENT", new DashboardFragment(),
+                    false, "Dashboard");
         }
 
         // Set the support action bar.
@@ -88,19 +90,24 @@ public class MainActivity extends AppCompatActivity
         // Set the toggle listener on the drawer menu.
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+                this, drawer, toolbar, R.string.navigation_drawer_open,
+                R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
         // Set the navigation item selected listener for the navigation view.
-        final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        mNavigationView = (NavigationView) findViewById(R.id.nav_view);
+        mNavigationView.setNavigationItemSelectedListener(this);
 
         // Get the navigation header.
-        View navHeader = navigationView.getHeaderView(0);
+        View navHeader = mNavigationView.getHeaderView(0);
         // Set the email in the header.
         TextView navHeaderEmail = (TextView) navHeader.findViewById(R.id.navHeaderEmail);
-        navHeaderEmail.setText(mAuth.getCurrentUser().getEmail());
+        try {
+            navHeaderEmail.setText(mAuth.getCurrentUser().getEmail());
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
 
         // Get the logout link.
         final TextView logoutLink = (TextView) navHeader.findViewById(R.id.navHeaderLogout);
@@ -129,10 +136,17 @@ public class MainActivity extends AppCompatActivity
         // If drawer is open, close it.
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        // ELse, if there is an entry on fragment stack, pop it.
+        // Else, if there is an entry on fragment stack, pop it.
         } else if (getFragmentManager().getBackStackEntryCount() > 0) {
             getFragmentManager().popBackStack();
             setTitle(popTitle());
+        // Else, if current fragment is not dashboard, load it.
+        } else if (getFragmentManager().findFragmentByTag("DASHBOARD_FRAGMENT") == null){
+            /*loadFragment(R.id.main_content_frame, "DASHBOARD_FRAGMENT", new DashboardFragment(),
+                    false, "Dashboard");
+            mNavigationView.setCheckedItem(R.id.nav_dashboard);*/
+            mNavigationView.getMenu().performIdentifierAction(R.id.nav_dashboard, 0);
+
         // Else, go to user's home (suspends application).
         } else {
             Intent startMain = new Intent(Intent.ACTION_MAIN);
@@ -175,42 +189,86 @@ public class MainActivity extends AppCompatActivity
         // Fragment for a selected item.
         Fragment fragment = null;
 
+        // Fragment tag.
+        String tag = "";
+
+        // Fragment title.
+        String title = "";
+
         // Instantiate an appropriate fragment and set title.
         if (id == R.id.nav_dashboard) {
-            setTitle("Dashboard");
+            title = "Dashboard";
             fragment = new DashboardFragment();
+            tag = "DASHBOARD_FRAGMENT";
         } else if (id == R.id.nav_notifications) {
-            setTitle("Notifications");
+            title = "Notifications";
             fragment = new NotificationsFragment();
+            tag = "NOTIFICATIONS_FRAGMENT";
         } else if (id == R.id.nav_contacts) {
-            setTitle("Contacts");
+            title = "Contacts";
             fragment = new ContactsFragment();
+            tag = "CONTACTS_FRAGMENT";
         } else if (id == R.id.nav_locations) {
-            setTitle("Locations");
+            title = "Locations";
             fragment = new LocationsFragment();
+            tag = "LOCATIONS_FRAGMENT";
         } else if (id == R.id.nav_mytrips) {
-            setTitle("My Trips");
+            title = "My Trips";
             fragment = new MyTripsFragment();
+            tag = "MY_TRIPS_FRAGMENT";
         } else if (id == R.id.nav_subscriptions) {
-            setTitle("Subscriptions");
+            title = "Subscriptions";
             fragment = new SubscriptionsFragment();
+            tag = "SUBSCRIPTIONS_FRAGMENT";
         } else if (id == R.id.nav_settings) {
-            setTitle("Settings");
+            title = "Settings";
+            tag = "SETTINGS_FRAGMENT";
             //TODO: fragment = new SettingsFragment(); <-- Should this be Activity or Fragment?
         } else if (id == R.id.nav_contactus) {
-            setTitle("Contact Us");
+            title = "Contact Us";
             fragment = new ContactUsFragment();
+            tag = "CONTACT_US_FRAGMENT";
         }
 
         // If fragment is not null, replace content frame with it.
         if (fragment != null) {
-            FragmentTransaction transaction = getFragmentManager().beginTransaction();
-            transaction.replace(R.id.main_content_frame, fragment).commit();
+            loadFragment(R.id.main_content_frame, tag, fragment, false, title);
         }
 
         // Close drawer menu.
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    // Loads the specified fragment.  Allows use of stack.  If stack is used new title is
+    // loaded and old title is pushed onto the stack.
+    public void loadFragment(int id, String tag, Fragment fragment, boolean useStack,
+                             String newTitle) {
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+        transaction.replace(id, fragment, tag);
+
+        // Check if use of stack is requested. If it is, pushes fragment onto the stack with
+        // the specified fragment tag.
+        if (useStack) {
+            transaction.addToBackStack(tag);
+        }
+
+        // Commit transaction.
+        transaction.commit();
+
+        // If new title is specified, use it.
+        if (newTitle != null) {
+            setNewTitle(newTitle);
+        }
+    }
+
+    // Sets new title.
+    private void setNewTitle(String title) {
+        // Add existing title to the title stack.
+        pushTitle(getTitle().toString());
+        // Change title.
+        setTitle(title);
     }
 }
