@@ -12,7 +12,7 @@ public class MockDataSource {
         // Initialize random string generators.
         RandomString id = new RandomString(15);
         RandomString label = new RandomString(10);
-        RandomString description = new RandomString(30);
+        RandomString description = new RandomString(60);
 
         // Create a new list.
         List<MyTripItem> data = new ArrayList<>();
@@ -35,7 +35,7 @@ public class MockDataSource {
         MyTripItem item = new MyTripItem();
         item.setId(new RandomString(15).nextString());
         item.setLabel(new RandomString(10).nextString());
-        item.setDescription(new RandomString(30).nextString());
+        item.setDescription(new RandomString(60).nextString());
         return item;
     }
 }

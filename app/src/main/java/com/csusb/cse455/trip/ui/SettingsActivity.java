@@ -1,6 +1,5 @@
 package com.csusb.cse455.trip.ui;
 
-
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
@@ -19,7 +18,6 @@ import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
 import android.text.TextUtils;
 import android.view.MenuItem;
-
 import com.csusb.cse455.trip.R;
 
 import java.util.List;

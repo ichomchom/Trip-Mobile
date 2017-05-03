@@ -1,21 +1,19 @@
 package com.csusb.cse455.trip.ui;
 
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.view.View;
-import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.view.View;
+import android.support.design.widget.NavigationView;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
-
 import com.csusb.cse455.trip.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -50,11 +48,12 @@ public class MainActivity extends AppCompatActivity
         // Create a new Firebase Authentication instance.
         mAuth = FirebaseAuth.getInstance();
 
-        // Set dashboard as main Fragment
-        DashboardFragment dashboardFragment = new DashboardFragment();
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.main_content_frame, dashboardFragment,
-                dashboardFragment.getTag()).commit();
+        // Set dashboard as main Fragment, unless there's already a fragment in saved state.
+        if (savedInstanceState == null) {
+            DashboardFragment dashboardFragment = new DashboardFragment();
+            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.main_content_frame, dashboardFragment).commit();
+        }
 
         // Set the support action bar.
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -104,6 +103,9 @@ public class MainActivity extends AppCompatActivity
         // If drawer is open, close it.
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
+        // ELse, if there is an entry on fragment stack, pop it.
+        } else if (getFragmentManager().getBackStackEntryCount() > 0) {
+            getFragmentManager().popBackStack();
         // Else, go to user's home (suspends application).
         } else {
             Intent startMain = new Intent(Intent.ACTION_MAIN);
@@ -175,9 +177,8 @@ public class MainActivity extends AppCompatActivity
 
         // If fragment is not null, replace content frame with it.
         if (fragment != null) {
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().
-                    replace(R.id.main_content_frame, fragment).commit();
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            transaction.replace(R.id.main_content_frame, fragment).commit();
         }
 
         // Close drawer menu.

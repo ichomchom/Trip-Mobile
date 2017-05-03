@@ -3,8 +3,8 @@ package com.csusb.cse455.trip.ui;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -55,11 +55,12 @@ public class MyTripsFragment extends Fragment implements ItemClickCallback {
         }
 
         // Initialize adapter.
-        mAdapter = new MyTripsDataAdapter(mListData, getContext());
+        mAdapter = new MyTripsDataAdapter(mListData, getActivity().getBaseContext());
 
         // Setup Recycler view.
         mRecView = (RecyclerView) view.findViewById(R.id.items_list);
-        mRecView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mRecView.setHasFixedSize(false);
+        mRecView.setLayoutManager(new LinearLayoutManager(getActivity().getBaseContext()));
         mRecView.setAdapter(mAdapter);
         mAdapter.setItemClickCallback(this);
 
@@ -124,27 +125,30 @@ public class MyTripsFragment extends Fragment implements ItemClickCallback {
     // Handles on click event by showing details.
     @Override
     public void onItemClick(int position) {
-        // Get item details and create a bundle.
+        // Get an item form the given position.
         MyTripItem item = (MyTripItem) mListData.get(position);
+
+        // Create a bundle.
         Bundle extras = new Bundle();
         extras.putString(EXTRA_ID, item.getId());
         extras.putString(EXTRA_LABEL, item.getLabel());
         extras.putString(EXTRA_DESCRIPTION, item.getDescription());
 
         // Create a new details fragment.
-        Fragment frag = new MyTripDetailsFragment();
+        Fragment newFragment = new MyTripDetailsFragment();
 
         // Pass bundle.
-        frag.setArguments(extras);
+        newFragment.setArguments(extras);
 
         // Create a fragment transaction.
-        FragmentTransaction tran = getFragmentManager().beginTransaction();
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
 
         // Replace this fragment with the new fragment.  Push old fragment onto the stack.
-        tran.replace(this.getId(), frag);
-        tran.addToBackStack(null);
+        transaction.replace(this.getId(), newFragment);
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        transaction.addToBackStack("MY_TRIP_DETAILS");
 
         // Commit transaction.
-        tran.commit();
+        transaction.commit();
     }
 }
