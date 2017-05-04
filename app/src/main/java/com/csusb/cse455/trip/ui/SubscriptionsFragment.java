@@ -5,25 +5,14 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.csusb.cse455.trip.R;
 
-
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link SubscriptionsFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link SubscriptionsFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+// A location to manage subscription to other users' trips.
 public class SubscriptionsFragment extends Fragment {
-
 
     public SubscriptionsFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

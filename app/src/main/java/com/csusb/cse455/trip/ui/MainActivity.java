@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
@@ -72,7 +73,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         // Initialize title stack.
-        mTitleStack = new Stack<String>();
+        mTitleStack = new Stack<>();
 
         // Create a new Firebase Authentication instance.
         mAuth = FirebaseAuth.getInstance();
@@ -101,16 +102,16 @@ public class MainActivity extends AppCompatActivity
 
         // Get the navigation header.
         View navHeader = mNavigationView.getHeaderView(0);
+
         // Set the email in the header.
-        TextView navHeaderEmail = (TextView) navHeader.findViewById(R.id.navHeaderEmail);
-        try {
-            navHeaderEmail.setText(mAuth.getCurrentUser().getEmail());
-        } catch (NullPointerException e) {
-            e.printStackTrace();
+        TextView navHeaderEmail = (TextView) navHeader.findViewById(R.id.nav_header_email);
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+                if (currentUser != null) {
+            navHeaderEmail.setText(currentUser.getEmail());
         }
 
         // Get the logout link.
-        final TextView logoutLink = (TextView) navHeader.findViewById(R.id.navHeaderLogout);
+        final TextView logoutLink = (TextView) navHeader.findViewById(R.id.nav_header_sign_out);
         // Set logout callback to sign out and return to the login screen.
         logoutLink.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -142,11 +143,8 @@ public class MainActivity extends AppCompatActivity
             setTitle(popTitle());
         // Else, if current fragment is not dashboard, load it.
         } else if (getFragmentManager().findFragmentByTag("DASHBOARD_FRAGMENT") == null){
-            /*loadFragment(R.id.main_content_frame, "DASHBOARD_FRAGMENT", new DashboardFragment(),
-                    false, "Dashboard");
-            mNavigationView.setCheckedItem(R.id.nav_dashboard);*/
             mNavigationView.getMenu().performIdentifierAction(R.id.nav_dashboard, 0);
-
+            mNavigationView.setCheckedItem(R.id.nav_dashboard);
         // Else, go to user's home (suspends application).
         } else {
             Intent startMain = new Intent(Intent.ACTION_MAIN);
@@ -182,7 +180,7 @@ public class MainActivity extends AppCompatActivity
 
     // onNavigationItemSelected event handler.
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 

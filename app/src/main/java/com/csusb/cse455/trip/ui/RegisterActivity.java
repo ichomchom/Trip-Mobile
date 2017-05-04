@@ -8,7 +8,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.csusb.cse455.trip.R;
 import com.csusb.cse455.trip.utils.Firebase;
 import com.csusb.cse455.trip.utils.Format;

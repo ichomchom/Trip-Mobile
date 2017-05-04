@@ -6,20 +6,14 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.csusb.cse455.trip.R;
 
-
-/**
- * A simple {@link Fragment} subclass.
- */
+// A "Contact Us" view.
 public class ContactUsFragment extends Fragment {
-
 
     public ContactUsFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

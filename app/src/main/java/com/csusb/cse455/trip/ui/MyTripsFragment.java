@@ -1,10 +1,10 @@
 package com.csusb.cse455.trip.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -16,7 +16,6 @@ import com.csusb.cse455.trip.adapter.ItemClickCallback;
 import com.csusb.cse455.trip.adapter.MyTripsDataAdapter;
 import com.csusb.cse455.trip.data.MockDataSource;
 import com.csusb.cse455.trip.model.MyTripItem;
-
 import java.util.ArrayList;
 
 public class MyTripsFragment extends Fragment implements ItemClickCallback {
@@ -27,12 +26,10 @@ public class MyTripsFragment extends Fragment implements ItemClickCallback {
 
     // Main activity.
     private MainActivity mMainActivity;
-    // Recycler view.
-    private RecyclerView mRecView;
     // Data adapter.
     private MyTripsDataAdapter mAdapter;
     // Data list.
-    private ArrayList mListData;
+    private ArrayList<MyTripItem> mListData;
 
     // Required empty public constructor.
     public MyTripsFragment() { }
@@ -54,16 +51,15 @@ public class MyTripsFragment extends Fragment implements ItemClickCallback {
 
         // Get data.
         // TODO: Change to real data.
-        mListData = (ArrayList) MockDataSource.getMyTripItemsList(30);
-        if (mListData == null) {
-            mListData = new ArrayList();
-        }
+        mListData = (ArrayList<MyTripItem>) MockDataSource.getMyTripItemsList(30);
 
         // Initialize adapter.
-        mAdapter = new MyTripsDataAdapter(mListData, getActivity().getBaseContext());
+        if (mListData != null) {
+            mAdapter = new MyTripsDataAdapter(mListData, getActivity().getBaseContext());
+        }
 
         // Setup Recycler view.
-        mRecView = (RecyclerView) view.findViewById(R.id.items_list);
+        RecyclerView mRecView = (RecyclerView) view.findViewById(R.id.items_list);
         mRecView.setHasFixedSize(false);
         mRecView.setLayoutManager(new LinearLayoutManager(getActivity().getBaseContext()));
         mRecView.setAdapter(mAdapter);
@@ -85,36 +81,33 @@ public class MyTripsFragment extends Fragment implements ItemClickCallback {
 
     // Creates callback for touch operations.
     private ItemTouchHelper.Callback createHelperCallback() {
-        ItemTouchHelper.SimpleCallback simpleItemTouchCallback =
-                new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN,
-                        ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+        return new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN,
+                ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
 
-                    @Override
-                    public boolean onMove(RecyclerView recyclerView,
-                                          RecyclerView.ViewHolder viewHolder,
-                                          RecyclerView.ViewHolder target) {
-                        moveItem(viewHolder.getAdapterPosition(), target.getAdapterPosition());
-                        return true;
-                    }
+            @Override
+            public boolean onMove(RecyclerView recyclerView,
+                                  RecyclerView.ViewHolder viewHolder,
+                                  RecyclerView.ViewHolder target) {
+                moveItem(viewHolder.getAdapterPosition(), target.getAdapterPosition());
+                return true;
+            }
 
-                    @Override
-                    public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-                        deleteItem(viewHolder.getAdapterPosition());
-                    }
-                };
-        return simpleItemTouchCallback;
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                deleteItem(viewHolder.getAdapterPosition());
+            }
+        };
     }
 
     // Opens a new trip creation view.
     private void addNewTrip() {
-        // Load new fragment.
-        mMainActivity.loadFragment(this.getId(), "NEW_TRIP_FRAGMENT", new NewTripFragment(),
-                true, "New Trip");
+        Intent intent = new Intent(getActivity(), NewTripActivity.class);
+        getActivity().startActivity(intent);
     }
 
     // Moves an item within the list.
     private void moveItem(int oldPos, int newPos) {
-        MyTripItem item = (MyTripItem) mListData.get(oldPos);
+        MyTripItem item = mListData.get(oldPos);
         if (item != null) {
             mListData.remove(oldPos);
             mListData.add(newPos, item);
@@ -132,7 +125,7 @@ public class MyTripsFragment extends Fragment implements ItemClickCallback {
     @Override
     public void onItemClick(int position) {
         // Get an item form the given position.
-        MyTripItem item = (MyTripItem) mListData.get(position);
+        MyTripItem item = mListData.get(position);
 
         // Create a bundle.
         Bundle extras = new Bundle();

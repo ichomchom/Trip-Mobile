@@ -26,7 +26,7 @@
         android:weightSum="1">
 
         <TextView
-            android:id="@+id/navHeaderEmail"
+            android:id="@+id/nav_header_email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -36,14 +36,14 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
         <TextView
-            android:id="@+id/navHeaderLogout"
+            android:id="@+id/nav_header_sign_out"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
             android:layout_weight="0.18"
             android:paddingTop="16dp"
-            android:text="Logout"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-            android:layout_alignParentRight="true"/>
+            android:text="Sign out"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 
     </RelativeLayout>
 

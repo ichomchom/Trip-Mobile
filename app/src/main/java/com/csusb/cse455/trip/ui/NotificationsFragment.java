@@ -1,25 +1,18 @@
 package com.csusb.cse455.trip.ui;
 
-
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.csusb.cse455.trip.R;
 
-
-/**
- * A simple {@link Fragment} subclass.
- */
+// A view containing notifications from various parts of the program.
 public class NotificationsFragment extends Fragment {
-
 
     public NotificationsFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

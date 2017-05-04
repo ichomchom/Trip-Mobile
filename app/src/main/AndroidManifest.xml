@@ -17,9 +17,8 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
-
-    <uses-permission
-        android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!-- External Storage -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -28,10 +27,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyAjI5_qgFTunNxmjK5cxwLfsO7s8UNI1M4"/>
+            android:value="AIzaSyAjI5_qgFTunNxmjK5cxwLfsO7s8UNI1M4" />
 
         <activity
             android:name=".ui.MainActivity"
@@ -56,7 +54,10 @@
         <activity android:name=".ui.PasswordResetActivity" />
         <activity
             android:name=".ui.SettingsActivity"
-            android:label="@string/title_activity_settings"/>
+            android:label="@string/title_activity_settings" />
+        <activity
+            android:name=".ui.NewTripActivity"
+            android:label="@string/title_activity_new_trip"/>
     </application>
 
 </manifest>

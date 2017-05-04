@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.csusb.cse455.trip.R;
 import com.csusb.cse455.trip.utils.Format;
 import com.google.firebase.auth.FirebaseAuth;
@@ -24,7 +23,7 @@ public class PasswordResetActivity extends AppCompatActivity {
         // Super propagation.
         super.onCreate(savedInstanceState);
         // Set content view layout.
-        setContentView(R.layout.activity_pass_recovery);
+        setContentView(R.layout.activity_password_reset);
 
         // Get a new Firebase Authentication instance.
         mAuth = FirebaseAuth.getInstance();

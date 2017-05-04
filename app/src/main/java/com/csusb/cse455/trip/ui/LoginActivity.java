@@ -12,7 +12,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.csusb.cse455.trip.R;
 import com.csusb.cse455.trip.utils.Firebase;
 import com.csusb.cse455.trip.utils.Format;
@@ -122,8 +121,11 @@ public class LoginActivity extends AppCompatActivity  {
     // Transition to main activity (user email must be verified).
     private void transitionToMain()
     {
+        // Get current user.
+        final FirebaseUser currentUser = mAuth.getCurrentUser();
+
         // Go to the main activity if verified.
-        if (mAuth.getCurrentUser().isEmailVerified()) {
+        if (currentUser != null && currentUser.isEmailVerified()) {
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             LoginActivity.this.startActivity(intent);
         } else {

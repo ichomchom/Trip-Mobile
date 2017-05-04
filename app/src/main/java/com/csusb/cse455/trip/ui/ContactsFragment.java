@@ -1,24 +1,18 @@
 package com.csusb.cse455.trip.ui;
 
-
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.csusb.cse455.trip.R;
 
 
-/**
- * A simple {@link Fragment} subclass.
- */
+// Provides user with a location to maintain contacts.
 public class ContactsFragment extends Fragment {
 
-
-    public ContactsFragment() {
-        // Required empty public constructor
-    }
+    // Required empty public constructor
+    public ContactsFragment() {}
 
 
     @Override
