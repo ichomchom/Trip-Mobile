@@ -149,7 +149,7 @@ public class ContactUsFragment extends Fragment {
                 sendEmail.setData(Uri.parse("mailto:"));
                 sendEmail.setType("plain/text");
                 sendEmail.putExtra(Intent.EXTRA_EMAIL,new String[]{"trip.mobile.contact@gmail.com","phan.huey389@gmail.com"});
-                sendEmail.putExtra(Intent.EXTRA_SUBJECT,subject);
+                sendEmail.putExtra(Intent.EXTRA_SUBJECT,subject+" : "+bugSubject);
                 sendEmail.putExtra(Intent.EXTRA_TEXT,
                         "name: "+userName+'\n'+"Email: "+userEmail+'\n'+"Message: "+'\n'+message);
 
