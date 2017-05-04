@@ -84,6 +84,25 @@
         <item>3</item>
     </string-array>
 
+    <string-array name="list_contact_us_subjects">
+        <item></item>
+        <item>Report Bug</item>
+        <item>Question</item>
+        <item>Feedback</item>
+        <item>Others</item>
+
+    </string-array>
+
+    <string-array name="list_bugs">
+        <item></item>
+        <item>Notification issues</item>
+        <item>Map issues</item>
+        <item>Connection issues</item>
+        <item>Topic is not listed</item>
+
+
+    </string-array>
+
     <string-array name="multi_select_list_preference_default_value" />
 
     <string name="pref_title_system_sync_settings">System sync settings</string>
