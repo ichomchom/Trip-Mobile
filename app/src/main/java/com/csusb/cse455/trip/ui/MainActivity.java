@@ -161,27 +161,25 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    // onOptionsItemSelected event handler.
+    // Handles actions form the action menu.
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Action bar clicks handling.
+        // Get item id.
         int id = item.getItemId();
 
-        // TODO: add more setting items, such as logout.
-
-        // Get the selected item.
         if (id == R.id.action_settings) {
-            return true;
+            // TODO: handle settings view transition here.!
+        } else if (id == R.id.action_sign_out) {
+            signOut();
         }
-
         // Return selected item.
         return super.onOptionsItemSelected(item);
     }
 
-    // onNavigationItemSelected event handler.
+    // Handles navigation actions from the drawer menu.
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        // Handle navigation view item clicks here.
+        // Get item id.
         int id = item.getItemId();
 
         // Fragment for a selected item.
