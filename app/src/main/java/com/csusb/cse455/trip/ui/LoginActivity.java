@@ -13,7 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.csusb.cse455.trip.R;
-import com.csusb.cse455.trip.utils.Firebase;
+import com.csusb.cse455.trip.utils.FirebaseUtil;
 import com.csusb.cse455.trip.utils.Format;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -138,7 +138,7 @@ public class LoginActivity extends AppCompatActivity  {
                     .setPositiveButton("SEND NEW VERIFICATION",
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
-                                    Firebase.sendEmailVerification(LoginActivity.this,
+                                    FirebaseUtil.sendEmailVerification(LoginActivity.this,
                                             mAuth.getCurrentUser());
                                 }
                     })

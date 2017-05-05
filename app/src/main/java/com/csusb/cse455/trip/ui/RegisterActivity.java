@@ -9,12 +9,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.csusb.cse455.trip.R;
-import com.csusb.cse455.trip.utils.Firebase;
+import com.csusb.cse455.trip.model.User;
+import com.csusb.cse455.trip.utils.FirebaseUtil;
 import com.csusb.cse455.trip.utils.Format;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class RegisterActivity extends AppCompatActivity {
     // Firebase Authentication instance.
@@ -71,11 +73,13 @@ public class RegisterActivity extends AppCompatActivity {
                         // provided, sends out verification email and transitions to the login
                         // screen.
                         if (task.isSuccessful()) {
-                            // Store additional information.
-                            Firebase.storeGeneralAccountInformation(email, fName, lName);
+                            // Store additional user information.
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            if (user != null) {
+                                FirebaseUtil.updateUser(user.getUid(), new User(fName, lName));
+                            }
                             // Send out verification email.
-                            Firebase.sendEmailVerification(RegisterActivity.this,
-                                    mAuth.getCurrentUser());
+                            FirebaseUtil.sendEmailVerification(RegisterActivity.this, user);
                             // Finish up and transition to login screen.
                             finish();
                         } else {

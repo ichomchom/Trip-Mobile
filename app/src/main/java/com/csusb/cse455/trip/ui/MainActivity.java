@@ -16,8 +16,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 import com.csusb.cse455.trip.R;
+import com.csusb.cse455.trip.model.User;
+import com.csusb.cse455.trip.utils.FirebaseUtil;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Stack;
 
@@ -103,11 +109,37 @@ public class MainActivity extends AppCompatActivity
         // Get the navigation header.
         View navHeader = mNavigationView.getHeaderView(0);
 
-        // Set the email in the header.
-        TextView navHeaderEmail = (TextView) navHeader.findViewById(R.id.nav_header_email);
+        // Get header text views.
+        final TextView navHeaderEmail = (TextView) navHeader.findViewById(R.id.nav_header_email);
+        final TextView navFirstName = (TextView) navHeader.findViewById(R.id.nav_header_first_name);
+        final TextView navLastName = (TextView) navHeader.findViewById(R.id.nav_header_last_name);
+
+        // Get Firebase user.
         FirebaseUser currentUser = mAuth.getCurrentUser();
-                if (currentUser != null) {
+        if (currentUser != null) {
+            // Set header email.
             navHeaderEmail.setText(currentUser.getEmail());
+
+            // Get user information from the database.
+            FirebaseUtil fbUtil = new FirebaseUtil();
+            DatabaseReference dbRef = FirebaseUtil.getUserDatabaseReference(currentUser.getUid());
+
+            // Setup a value listener.
+            dbRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    // Get snapshot value.
+                    User user = dataSnapshot.getValue(User.class);
+
+                    // Set head first name and last name.
+                    navFirstName.setText(user.getFirstName());
+                    navLastName.setText(user.getLastName());
+                }
+
+                // Not implemented.
+                @Override
+                public void onCancelled(DatabaseError databaseError) {}
+            });
         }
 
         // Get the logout link.
@@ -168,7 +200,7 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.action_settings) {
-            // TODO: handle settings view transition here.!
+            // TODO: handle settings view transition here.
         } else if (id == R.id.action_sign_out) {
             signOut();
         }
