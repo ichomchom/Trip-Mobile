@@ -55,10 +55,11 @@ public class ContactUsFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+
         mAuth = FirebaseAuth.getInstance();
 
-
-
+        //Get User Inputs
         final String userEmail =  mAuth.getCurrentUser().getEmail();
         final String userName = mAuth.getCurrentUser().getDisplayName();
         final EditText userMsg = (EditText) view.findViewById(R.id.userMsgTxt);
@@ -118,18 +119,20 @@ public class ContactUsFragment extends Fragment {
             }
         });
 
-
+        //On click Listener for Send Email Button
         sendMsgBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+                //Convert user inputs to String
                 String subject = subjectsSpinner.getSelectedItem().toString();
                 String bugSubject = bugsSpinner.getSelectedItem().toString();
                 String message = userMsg.getText().toString();
                 String otherSubject = emailSubject.getText().toString();
 
-
-            if(subjectsSpinner.getSelectedItemPosition()==0 || subjectsSpinner.getSelectedItemPosition()== 1 && bugsSpinner.getSelectedItemPosition()==0 ||TextUtils.isEmpty(message) ) {
+            //Check validation for user inputs
+            if(subjectsSpinner.getSelectedItemPosition()==0 || subjectsSpinner.getSelectedItemPosition()== 1 && bugsSpinner.getSelectedItemPosition()==0
+                    ||TextUtils.isEmpty(message) ) {
 
                 if (subjectsSpinner.getSelectedItemPosition() == 0) {
                     TextView errorText = (TextView) subjectsSpinner.getSelectedView();
@@ -167,6 +170,7 @@ public class ContactUsFragment extends Fragment {
 
     }
 
+    //Send Email
     protected void sendEmail(String subject, String bugSubject, String otherSubject, String message,String userName, String userEmail){
 
         Log.i("Send email","");
