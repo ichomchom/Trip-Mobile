@@ -1,6 +1,7 @@
 package com.csusb.cse455.trip.ui;
 
 
+import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.graphics.Color;
@@ -9,6 +10,7 @@ import android.os.Bundle;
 import android.app.Fragment;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +22,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 import com.csusb.cse455.trip.R;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -29,6 +32,9 @@ import com.google.firebase.auth.FirebaseAuth;
  */
 public class ContactUsFragment extends Fragment {
     private FirebaseAuth mAuth;
+
+
+
 
 
     public ContactUsFragment() {
@@ -82,7 +88,8 @@ public class ContactUsFragment extends Fragment {
 
 
 
-        //Set Specific bugg list hidden or show
+
+        //Set Specific bugs list hidden or show
         subjectsSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -119,18 +126,22 @@ public class ContactUsFragment extends Fragment {
                 String subject = subjectsSpinner.getSelectedItem().toString();
                 String bugSubject = bugsSpinner.getSelectedItem().toString();
                 String message = userMsg.getText().toString();
+                String otherSubject = emailSubject.getText().toString();
 
 
-                if (subjectsSpinner.getSelectedItemPosition()==0){
+            if(subjectsSpinner.getSelectedItemPosition()==0 || subjectsSpinner.getSelectedItemPosition()== 1 && bugsSpinner.getSelectedItemPosition()==0 ||TextUtils.isEmpty(message) ) {
+
+                if (subjectsSpinner.getSelectedItemPosition() == 0) {
                     TextView errorText = (TextView) subjectsSpinner.getSelectedView();
                     errorText.setError("");
                     errorText.setTextColor(Color.RED);
                     errorText.setText("Please Select a Subject");
                     subjectsSpinner.requestFocus();
 
+
                 }
 
-                if(subjectsSpinner.getSelectedItemPosition()== 1 && bugsSpinner.getSelectedItemPosition()==0){
+                if (subjectsSpinner.getSelectedItemPosition() == 1 && bugsSpinner.getSelectedItemPosition() == 0) {
                     TextView errorText = (TextView) bugsSpinner.getSelectedView();
                     errorText.setError("");
                     errorText.setTextColor(Color.RED);
@@ -138,28 +149,15 @@ public class ContactUsFragment extends Fragment {
                     bugsSpinner.requestFocus();
                 }
 
-                if(TextUtils.isEmpty(message)){
+                if (TextUtils.isEmpty(message)) {
                     userMsg.setError("Please Enter Your Message");
                     userMsg.requestFocus();
                 }
 
 
-
-                Intent sendEmail = new Intent(Intent.ACTION_SEND);
-                sendEmail.setData(Uri.parse("mailto:"));
-                sendEmail.setType("plain/text");
-                sendEmail.putExtra(Intent.EXTRA_EMAIL,new String[]{"trip.mobile.contact@gmail.com","phan.huey389@gmail.com"});
-                sendEmail.putExtra(Intent.EXTRA_SUBJECT,subject+" : "+bugSubject);
-                sendEmail.putExtra(Intent.EXTRA_TEXT,
-                        "name: "+userName+'\n'+"Email: "+userEmail+'\n'+"Message: "+'\n'+message);
-
-
-                try{
-                    startActivity(Intent.createChooser(sendEmail, "Send mail..."));
-
-                }catch (android.content.ActivityNotFoundException ex){
-
-                }
+            }
+            else
+              sendEmail(subject,bugSubject,otherSubject,message,userName,userEmail);
 
 
 
@@ -167,9 +165,41 @@ public class ContactUsFragment extends Fragment {
             }
         });
 
+    }
+
+    protected void sendEmail(String subject, String bugSubject, String otherSubject, String message,String userName, String userEmail){
+
+        Log.i("Send email","");
+        Intent sendEmail = new Intent(Intent.ACTION_SEND);
 
 
+        sendEmail.setData(Uri.parse("mailto:"));
+        sendEmail.setType("plain/text");
+        sendEmail.putExtra(Intent.EXTRA_EMAIL,new String[]{"trip.mobile.contact@gmail.com"});
+        sendEmail.putExtra(Intent.EXTRA_SUBJECT,subject+" : "+bugSubject +otherSubject);
+        sendEmail.putExtra(Intent.EXTRA_TEXT,
+                "name: "+userName+'\n'+"Email: "+userEmail+'\n'+"Message: "+'\n'+message);
+
+
+        try{
+            startActivityForResult(Intent.createChooser(sendEmail, "Send mail..."),1);
+
+
+        }catch (android.content.ActivityNotFoundException ex){
+
+        }
 
 
     }
+/*
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        if( requestCode == 1 && resultCode == getActivity().RESULT_OK){
+            Toast.makeText(getActivity(),
+                    "We have received your email and will be responding to you soon.",
+                    Toast.LENGTH_LONG).show();
+        }
+    }
+*/
+
+
 }
