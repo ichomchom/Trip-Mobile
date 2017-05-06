@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.csusb.cse455.trip.R;
+import com.csusb.cse455.trip.data.FirebaseDb;
 import com.csusb.cse455.trip.model.User;
 import com.csusb.cse455.trip.utils.FirebaseUtil;
 import com.csusb.cse455.trip.utils.Format;
@@ -76,7 +77,7 @@ public class RegisterActivity extends AppCompatActivity {
                             // Store additional user information.
                             FirebaseUser user = mAuth.getCurrentUser();
                             if (user != null) {
-                                FirebaseUtil.updateUser(user.getUid(), new User(fName, lName));
+                                FirebaseDb.createOrUpdateUser(user.getUid(), new User(fName, lName));
                             }
                             // Send out verification email.
                             FirebaseUtil.sendEmailVerification(RegisterActivity.this, user);

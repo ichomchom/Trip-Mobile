@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 import com.csusb.cse455.trip.R;
+import com.csusb.cse455.trip.data.FirebaseDb;
 import com.csusb.cse455.trip.model.User;
 import com.csusb.cse455.trip.utils.FirebaseUtil;
 import com.google.firebase.auth.FirebaseAuth;
@@ -121,8 +122,7 @@ public class MainActivity extends AppCompatActivity
             navHeaderEmail.setText(currentUser.getEmail());
 
             // Get user information from the database.
-            FirebaseUtil fbUtil = new FirebaseUtil();
-            DatabaseReference dbRef = FirebaseUtil.getUserDatabaseReference(currentUser.getUid());
+            DatabaseReference dbRef = FirebaseDb.getUserDatabaseReference(currentUser.getUid());
 
             // Setup a value listener.
             dbRef.addValueEventListener(new ValueEventListener() {
