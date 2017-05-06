@@ -11,7 +11,7 @@ public class MockDataSource {
     private static int mMyTripCount = 0;
 
     // Returns a specified number of Trip data items as a list.
-    public static List<Trip> getMyTripItemsList (int count) {
+    public static List<Trip> getMyTripsList(int count) {
         // Create a new list.
         List<Trip> data = new ArrayList<>();
 
@@ -30,7 +30,7 @@ public class MockDataSource {
     }
 
     // Returns a single randomly generated Trip data item.
-    public static Trip getMyTripItem() {
+    public static Trip getMyTrip() {
         mMyTripCount++;
         Trip item = new Trip();
         item.setId(String.format("Trip ID #%d ID.", mMyTripCount));

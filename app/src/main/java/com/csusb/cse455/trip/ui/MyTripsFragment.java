@@ -51,7 +51,7 @@ public class MyTripsFragment extends Fragment implements ItemClickCallback {
 
         // Get data.
         // TODO: Change to real data.
-        mListData = (ArrayList<Trip>) MockDataSource.getMyTripItemsList(30);
+        mListData = (ArrayList<Trip>) MockDataSource.getMyTripsList(30);
 
         // Initialize adapter.
         if (mListData != null) {
