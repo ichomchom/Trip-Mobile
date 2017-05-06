@@ -15,7 +15,7 @@ import com.csusb.cse455.trip.R;
 import com.csusb.cse455.trip.adapter.ItemClickCallback;
 import com.csusb.cse455.trip.adapter.MyTripsDataAdapter;
 import com.csusb.cse455.trip.data.MockDataSource;
-import com.csusb.cse455.trip.model.MyTripItem;
+import com.csusb.cse455.trip.model.Trip;
 import java.util.ArrayList;
 
 public class MyTripsFragment extends Fragment implements ItemClickCallback {
@@ -29,7 +29,7 @@ public class MyTripsFragment extends Fragment implements ItemClickCallback {
     // Data adapter.
     private MyTripsDataAdapter mAdapter;
     // Data list.
-    private ArrayList<MyTripItem> mListData;
+    private ArrayList<Trip> mListData;
 
     // Required empty public constructor.
     public MyTripsFragment() { }
@@ -51,7 +51,7 @@ public class MyTripsFragment extends Fragment implements ItemClickCallback {
 
         // Get data.
         // TODO: Change to real data.
-        mListData = (ArrayList<MyTripItem>) MockDataSource.getMyTripItemsList(30);
+        mListData = (ArrayList<Trip>) MockDataSource.getMyTripItemsList(30);
 
         // Initialize adapter.
         if (mListData != null) {
@@ -107,7 +107,7 @@ public class MyTripsFragment extends Fragment implements ItemClickCallback {
 
     // Moves an item within the list.
     private void moveItem(int oldPos, int newPos) {
-        MyTripItem item = mListData.get(oldPos);
+        Trip item = mListData.get(oldPos);
         if (item != null) {
             mListData.remove(oldPos);
             mListData.add(newPos, item);
@@ -125,7 +125,7 @@ public class MyTripsFragment extends Fragment implements ItemClickCallback {
     @Override
     public void onItemClick(int position) {
         // Get an item form the given position.
-        MyTripItem item = mListData.get(position);
+        Trip item = mListData.get(position);
 
         // Create a bundle.
         Bundle extras = new Bundle();

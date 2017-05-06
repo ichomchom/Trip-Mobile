@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
     android:orientation="vertical"
     tools:context="com.csusb.cse455.trip.ui.MyTripsFragment">
 
@@ -12,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:background="#E8EAF6" />
+        android:background="#F1F1F1" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/btn_add_item"

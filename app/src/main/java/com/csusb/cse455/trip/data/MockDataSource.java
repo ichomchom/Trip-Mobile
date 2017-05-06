@@ -1,6 +1,7 @@
 package com.csusb.cse455.trip.data;
 
-import com.csusb.cse455.trip.model.MyTripItem;
+import com.csusb.cse455.trip.model.Trip;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,15 +10,15 @@ public class MockDataSource {
     // Keeps static counts of number of items.
     private static int mMyTripCount = 0;
 
-    // Returns a specified number of MyTripItem data items as a list.
-    public static List<MyTripItem> getMyTripItemsList (int count) {
+    // Returns a specified number of Trip data items as a list.
+    public static List<Trip> getMyTripItemsList (int count) {
         // Create a new list.
-        List<MyTripItem> data = new ArrayList<>();
+        List<Trip> data = new ArrayList<>();
 
         // Populate it with random data.
         for (int i = 0; i < count; i++) {
             mMyTripCount++;
-            MyTripItem item = new MyTripItem();
+            Trip item = new Trip();
             item.setId(String.format("Trip #%d ID.", mMyTripCount));
             item.setLabel(String.format("Trip #%d label.", mMyTripCount));
             item.setDescription(String.format("Trip #%d description.", mMyTripCount));
@@ -28,10 +29,10 @@ public class MockDataSource {
         return data;
     }
 
-    // Returns a single randomly generated MyTripItem data item.
-    public static MyTripItem getMyTripItem() {
+    // Returns a single randomly generated Trip data item.
+    public static Trip getMyTripItem() {
         mMyTripCount++;
-        MyTripItem item = new MyTripItem();
+        Trip item = new Trip();
         item.setId(String.format("Trip ID #%d ID.", mMyTripCount));
         item.setLabel(String.format("Trip ID #%d label.", mMyTripCount));
         item.setDescription(String.format("Trip ID #%d description.", mMyTripCount));

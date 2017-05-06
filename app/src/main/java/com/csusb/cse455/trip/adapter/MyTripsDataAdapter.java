@@ -7,14 +7,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import com.csusb.cse455.trip.R;
-import com.csusb.cse455.trip.model.MyTripItem;
+import com.csusb.cse455.trip.model.Trip;
 import java.util.List;
 
 
 // MyTrips data adapter.
 public class MyTripsDataAdapter extends RecyclerView.Adapter<MyTripsDataAdapter.DataViewHolder> {
     // My trips data.
-    private List<MyTripItem> mListData;
+    private List<Trip> mListData;
 
     // Layout inflater for recycler view.
     private LayoutInflater mInflater;
@@ -23,7 +23,7 @@ public class MyTripsDataAdapter extends RecyclerView.Adapter<MyTripsDataAdapter.
     private ItemClickCallback mItemClickCallback;
 
     // Constructor.
-    public MyTripsDataAdapter(List<MyTripItem> listData, Context context) {
+    public MyTripsDataAdapter(List<Trip> listData, Context context) {
         mInflater = LayoutInflater.from(context);
         mListData = listData;
     }
@@ -36,15 +36,14 @@ public class MyTripsDataAdapter extends RecyclerView.Adapter<MyTripsDataAdapter.
     // Inflates view.
     @Override
     public DataViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.my_trip_list_item, parent, false);
+        View view = mInflater.inflate(R.layout.card_my_trip, parent, false);
         return new DataViewHolder(view);
     }
 
     // Binds data.
     @Override
     public void onBindViewHolder(DataViewHolder holder, int position) {
-        MyTripItem item = mListData.get(position);
-        holder.mId.setText(item.getId());
+        Trip item = mListData.get(position);
         holder.mLabel.setText(item.getLabel());
         holder.mDescription.setText(item.getDescription());
     }
@@ -59,7 +58,6 @@ public class MyTripsDataAdapter extends RecyclerView.Adapter<MyTripsDataAdapter.
     // Data view holder for MyTrips data adapter.
     class DataViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         // UI components.
-        private TextView mId;
         private TextView mLabel;
         private TextView mDescription;
         private View mContainer;
@@ -70,10 +68,9 @@ public class MyTripsDataAdapter extends RecyclerView.Adapter<MyTripsDataAdapter.
             super(itemView);
 
             // Initialize components.
-            mId = (TextView) itemView.findViewById(R.id.item_id);
-            mLabel = (TextView) itemView.findViewById(R.id.item_label);
-            mDescription = (TextView) itemView.findViewById(R.id.item_description);
-            mContainer = itemView.findViewById(R.id.item_container);
+            mLabel = (TextView) itemView.findViewById(R.id.card_my_trip_label);
+            mDescription = (TextView) itemView.findViewById(R.id.card_my_trip_description);
+            mContainer = itemView.findViewById(R.id.card_my_trip_content_container);
 
             mContainer.setOnClickListener(this);
         }
@@ -81,7 +78,7 @@ public class MyTripsDataAdapter extends RecyclerView.Adapter<MyTripsDataAdapter.
         // On click event handler.
         @Override
         public void onClick(View v) {
-            if (v.getId() == R.id.item_container) {
+            if (v.getId() == R.id.card_my_trip_content_container) {
                 mItemClickCallback.onItemClick(getAdapterPosition());
             }
         }
