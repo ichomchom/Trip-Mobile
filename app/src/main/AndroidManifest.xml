@@ -54,12 +54,13 @@
         </activity>
         <activity
             android:name=".ui.RegisterActivity"
-            android:label="Register"
-
+            android:label="Registration"
+            android:theme="@style/AppTheme.NoActionBar"
             />
         <activity
             android:name=".ui.PasswordResetActivity"
             android:label="Password Reset"
+            android:theme="@style/AppTheme.NoActionBar"
             />
         <activity
             android:name=".ui.SettingsActivity"

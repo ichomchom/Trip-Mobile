@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import com.csusb.cse455.trip.R;
 import com.csusb.cse455.trip.model.Trip;
@@ -20,7 +21,7 @@ public class MyTripsDataAdapter extends RecyclerView.Adapter<MyTripsDataAdapter.
     private LayoutInflater mInflater;
 
     // Main activity communication interface.
-    private ItemClickCallback mItemClickCallback;
+    private OnMyTripCardClickCallback mCardClickCallback;
 
     // Constructor.
     public MyTripsDataAdapter(List<Trip> listData, Context context) {
@@ -29,8 +30,8 @@ public class MyTripsDataAdapter extends RecyclerView.Adapter<MyTripsDataAdapter.
     }
 
     // Sets item click callback.
-    public void setItemClickCallback(final ItemClickCallback callback) {
-        mItemClickCallback = callback;
+    public void setCardClickCallback(final OnMyTripCardClickCallback callback) {
+        mCardClickCallback = callback;
     }
 
     // Inflates view.
@@ -46,6 +47,9 @@ public class MyTripsDataAdapter extends RecyclerView.Adapter<MyTripsDataAdapter.
         Trip item = mListData.get(position);
         holder.mLabel.setText(item.getLabel());
         holder.mDescription.setText(item.getDescription());
+        //String imgSource = item.getImageSource();
+        //ImageLoader imgLoader = new ImageLoader(getApplicationContext());
+        //imgLoader.DisplayImage(imgSource, R.drawable.trip_snapshot_placeholder, holder.mSnapshot);
     }
 
     // Returns the number of itmes.
@@ -60,26 +64,44 @@ public class MyTripsDataAdapter extends RecyclerView.Adapter<MyTripsDataAdapter.
         // UI components.
         private TextView mLabel;
         private TextView mDescription;
-        private View mContainer;
+        private ImageView mSnapshot;
+        private TextView mViewAction;
+        private TextView mShareAction;
 
         // Constructor.
-        public DataViewHolder(View itemView) {
+        private DataViewHolder(View v) {
             // Super propagation.
-            super(itemView);
+            super(v);
 
             // Initialize components.
-            mLabel = (TextView) itemView.findViewById(R.id.card_my_trip_label);
-            mDescription = (TextView) itemView.findViewById(R.id.card_my_trip_description);
-            mContainer = itemView.findViewById(R.id.card_my_trip_content_container);
+            mLabel = (TextView) v.findViewById(R.id.card_my_trip_label);
+            mDescription = (TextView) v.findViewById(R.id.card_my_trip_description);
+            mSnapshot = (ImageView) v.findViewById(R.id.card_my_trip_snapshot);
+            mViewAction = (TextView) v.findViewById(R.id.card_my_trip_action_view);
+            mShareAction = (TextView) v.findViewById(R.id.card_my_trip_action_share);
 
-            mContainer.setOnClickListener(this);
+            // Set click listeners.
+            mViewAction.setOnClickListener(this);
+            mShareAction.setOnClickListener(this);
         }
 
         // On click event handler.
         @Override
         public void onClick(View v) {
-            if (v.getId() == R.id.card_my_trip_content_container) {
-                mItemClickCallback.onItemClick(getAdapterPosition());
+            // Standard null check.
+            if (v == null)
+            {
+                return;
+            }
+
+            // Get id.
+            int id = v.getId();
+
+            // Take action based on ID.
+            if (id == R.id.card_my_trip_action_view) {
+                mCardClickCallback.onViewActionClick(getAdapterPosition());
+            } else if (id == R.id.card_my_trip_action_share) {
+                mCardClickCallback.onShareActionClick(getAdapterPosition());
             }
         }
     }

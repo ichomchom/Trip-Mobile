@@ -12,13 +12,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.csusb.cse455.trip.R;
-import com.csusb.cse455.trip.adapter.ItemClickCallback;
+import com.csusb.cse455.trip.adapter.OnMyTripCardClickCallback;
 import com.csusb.cse455.trip.adapter.MyTripsDataAdapter;
 import com.csusb.cse455.trip.data.MockDataSource;
 import com.csusb.cse455.trip.model.Trip;
 import java.util.ArrayList;
 
-public class MyTripsFragment extends Fragment implements ItemClickCallback {
+public class MyTripsFragment extends Fragment implements OnMyTripCardClickCallback {
     // Fragment initialization parameters.
     private static final String EXTRA_ID = "EXTRA_ID";
     private static final String EXTRA_LABEL = "EXTRA_LABEL";
@@ -63,7 +63,7 @@ public class MyTripsFragment extends Fragment implements ItemClickCallback {
         mRecView.setHasFixedSize(false);
         mRecView.setLayoutManager(new LinearLayoutManager(getActivity().getBaseContext()));
         mRecView.setAdapter(mAdapter);
-        mAdapter.setItemClickCallback(this);
+        mAdapter.setCardClickCallback(this);
 
         // Set up item touch helper.
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(createHelperCallback());
@@ -123,7 +123,7 @@ public class MyTripsFragment extends Fragment implements ItemClickCallback {
 
     // Handles on click event by showing details.
     @Override
-    public void onItemClick(int position) {
+    public void onViewActionClick(int position) {
         // Get an item form the given position.
         Trip item = mListData.get(position);
 
@@ -142,5 +142,12 @@ public class MyTripsFragment extends Fragment implements ItemClickCallback {
         // Load the new fragment.
         mMainActivity.loadFragment(this.getId(), "MY_TRIP_DETAILS_FRAGMENT", newFragment,
                 true, "My Trip Details");
+    }
+
+    // Handles click on SHARE action.
+    @Override
+    public void onShareActionClick(int position) {
+        // Get an item from the given position.
+
     }
 }
