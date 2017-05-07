@@ -43,15 +43,24 @@
         </activity>
         <activity
             android:name=".ui.LoginActivity"
-            android:label="Trip">
+            android:label="Trip"
+            android:theme="@style/AppTheme.NoActionBar">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.RegisterActivity" />
-        <activity android:name=".ui.PasswordResetActivity" />
+        <activity
+            android:name=".ui.RegisterActivity"
+            android:label="Register"
+
+            />
+        <activity
+            android:name=".ui.PasswordResetActivity"
+            android:label="Password Reset"
+            />
         <activity
             android:name=".ui.SettingsActivity"
             android:label="@string/title_activity_settings" />

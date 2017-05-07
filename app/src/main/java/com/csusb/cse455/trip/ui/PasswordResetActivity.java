@@ -28,9 +28,14 @@ public class PasswordResetActivity extends AppCompatActivity {
         // Get a new Firebase Authentication instance.
         mAuth = FirebaseAuth.getInstance();
 
+
+
+
         // Get UI references.
         final TextView emailView = (TextView) findViewById(R.id.recoveryEmail);
         final Button resetButton = (Button) findViewById(R.id.recoveryBtn);
+
+
 
         // Set on click listener for the reset button.
         resetButton.setOnClickListener(new View.OnClickListener() {

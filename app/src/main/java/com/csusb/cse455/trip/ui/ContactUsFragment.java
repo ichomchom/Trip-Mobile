@@ -159,11 +159,12 @@ public class ContactUsFragment extends Fragment {
 
 
             }
-            else
-              sendEmail(subject,bugSubject,otherSubject,message,userName,userEmail);
+            else {
+                sendEmail(subject, bugSubject, otherSubject, message, userName, userEmail);
 
 
 
+            }
 
             }
         });
@@ -173,7 +174,7 @@ public class ContactUsFragment extends Fragment {
     //Send Email
     protected void sendEmail(String subject, String bugSubject, String otherSubject, String message,String userName, String userEmail){
 
-        Log.i("Send email","");
+
         Intent sendEmail = new Intent(Intent.ACTION_SEND);
 
 
@@ -187,20 +188,22 @@ public class ContactUsFragment extends Fragment {
 
         try{
             startActivityForResult(Intent.createChooser(sendEmail, "Send mail..."),1);
-
+            Log.i("Email sent...","");
 
         }catch (android.content.ActivityNotFoundException ex){
-
+            Toast.makeText(getActivity(), "There are no email clients installed.", Toast.LENGTH_SHORT).show();
         }
 
 
     }
-/*
-    public void onActivityResult(int requestCode, int resultCode, Intent data){
+
+  /*  public void onActivityResult(int requestCode, int resultCode, Intent data){
         if( requestCode == 1 && resultCode == getActivity().RESULT_OK){
             Toast.makeText(getActivity(),
                     "We have received your email and will be responding to you soon.",
                     Toast.LENGTH_LONG).show();
+            Intent mainIntent = new Intent(getActivity(), MainActivity.class);
+            startActivity(mainIntent);
         }
     }
 */
