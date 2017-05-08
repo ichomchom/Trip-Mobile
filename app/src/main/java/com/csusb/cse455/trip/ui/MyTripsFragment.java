@@ -81,9 +81,9 @@ public class MyTripsFragment extends Fragment implements OnMyTripCardClickCallba
 
     // Creates callback for touch operations.
     private ItemTouchHelper.Callback createHelperCallback() {
-        return new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN,
-                ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+        return new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN, 0) {
 
+            // Allows rearrangement of cards.
             @Override
             public boolean onMove(RecyclerView recyclerView,
                                   RecyclerView.ViewHolder viewHolder,
@@ -94,7 +94,7 @@ public class MyTripsFragment extends Fragment implements OnMyTripCardClickCallba
 
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-                deleteItem(viewHolder.getAdapterPosition());
+                // Do nothing.
             }
         };
     }
@@ -113,12 +113,6 @@ public class MyTripsFragment extends Fragment implements OnMyTripCardClickCallba
             mListData.add(newPos, item);
             mAdapter.notifyItemMoved(oldPos, newPos);
         }
-    }
-
-    // Deletes an item from the list.
-    private void deleteItem(int position) {
-        mListData.remove(position);
-        mAdapter.notifyItemRemoved(position);
     }
 
     // Handles on click event by showing details.
