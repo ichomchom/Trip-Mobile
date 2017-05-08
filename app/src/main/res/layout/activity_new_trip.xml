@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layout_behavior="android.support.design.widget.BottomSheetBehavior"
     tools:context="com.csusb.cse455.trip.ui.NewTripActivity">
 
     <fragment
@@ -14,79 +13,65 @@
         android:layout_height="match_parent"
         tools:context="com.csusb.cse455.trip.ui.NewTripActivity" />
 
-        <android.support.v4.widget.NestedScrollView
-            android:id="@+id/map_bottom_sheet"
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
+
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/app_bar"
             android:layout_width="match_parent"
-            android:layout_height="400dp"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            android:layout_marginBottom="50dp"
+            android:gravity="bottom"
+            android:background="@android:color/transparent">
+
+            <android.support.design.widget.CollapsingToolbarLayout
+                android:id="@+id/toolbar_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fitsSystemWindows="true"
+                app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
+                app:titleEnabled="false">
+
+            </android.support.design.widget.CollapsingToolbarLayout>
+        </android.support.design.widget.AppBarLayout>
+
+        <android.support.v4.widget.NestedScrollView
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:fillViewport="true"
-            android:layout_gravity="top"
-            app:layout_behavior="android.support.design.widget.BottomSheetBehavior"
-            app:behavior_peekHeight="54dp">
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <LinearLayout
-                android:id="@+id/map_bottom_sheet_content"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
                 <View
-                    android:id="@+id/bottom_sheet_top_shadow"
                     android:layout_width="match_parent"
                     android:layout_height="5dp"
                     android:background="@drawable/above_shadow"/>
 
-                <LinearLayout
+                <android.support.design.widget.TabLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"
                     android:background="#F0F0F0">
 
-                    <LinearLayout
+                    <android.support.design.widget.TabItem
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:paddingLeft="24dp"
-                        android:paddingRight="24dp"
-                        android:paddingTop="16dp"
-                        android:paddingBottom="16dp">
+                        android:text="Tab 1">
+                    </android.support.design.widget.TabItem>
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Tab 1"
-                            android:gravity="center"
-                            android:layout_weight="1"/>
+                </android.support.design.widget.TabLayout>
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Tab 2"
-                            android:gravity="center"
-                            android:layout_weight="1"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Tab 3"
-                            android:gravity="center"
-                            android:layout_weight="1"/>
-
-                    </LinearLayout>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Testing 1"
-                        android:layout_gravity="center"/>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Testing 2"
-                        android:layout_gravity="center"/>
-
-                </LinearLayout>
             </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
-</android.support.design.widget.CoordinatorLayout>
 
+        </android.support.v4.widget.NestedScrollView>
+
+    </android.support.design.widget.CoordinatorLayout>
+
+</android.support.design.widget.CoordinatorLayout>
