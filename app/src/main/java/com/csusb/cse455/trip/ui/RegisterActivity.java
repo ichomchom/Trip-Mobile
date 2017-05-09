@@ -1,6 +1,8 @@
 package com.csusb.cse455.trip.ui;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -41,6 +43,18 @@ public class RegisterActivity extends AppCompatActivity {
         final EditText passwordView = (EditText) findViewById(R.id.regPassword);
         final EditText rePasswordView = (EditText) findViewById(R.id.regRePassword);
         final Button regButton = (Button) findViewById(R.id.regBtn);
+
+
+        //Set floating button to go back to login
+        FloatingActionButton backBtn = (FloatingActionButton) findViewById(R.id.reg_to_log_btn);
+
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent logIntent = new Intent(RegisterActivity.this,LoginActivity.class);
+                RegisterActivity.this.startActivity(logIntent);
+            }
+        });
 
         // Set on click listener for the registration button.
         regButton.setOnClickListener(new View.OnClickListener() {

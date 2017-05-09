@@ -1,5 +1,7 @@
 package com.csusb.cse455.trip.ui;
 
+import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -31,7 +33,19 @@ public class PasswordResetActivity extends AppCompatActivity {
         // Get UI references.
         final TextView emailView = (TextView) findViewById(R.id.recoveryEmail);
         final Button resetButton = (Button) findViewById(R.id.recoveryBtn);
-        
+
+
+
+        //Set floating button to go back to login
+        FloatingActionButton backBtn = (FloatingActionButton) findViewById(R.id.reset_to_log_btn);
+
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent logIntent = new Intent(PasswordResetActivity.this,LoginActivity.class);
+                PasswordResetActivity.this.startActivity(logIntent);
+            }
+        });
         // Set on click listener for the reset button.
         resetButton.setOnClickListener(new View.OnClickListener() {
             @Override
