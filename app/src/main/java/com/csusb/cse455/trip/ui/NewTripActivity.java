@@ -4,17 +4,15 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.LinearLayout;
-
+import android.view.ViewGroup;
 import com.csusb.cse455.trip.R;
+import com.csusb.cse455.trip.utils.DpPixelConverter;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
@@ -26,14 +24,26 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 
+import static android.view.MotionEvent.ACTION_DOWN;
+import static android.view.MotionEvent.ACTION_MOVE;
+
 // An activity that lets the user create a new trip.
 public class NewTripActivity extends AppCompatActivity
         implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener {
+        GoogleApiClient.OnConnectionFailedListener,
+        View.OnTouchListener {
 
     // Tag used for logging.
     private static final String TAG = NewTripActivity.class.getSimpleName();
+
+    // Sliding panel components.
+    View mSlidingPanel;
+    View mDraggableView;
+    ViewGroup.LayoutParams params;
+    int mInitHeight;
+    float mInitPos;
+    float mMinHeight;
 
     // Google map.
     private GoogleMap mMap;
@@ -86,6 +96,43 @@ public class NewTripActivity extends AppCompatActivity
                 .addApi(Places.PLACE_DETECTION_API)
                 .build();
         mGoogleApiClient.connect();
+
+        // Sliding panel setup.
+        mSlidingPanel = findViewById(R.id.sliding_panel);
+        mDraggableView = findViewById(R.id.draggable_view);
+        mDraggableView.setOnTouchListener(this);
+        mDraggableView.setClickable(true);
+        mMinHeight = getResources().getDimension(R.dimen.map_sliding_panel_min_height);
+    }
+
+    // Handle touch event.
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        if(params == null){
+            params = mSlidingPanel.getLayoutParams();
+        }
+
+        // Perform appropriate action based on event.
+        switch (event.getActionMasked()){
+            case ACTION_DOWN:
+                // Get initial state.
+                mInitHeight = mSlidingPanel.getHeight();
+                mInitPos = event.getRawY();
+                break;
+            case ACTION_MOVE:
+                // Perform sliding.
+                float dPos = mInitPos - event.getRawY();
+                float newHeight = mInitHeight + dPos;
+                if (newHeight < mMinHeight) {
+                    newHeight = mMinHeight;
+                }
+                params.height = Math.round(newHeight);
+                // Refresh layout.
+                mSlidingPanel.requestLayout();
+                break;
+        }
+
+        return false;
     }
 
     // Saves the state of the map when the activity is paused.
