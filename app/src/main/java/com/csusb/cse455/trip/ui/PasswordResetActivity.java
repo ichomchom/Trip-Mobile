@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.csusb.cse455.trip.R;
@@ -36,9 +37,9 @@ public class PasswordResetActivity extends AppCompatActivity {
 
 
 
-        //Set floating button to go back to login
-        FloatingActionButton backBtn = (FloatingActionButton) findViewById(R.id.reset_to_log_btn);
-
+        //Set image of button to go back to login
+        ImageView backBtn = (ImageView) findViewById(R.id.resetBtnVew);
+        backBtn.setColorFilter(0xffffffff);
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -46,6 +47,8 @@ public class PasswordResetActivity extends AppCompatActivity {
                 PasswordResetActivity.this.startActivity(logIntent);
             }
         });
+
+
         // Set on click listener for the reset button.
         resetButton.setOnClickListener(new View.OnClickListener() {
             @Override

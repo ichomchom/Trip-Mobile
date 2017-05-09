@@ -1,6 +1,8 @@
 package com.csusb.cse455.trip.ui;
 
 import android.content.Intent;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.csusb.cse455.trip.R;
@@ -45,9 +48,11 @@ public class RegisterActivity extends AppCompatActivity {
         final Button regButton = (Button) findViewById(R.id.regBtn);
 
 
-        //Set floating button to go back to login
-        FloatingActionButton backBtn = (FloatingActionButton) findViewById(R.id.reg_to_log_btn);
 
+
+        //Set image of button to go back to login
+        ImageView backBtn = (ImageView) findViewById(R.id.registerBtnVew);
+        backBtn.setColorFilter(0xffffffff);
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -55,6 +60,7 @@ public class RegisterActivity extends AppCompatActivity {
                 RegisterActivity.this.startActivity(logIntent);
             }
         });
+
 
         // Set on click listener for the registration button.
         regButton.setOnClickListener(new View.OnClickListener() {

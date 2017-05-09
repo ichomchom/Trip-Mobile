@@ -157,16 +157,15 @@
 
     </LinearLayout>
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/reg_to_log_btn"
+
+    <ImageView
+        android:id="@+id/registerBtnVew"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        app:backgroundTint="@color/colorPrimary"
-        app:fabSize="normal"
-        app:rippleColor="@color/colorAccent"
-        app:srcCompat="@drawable/arrow_left_thick"
-        app:useCompatPadding="true"/>
+
+        android:adjustViewBounds="false"
+        app:srcCompat="@drawable/arrow_left_thick" />
 </RelativeLayout>
