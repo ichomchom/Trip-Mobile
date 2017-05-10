@@ -1,7 +1,7 @@
 package com.csusb.cse455.trip.ui;
 
-import android.app.Fragment;
-import android.app.FragmentTransaction;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -273,7 +273,7 @@ public class MainActivity extends AppCompatActivity
     // loaded and old title is pushed onto the stack.
     public void loadFragment(int id, String tag, Fragment fragment, boolean useStack,
                              String newTitle) {
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         transaction.replace(id, fragment, tag);
 

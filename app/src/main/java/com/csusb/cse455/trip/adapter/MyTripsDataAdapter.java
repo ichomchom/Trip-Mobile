@@ -11,7 +11,6 @@ import com.csusb.cse455.trip.R;
 import com.csusb.cse455.trip.model.Trip;
 import java.util.List;
 
-
 // MyTrips data adapter.
 public class MyTripsDataAdapter extends RecyclerView.Adapter<MyTripsDataAdapter.DataViewHolder> {
     // My trips data.

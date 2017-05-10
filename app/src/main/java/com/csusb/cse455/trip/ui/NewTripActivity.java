@@ -6,13 +6,16 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import com.csusb.cse455.trip.R;
-import com.csusb.cse455.trip.utils.DpPixelConverter;
+import com.csusb.cse455.trip.adapter.FixedTabsPagerAdapter;
+import com.csusb.cse455.trip.adapter.FragmentTab;
+import com.csusb.cse455.trip.adapter.OnFragmentInteractionListener;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
@@ -24,6 +27,8 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 
+import java.util.ArrayList;
+
 import static android.view.MotionEvent.ACTION_DOWN;
 import static android.view.MotionEvent.ACTION_MOVE;
 
@@ -32,14 +37,15 @@ public class NewTripActivity extends AppCompatActivity
         implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
-        View.OnTouchListener {
+        View.OnTouchListener,
+        OnFragmentInteractionListener<Object> {
 
     // Tag used for logging.
     private static final String TAG = NewTripActivity.class.getSimpleName();
 
     // Sliding panel components.
     View mSlidingPanel;
-    View mDraggableView;
+    ViewPager mDraggableView;
     ViewGroup.LayoutParams params;
     int mInitHeight;
     float mInitPos;
@@ -99,10 +105,18 @@ public class NewTripActivity extends AppCompatActivity
 
         // Sliding panel setup.
         mSlidingPanel = findViewById(R.id.sliding_panel);
-        mDraggableView = findViewById(R.id.draggable_view);
+        mDraggableView = (ViewPager) findViewById(R.id.draggable_view);
         mDraggableView.setOnTouchListener(this);
         mDraggableView.setClickable(true);
         mMinHeight = getResources().getDimension(R.dimen.map_sliding_panel_min_height);
+
+        ArrayList<FragmentTab> fragmentTabs = new ArrayList<>();
+        fragmentTabs.add(new FragmentTab(NewTripLocationsFragment.class, "Locations"));
+        fragmentTabs.add(new FragmentTab(NewTripSubscribersFragment.class, "Subscribers"));
+
+        FixedTabsPagerAdapter pagerAdapter = new FixedTabsPagerAdapter(
+                getSupportFragmentManager(), fragmentTabs);
+        mDraggableView.setAdapter(pagerAdapter);
     }
 
     // Handle touch event.
@@ -265,5 +279,19 @@ public class NewTripActivity extends AppCompatActivity
             mMap.getUiSettings().setMyLocationButtonEnabled(false);
             mLastKnownLocation = null;
         }
+    }
+
+    // Handles interaction with child fragments.
+    @Override
+    public void onFragmentInteraction(String tag, Object data) {
+        switch (tag) {
+            case "Locations":
+                break;
+            case "Subscribers":
+                break;
+            default:
+                break;
+        }
+
     }
 }

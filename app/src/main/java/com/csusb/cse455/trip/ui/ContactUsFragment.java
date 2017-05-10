@@ -1,13 +1,10 @@
 package com.csusb.cse455.trip.ui;
 
-
-import android.app.Activity;
-import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
@@ -21,11 +18,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
-
 import com.csusb.cse455.trip.R;
 import com.google.firebase.auth.FirebaseAuth;
-
 
 /**
  * A simple {@link Fragment} subclass.
@@ -33,16 +27,9 @@ import com.google.firebase.auth.FirebaseAuth;
 public class ContactUsFragment extends Fragment {
     private FirebaseAuth mAuth;
 
-
-
-
-
     public ContactUsFragment() {
         // Required empty public constructor
     }
-
-
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -51,11 +38,9 @@ public class ContactUsFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_contact_us, container, false);
     }
 
-
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -86,10 +71,6 @@ public class ContactUsFragment extends Fragment {
         bugsSpinner.setVisibility(View.GONE);
         emailSubject.setVisibility(View.GONE);
 
-
-
-
-
         //Set Specific bugs list hidden or show
         subjectsSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -109,14 +90,10 @@ public class ContactUsFragment extends Fragment {
                 else{
                     emailSubject.setVisibility(View.GONE);
                 }
-
-
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
+            public void onNothingSelected(AdapterView<?> parent) {}
         });
 
         //On click Listener for Send Email Button
@@ -130,42 +107,34 @@ public class ContactUsFragment extends Fragment {
                 String message = userMsg.getText().toString();
                 String otherSubject = emailSubject.getText().toString();
 
-            //Check validation for user inputs
-            if(subjectsSpinner.getSelectedItemPosition()==0 || subjectsSpinner.getSelectedItemPosition()== 1 && bugsSpinner.getSelectedItemPosition()==0
-                    ||TextUtils.isEmpty(message) ) {
+                //Check validation for user inputs
+                if(subjectsSpinner.getSelectedItemPosition()==0 || subjectsSpinner.getSelectedItemPosition()== 1 && bugsSpinner.getSelectedItemPosition()==0
+                        ||TextUtils.isEmpty(message) ) {
 
-                if (subjectsSpinner.getSelectedItemPosition() == 0) {
-                    TextView errorText = (TextView) subjectsSpinner.getSelectedView();
-                    errorText.setError("");
-                    errorText.setTextColor(Color.RED);
-                    errorText.setText("Please Select a Subject");
-                    subjectsSpinner.requestFocus();
+                    if (subjectsSpinner.getSelectedItemPosition() == 0) {
+                        TextView errorText = (TextView) subjectsSpinner.getSelectedView();
+                        errorText.setError("");
+                        errorText.setTextColor(Color.RED);
+                        errorText.setText("Please Select a Subject");
+                        subjectsSpinner.requestFocus();
+                    }
 
+                    if (subjectsSpinner.getSelectedItemPosition() == 1 && bugsSpinner.getSelectedItemPosition() == 0) {
+                        TextView errorText = (TextView) bugsSpinner.getSelectedView();
+                        errorText.setError("");
+                        errorText.setTextColor(Color.RED);
+                        errorText.setText("Please Select a Subject");
+                        bugsSpinner.requestFocus();
+                    }
 
+                    if (TextUtils.isEmpty(message)) {
+                        userMsg.setError("Please Enter Your Message");
+                        userMsg.requestFocus();
+                    }
                 }
-
-                if (subjectsSpinner.getSelectedItemPosition() == 1 && bugsSpinner.getSelectedItemPosition() == 0) {
-                    TextView errorText = (TextView) bugsSpinner.getSelectedView();
-                    errorText.setError("");
-                    errorText.setTextColor(Color.RED);
-                    errorText.setText("Please Select a Subject");
-                    bugsSpinner.requestFocus();
+                else {
+                    sendEmail(subject, bugSubject, otherSubject, message, userName, userEmail);
                 }
-
-                if (TextUtils.isEmpty(message)) {
-                    userMsg.setError("Please Enter Your Message");
-                    userMsg.requestFocus();
-                }
-
-
-            }
-            else {
-                sendEmail(subject, bugSubject, otherSubject, message, userName, userEmail);
-
-
-
-            }
-
             }
         });
 
@@ -173,10 +142,7 @@ public class ContactUsFragment extends Fragment {
 
     //Send Email
     protected void sendEmail(String subject, String bugSubject, String otherSubject, String message,String userName, String userEmail){
-
-
         Intent sendEmail = new Intent(Intent.ACTION_SEND);
-
 
         sendEmail.setData(Uri.parse("mailto:"));
         sendEmail.setType("plain/text");
@@ -185,7 +151,6 @@ public class ContactUsFragment extends Fragment {
         sendEmail.putExtra(Intent.EXTRA_TEXT,
                 "name: "+userName+'\n'+"Email: "+userEmail+'\n'+"Message: "+'\n'+message);
 
-
         try{
             startActivityForResult(Intent.createChooser(sendEmail, "Send mail..."),1);
             Log.i("Email sent...","");
@@ -193,8 +158,6 @@ public class ContactUsFragment extends Fragment {
         }catch (android.content.ActivityNotFoundException ex){
             Toast.makeText(getActivity(), "There are no email clients installed.", Toast.LENGTH_SHORT).show();
         }
-
-
     }
 
   /*  public void onActivityResult(int requestCode, int resultCode, Intent data){
@@ -207,6 +170,4 @@ public class ContactUsFragment extends Fragment {
         }
     }
 */
-
-
 }
