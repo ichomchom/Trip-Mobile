@@ -18,7 +18,6 @@ import android.widget.TextView;
 import com.csusb.cse455.trip.R;
 import com.csusb.cse455.trip.data.FirebaseDb;
 import com.csusb.cse455.trip.model.User;
-import com.csusb.cse455.trip.utils.FirebaseUtil;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;

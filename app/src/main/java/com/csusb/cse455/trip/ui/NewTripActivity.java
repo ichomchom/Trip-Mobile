@@ -4,6 +4,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
@@ -26,7 +27,6 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
-
 import java.util.ArrayList;
 
 import static android.view.MotionEvent.ACTION_DOWN;
@@ -45,7 +45,9 @@ public class NewTripActivity extends AppCompatActivity
 
     // Sliding panel components.
     View mSlidingPanel;
-    ViewPager mDraggableView;
+    View mDraggablePanel;
+    ViewPager mViewPager;
+    TabLayout mTabLayout;
     ViewGroup.LayoutParams params;
     int mInitHeight;
     float mInitPos;
@@ -104,11 +106,14 @@ public class NewTripActivity extends AppCompatActivity
         mGoogleApiClient.connect();
 
         // Sliding panel setup.
-        mSlidingPanel = findViewById(R.id.sliding_panel);
-        mDraggableView = (ViewPager) findViewById(R.id.draggable_view);
-        mDraggableView.setOnTouchListener(this);
-        mDraggableView.setClickable(true);
         mMinHeight = getResources().getDimension(R.dimen.map_sliding_panel_min_height);
+
+        mSlidingPanel = findViewById(R.id.sliding_panel);
+        mDraggablePanel = findViewById(R.id.draggable_panel);
+        mTabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        mViewPager = (ViewPager) findViewById(R.id.view_pager);
+
+        mDraggablePanel.setOnTouchListener(this);
 
         ArrayList<FragmentTab> fragmentTabs = new ArrayList<>();
         fragmentTabs.add(new FragmentTab(NewTripLocationsFragment.class, "Locations"));
@@ -116,34 +121,39 @@ public class NewTripActivity extends AppCompatActivity
 
         FixedTabsPagerAdapter pagerAdapter = new FixedTabsPagerAdapter(
                 getSupportFragmentManager(), fragmentTabs);
-        mDraggableView.setAdapter(pagerAdapter);
+        mViewPager.setAdapter(pagerAdapter);
     }
 
-    // Handle touch event.
+    // Handle touch event for the sliding panel.
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         if(params == null){
             params = mSlidingPanel.getLayoutParams();
         }
 
-        // Perform appropriate action based on event.
-        switch (event.getActionMasked()){
-            case ACTION_DOWN:
-                // Get initial state.
-                mInitHeight = mSlidingPanel.getHeight();
-                mInitPos = event.getRawY();
-                break;
-            case ACTION_MOVE:
-                // Perform sliding.
-                float dPos = mInitPos - event.getRawY();
-                float newHeight = mInitHeight + dPos;
-                if (newHeight < mMinHeight) {
-                    newHeight = mMinHeight;
-                }
-                params.height = Math.round(newHeight);
-                // Refresh layout.
-                mSlidingPanel.requestLayout();
-                break;
+        if (v.getId() == R.id.draggable_panel) {
+            mViewPager.onTouchEvent(event);
+            mTabLayout.onTouchEvent(event);
+
+            // Perform appropriate action based on event.
+            switch (event.getActionMasked()) {
+                case ACTION_DOWN:
+                    // Get initial state.
+                    mInitHeight = mSlidingPanel.getHeight();
+                    mInitPos = event.getRawY();
+                    break;
+                case ACTION_MOVE:
+                    // Perform sliding.
+                    float dPos = mInitPos - event.getRawY();
+                    float newHeight = mInitHeight + dPos;
+                    if (newHeight < mMinHeight) {
+                        newHeight = mMinHeight;
+                    }
+                    params.height = Math.round(newHeight);
+                    // Refresh layout.
+                    mSlidingPanel.requestLayout();
+                    break;
+            }
         }
 
         return false;
@@ -189,7 +199,6 @@ public class NewTripActivity extends AppCompatActivity
     public void onMapReady(GoogleMap map) {
         // Assign the Google map.
         mMap = map;
-
         // Turn on the My Location layer and the related control on the map.
         updateLocationUI();
         // Get the current location of the device and set the position of the map.
@@ -256,11 +265,9 @@ public class NewTripActivity extends AppCompatActivity
             return;
         }
 
-        /*
-         * Request location permission, so that we can get the location of the
-         * device. The result of the permission request is handled by a callback,
-         * onRequestPermissionsResult.
-         */
+        // Request location permission, so that we can get the location of the
+        // device. The result of the permission request is handled by a callback,
+        // onRequestPermissionsResult.
         if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
                 android.Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {

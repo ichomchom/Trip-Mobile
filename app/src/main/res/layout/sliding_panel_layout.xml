@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/sliding_panel"
+    android:layout_alignParentBottom="true"
+    android:layout_width="match_parent"
+    android:layout_height="150dp"
+    android:minHeight="@dimen/map_sliding_panel_min_height"
+    tools:showIn="@layout/activity_new_trip">
+
+    <View
+        android:id="@+id/shadow"
+        android:layout_height="@dimen/map_sliding_panel_shadow_height"
+        android:layout_width="match_parent"
+        android:background="@drawable/above_shadow"
+        android:layout_alignParentTop="true"/>
+
+    <include layout="@layout/tab_pager_layout"/>
+
+    <View
+        android:id="@+id/draggable_panel"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true" />
+
+</RelativeLayout>

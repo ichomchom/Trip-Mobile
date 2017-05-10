@@ -5,8 +5,7 @@
     android:layout_height="match_parent"
     tools:context="com.csusb.cse455.trip.ui.NewTripActivity">
 
-    <LinearLayout
-        android:id="@+id/map_container"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -18,25 +17,7 @@
             android:layout_height="match_parent"
             tools:context="com.csusb.cse455.trip.ui.NewTripActivity" />
 
-    </LinearLayout>
+    </RelativeLayout>
 
-    <LinearLayout
-        android:id="@+id/sliding_panel"
-        android:layout_alignParentBottom="true"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/map_sliding_panel_min_height"
-        android:minHeight="@dimen/map_sliding_panel_min_height"
-        android:orientation="vertical">
-
-        <View android:layout_height="@dimen/map_sliding_panel_shadow_height"
-            android:layout_width="match_parent"
-            android:background="@drawable/above_shadow"/>
-
-        <android.support.v4.view.ViewPager
-            android:id="@+id/draggable_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@android:color/white"/>
-
-    </LinearLayout>
+    <include layout="@layout/sliding_panel_layout" />
 </RelativeLayout>
