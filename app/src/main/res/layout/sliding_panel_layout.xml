@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/sliding_panel"
     android:layout_alignParentBottom="true"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="150dp"
+    android:layout_height="@dimen/map_sliding_panel_tab_height"
     android:minHeight="@dimen/map_sliding_panel_min_height"
     tools:showIn="@layout/activity_new_trip">
 
@@ -12,17 +13,26 @@
         android:id="@+id/shadow"
         android:layout_height="@dimen/map_sliding_panel_shadow_height"
         android:layout_width="match_parent"
-        android:background="@drawable/above_shadow"
-        android:layout_alignParentTop="true"/>
+        android:background="@drawable/above_shadow"/>
 
-    <include layout="@layout/tab_pager_layout"/>
-
-    <!--<include layout="@layout/fragment_draggable_panel"/>-->
-
-    <fragment
+    <RelativeLayout
         android:id="@+id/draggable_panel"
-        android:name="com.csusb.cse455.trip.ui.DraggablePanel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:clickable="true">
+
+        <View
+            android:layout_width="36dp"
+            android:layout_height="24dp"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/ic_drag_handle_black_24px"/>
+
+    </RelativeLayout>
+
+    <include
+        layout="@layout/tab_pager_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
-</RelativeLayout>
+</LinearLayout>

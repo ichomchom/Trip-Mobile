@@ -52,7 +52,6 @@ public class FixedTabsPagerAdapter extends FragmentPagerAdapter {
         {
             return null;
         }
-
         return mFragments.get(position).getTitle();
     }
 }
