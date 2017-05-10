@@ -124,7 +124,7 @@ public class NewTripActivity extends AppCompatActivity
 
         // Create tab fragments.
         ArrayList<FragmentTab> fragmentTabs = new ArrayList<>();
-        fragmentTabs.add(new FragmentTab(NewTripLocationsFragment.class, "Locations"));
+        fragmentTabs.add(new FragmentTab(NewTripLocationsFragment.class, "Route"));
         fragmentTabs.add(new FragmentTab(NewTripSubscribersFragment.class, "Subscribers"));
 
         // Hook up tab fragments with the adapter and set the adapter in view pager.
@@ -142,6 +142,7 @@ public class NewTripActivity extends AppCompatActivity
                 params = mSlidingPanel.getLayoutParams();
             }
 
+            // For testing.
             Log.d("test", "touched!");
 
             int h = mSlidingPanel.getHeight();
