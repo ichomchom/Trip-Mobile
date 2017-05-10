@@ -31,6 +31,7 @@ import java.util.ArrayList;
 
 import static android.view.MotionEvent.ACTION_DOWN;
 import static android.view.MotionEvent.ACTION_MOVE;
+import static android.view.MotionEvent.ACTION_UP;
 
 // An activity that lets the user create a new trip.
 public class NewTripActivity extends AppCompatActivity
@@ -114,6 +115,8 @@ public class NewTripActivity extends AppCompatActivity
         mViewPager = (ViewPager) findViewById(R.id.view_pager);
 
         mDraggablePanel.setOnTouchListener(this);
+        mViewPager.setOnTouchListener(this);
+        mTabLayout.setOnTouchListener(this);
 
         ArrayList<FragmentTab> fragmentTabs = new ArrayList<>();
         fragmentTabs.add(new FragmentTab(NewTripLocationsFragment.class, "Locations"));
@@ -131,31 +134,33 @@ public class NewTripActivity extends AppCompatActivity
             params = mSlidingPanel.getLayoutParams();
         }
 
-        if (v.getId() == R.id.draggable_panel) {
-            mViewPager.onTouchEvent(event);
-            mTabLayout.onTouchEvent(event);
-
-            // Perform appropriate action based on event.
-            switch (event.getActionMasked()) {
-                case ACTION_DOWN:
-                    // Get initial state.
-                    mInitHeight = mSlidingPanel.getHeight();
-                    mInitPos = event.getRawY();
-                    break;
-                case ACTION_MOVE:
-                    // Perform sliding.
-                    float dPos = mInitPos - event.getRawY();
-                    float newHeight = mInitHeight + dPos;
-                    if (newHeight < mMinHeight) {
-                        newHeight = mMinHeight;
-                    }
-                    params.height = Math.round(newHeight);
-                    // Refresh layout.
-                    mSlidingPanel.requestLayout();
-                    break;
-            }
+        switch (event.getActionMasked()) {
+            case ACTION_DOWN:
+                // Get initial state.
+                mInitHeight = mSlidingPanel.getHeight();
+                mInitPos = event.getRawY();
+                mDraggablePanel.setClickable(false);
+                break;
+            case ACTION_MOVE:
+                // Perform sliding.
+                float dPos = mInitPos - event.getRawY();
+                if (!mDraggablePanel.isClickable() && (dPos > 0.1 || dPos < -0.1)) {
+                    mDraggablePanel.setClickable(true);
+                }
+                float newHeight = mInitHeight + dPos;
+                if (newHeight < mMinHeight) {
+                    newHeight = mMinHeight;
+                }
+                params.height = Math.round(newHeight);
+                // Refresh layout.
+                mSlidingPanel.requestLayout();
+                break;
+            case ACTION_UP:
+                if (!mDraggablePanel.isClickable()) {
+                    mDraggablePanel.setClickable(true);
+                }
+                break;
         }
-
         return false;
     }
 
