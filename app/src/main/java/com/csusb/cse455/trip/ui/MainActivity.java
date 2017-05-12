@@ -81,6 +81,8 @@ public class MainActivity extends AppCompatActivity
         // Initialize title stack.
         mTitleStack = new Stack<>();
 
+
+
         // Create a new Firebase Authentication instance.
         mAuth = FirebaseAuth.getInstance();
 
