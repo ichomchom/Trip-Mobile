@@ -1,4 +1,5 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,7 +9,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="@color/colorPrimaryDark"
+    android:background="@drawable/bg"
     tools:context="com.csusb.cse455.trip.ui.LoginActivity">
 
     <!-- Login progress -->
@@ -24,9 +25,11 @@
         android:id="@+id/login_logo"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:layout_marginTop="72dp"
         android:layout_marginBottom="24dp"
-        android:contentDescription="Trip Logo"/>
+        android:layout_marginTop="72dp"
+        android:contentDescription="Trip Logo"
+        app:srcCompat="@drawable/logo" />
+
 
     <LinearLayout
         android:id="@+id/email_login_form"
@@ -50,6 +53,7 @@
                 android:theme="@style/EditTextTheme"
                 android:maxLines="1"
                 android:imeOptions="actionNext"
+
                 android:singleLine="true" />
 
         </android.support.design.widget.TextInputLayout>
@@ -77,14 +81,10 @@
 
         <Button
             android:id="@+id/logBtn"
-            style="?android:textAppearanceSmall"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="36dp"
-            android:background="@color/colorAccent"
-            android:textColor="@android:color/white"
-            android:text="Sign In"
-            android:textStyle="bold" />
+            android:layout_height="70dp"
+            android:layout_marginTop="90dp"
+            android:background="@drawable/signin"/>
 
         <TextView
             android:id="@+id/logRegister"

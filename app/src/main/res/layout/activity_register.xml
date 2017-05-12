@@ -156,14 +156,14 @@
 
     </LinearLayout>
 
-    <ImageView
+    <Button
         android:id="@+id/regBackBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="?android:textAppearanceSmall"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:adjustViewBounds="false"
-        app:srcCompat="@drawable/arrow_left_thick"
-        android:tint="#FFFFFF"/>
+        android:background="@drawable/arrow_left_thick" />
+
 </RelativeLayout>

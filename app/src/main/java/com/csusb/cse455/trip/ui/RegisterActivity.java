@@ -42,10 +42,10 @@ public class RegisterActivity extends AppCompatActivity {
         final EditText passwordView = (EditText) findViewById(R.id.regPassword);
         final EditText rePasswordView = (EditText) findViewById(R.id.regRePassword);
         final Button regButton = (Button) findViewById(R.id.regBtn);
+        final Button backArrowButton = (Button) findViewById(R.id.regBackBtn);
 
-        // Set image of button to go back to login.
-        ImageView backBtn = (ImageView) findViewById(R.id.regBackBtn);
-        backBtn.setOnClickListener(new View.OnClickListener() {
+        // Set on click listener for the back button
+        backArrowButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();

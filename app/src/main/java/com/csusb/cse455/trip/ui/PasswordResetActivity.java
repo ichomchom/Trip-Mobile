@@ -32,10 +32,10 @@ public class PasswordResetActivity extends AppCompatActivity {
         // Get UI references.
         final TextView emailView = (TextView) findViewById(R.id.recoveryEmail);
         final Button resetButton = (Button) findViewById(R.id.recoveryBtn);
+        final Button backArrowButton = (Button) findViewById(R.id.regBackBtn);
 
-        //Set image of button to go back to login
-        ImageView backBtn = (ImageView) findViewById(R.id.resetBackBtn);
-        backBtn.setOnClickListener(new View.OnClickListener() {
+        // Set on click listener for the back button
+        backArrowButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
