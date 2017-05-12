@@ -1,6 +1,5 @@
 package com.csusb.cse455.trip.ui;
 
-import android.app.Fragment;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -8,11 +7,9 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.NavUtils;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
@@ -101,9 +98,11 @@ public class NewTripActivity extends AppCompatActivity
         // Retrieve the content view that renders the map.
         setContentView(R.layout.activity_new_trip);
 
-
-        //Enable back button on action bar
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        // Enable back button on action bar.
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
 
         // Build the Play services client for use by the Fused Location Provider and the Places API.
         // addApi() method requests the Google Places API and the Fused Location Provider.
@@ -143,17 +142,11 @@ public class NewTripActivity extends AppCompatActivity
         mViewPager.setAdapter(pagerAdapter);
     }
 
-
-    //Handle Back button to go back to My Trip
+    //Handle Back button to go back to My Trips view.
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case android.R.id.home:
-               this.onBackPressed();
-                return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+        finish();
+        return true;
     }
 
     // Handle click events.
