@@ -1,6 +1,5 @@
 package com.csusb.cse455.trip.ui;
 
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -16,6 +15,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import com.csusb.cse455.trip.R;
 import com.csusb.cse455.trip.adapter.FixedTabsPagerAdapter;
 import com.csusb.cse455.trip.adapter.FragmentTab;
@@ -41,7 +41,6 @@ public class NewTripActivity extends AppCompatActivity
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         View.OnTouchListener,
-        View.OnClickListener,
         OnFragmentInteractionListener<Object> {
 
     // Tag used for logging.
@@ -50,13 +49,15 @@ public class NewTripActivity extends AppCompatActivity
     // Sliding panel components.
     View mSlidingPanel;
     View mDraggablePanel;
+    Button mDraggablePanelGrip;
     ViewPager mViewPager;
     TabLayout mTabLayout;
     ViewGroup.LayoutParams params;
     int mInitHeight;
     float mInitPos;
     float mMinHeight;
-    float mDefaultHeight;
+    float mTabHeight;
+    float mExtendedHeight;
 
     // Google map.
     private GoogleMap mMap;
@@ -118,18 +119,21 @@ public class NewTripActivity extends AppCompatActivity
 
         // Get minimum height for the sliding panel.
         mMinHeight = getResources().getDimension(R.dimen.map_sliding_panel_min_height);
+        // Get the tab height for the sliding panel.
+        mTabHeight = getResources().getDimension(R.dimen.map_sliding_panel_tab_height);
         // Get default height for the sliding pnale.
-        mDefaultHeight = getResources().getDimension(R.dimen.map_sliding_panel_default_height);
+        mExtendedHeight = getResources().getDimension(R.dimen.map_sliding_panel_extended_height);
 
         // Get all the main panels from the sliding panel group.
         mSlidingPanel = findViewById(R.id.sliding_panel);
         mDraggablePanel = findViewById(R.id.draggable_panel);
+        mDraggablePanelGrip =  (Button) findViewById(R.id.draggable_panel_grip);
         mTabLayout = (TabLayout) findViewById(R.id.tab_layout);
         mViewPager = (ViewPager) findViewById(R.id.view_pager);
 
-        // Set the touch and click listners on the draggable panel (grip).
+        // Set the touch listener on the draggable panel and its grip.
         mDraggablePanel.setOnTouchListener(this);
-        mDraggablePanel.setOnClickListener(this);
+        mDraggablePanelGrip.setOnTouchListener(this);
 
         // Create tab fragments.
         ArrayList<FragmentTab> fragmentTabs = new ArrayList<>();
@@ -149,38 +153,14 @@ public class NewTripActivity extends AppCompatActivity
         return true;
     }
 
-    // Handle click events.
-    @Override
-    public void onClick(View v) {
-        // If draggable panel, minimize or set to default, depending on current state.
-        if (v.getId() == R.id.draggable_panel) {
-            if(params == null){
-                params = mSlidingPanel.getLayoutParams();
-            }
-
-            // For testing.
-            Log.d("test", "touched!");
-
-            int h = mSlidingPanel.getHeight();
-            int dh = Math.round(mDefaultHeight);
-            int mh = Math.round(mMinHeight);
-
-            // If currently in any position other than minimized, minimize.
-            if (h > mh) {
-                params.height = mh;
-            // Otherwise, set to default.
-            } else {
-                params.height = dh;
-            }
-        }
-    }
-
-
     // Handle touch events.
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-        // If draggable panel, calculate sliding panel's height based on movement.
-        if (v.getId() == R.id.draggable_panel) {
+        // Get id.
+        int id = v.getId();
+
+        // If draggable panel or its grip, calculate sliding panel's height based on movement.
+        if (id == R.id.draggable_panel || id == R.id.draggable_panel_grip) {
             if(params == null){
                 params = mSlidingPanel.getLayoutParams();
             }

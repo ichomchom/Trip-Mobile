@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -24,9 +25,9 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
-
 import java.util.Stack;
 
+// Main app activity.
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     // Firebase Authentication instance.
@@ -80,8 +81,6 @@ public class MainActivity extends AppCompatActivity
 
         // Initialize title stack.
         mTitleStack = new Stack<>();
-
-
 
         // Create a new Firebase Authentication instance.
         mAuth = FirebaseAuth.getInstance();
@@ -171,15 +170,20 @@ public class MainActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         // Else, if there is an entry on fragment stack, pop it.
-        } else if (getFragmentManager().getBackStackEntryCount() > 0) {
-            getFragmentManager().popBackStack();
+        } else if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+            getSupportFragmentManager().popBackStack();
             setTitle(popTitle());
         // Else, if current fragment is not dashboard, load it.
-        } else if (getFragmentManager().findFragmentByTag("DASHBOARD_FRAGMENT") == null){
+        } else if (getSupportFragmentManager().findFragmentByTag("DASHBOARD_FRAGMENT") == null){
+            /*
+            loadFragment(R.id.main_content_frame, "DASHBOARD_FRAGMENT", new DashboardFragment(), false, "Dashboard");
+            mNavigationView.setCheckedItem(R.id.nav_dashboard);
+            */
             mNavigationView.getMenu().performIdentifierAction(R.id.nav_dashboard, 0);
             mNavigationView.setCheckedItem(R.id.nav_dashboard);
         // Else, go to user's home (suspends application).
         } else {
+            Log.d("test", "else");
             Intent startMain = new Intent(Intent.ACTION_MAIN);
             startMain.addCategory(Intent.CATEGORY_HOME);
             startActivity(startMain);
@@ -282,6 +286,7 @@ public class MainActivity extends AppCompatActivity
         // the specified fragment tag.
         if (useStack) {
             transaction.addToBackStack(tag);
+            pushTitle(getTitle().toString());
         }
 
         // Commit transaction.
@@ -289,15 +294,7 @@ public class MainActivity extends AppCompatActivity
 
         // If new title is specified, use it.
         if (newTitle != null) {
-            setNewTitle(newTitle);
+            setTitle(newTitle);
         }
-    }
-
-    // Sets new title.
-    private void setNewTitle(String title) {
-        // Add existing title to the title stack.
-        pushTitle(getTitle().toString());
-        // Change title.
-        setTitle(title);
     }
 }

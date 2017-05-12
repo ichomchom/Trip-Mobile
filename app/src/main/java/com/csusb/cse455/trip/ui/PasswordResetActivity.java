@@ -1,6 +1,5 @@
 package com.csusb.cse455.trip.ui;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -34,19 +33,14 @@ public class PasswordResetActivity extends AppCompatActivity {
         final TextView emailView = (TextView) findViewById(R.id.recoveryEmail);
         final Button resetButton = (Button) findViewById(R.id.recoveryBtn);
 
-
-
         //Set image of button to go back to login
-        ImageView backBtn = (ImageView) findViewById(R.id.resetBtnVew);
-        backBtn.setColorFilter(0xffffffff);
+        ImageView backBtn = (ImageView) findViewById(R.id.resetBackBtn);
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent logIntent = new Intent(PasswordResetActivity.this,LoginActivity.class);
-                PasswordResetActivity.this.startActivity(logIntent);
+                finish();
             }
         });
-
 
         // Set on click listener for the reset button.
         resetButton.setOnClickListener(new View.OnClickListener() {

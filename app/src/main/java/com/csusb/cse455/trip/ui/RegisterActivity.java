@@ -1,6 +1,5 @@
 package com.csusb.cse455.trip.ui;
 
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -44,14 +43,12 @@ public class RegisterActivity extends AppCompatActivity {
         final EditText rePasswordView = (EditText) findViewById(R.id.regRePassword);
         final Button regButton = (Button) findViewById(R.id.regBtn);
 
-        //Set image of button to go back to login
-        ImageView backBtn = (ImageView) findViewById(R.id.registerBtnVew);
-        backBtn.setColorFilter(0xffffffff);
+        // Set image of button to go back to login.
+        ImageView backBtn = (ImageView) findViewById(R.id.regBackBtn);
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent logIntent = new Intent(RegisterActivity.this,LoginActivity.class);
-                RegisterActivity.this.startActivity(logIntent);
+                finish();
             }
         });
 
