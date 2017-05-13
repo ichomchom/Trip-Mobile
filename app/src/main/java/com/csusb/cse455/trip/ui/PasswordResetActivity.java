@@ -1,10 +1,12 @@
 package com.csusb.cse455.trip.ui;
 
+import android.app.ProgressDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.csusb.cse455.trip.R;
@@ -17,6 +19,9 @@ import com.google.firebase.auth.FirebaseAuth;
 public class PasswordResetActivity extends AppCompatActivity {
     // Firebase Authentication instance.
     private FirebaseAuth mAuth;
+
+    //Progress Dialog instance
+    private ProgressDialog progressDialog;
 
     // Handles initialization during view creation.
     @Override
@@ -34,6 +39,9 @@ public class PasswordResetActivity extends AppCompatActivity {
         final Button resetButton = (Button) findViewById(R.id.recoveryBtn);
         final Button backArrowButton = (Button) findViewById(R.id.regBackBtn);
 
+        //Set Progress Dialog
+        progressDialog = new ProgressDialog(this);
+
         // Set on click listener for the back button
         backArrowButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,11 +57,27 @@ public class PasswordResetActivity extends AppCompatActivity {
                 // If format is valid, attempt to reset.
                 if (Format.checkEmailFormat(emailView)) {
                     tryReset(emailView.getText().toString());
+
+                    //Set Progress Dialog Visible
+                    if (progressDialog.getProgress() != 1) {
+                        progressDialog.setIndeterminate(true);
+                        progressDialog.setMessage("Please Wait...");
+                        progressDialog.show();
+                    }
+
                     // Finish this Activity.
                     finish();
                 }
             }
         });
+    }
+
+    //Set Progress Dialog invisible on when go back to Activity
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        progressDialog.dismiss();
     }
 
     // Attempts to reset the password for the provided email address.  We do not check if

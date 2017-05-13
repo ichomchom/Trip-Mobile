@@ -1,5 +1,6 @@
 package com.csusb.cse455.trip.ui;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.csusb.cse455.trip.R;
@@ -25,6 +27,11 @@ import com.google.firebase.auth.FirebaseUser;
 public class LoginActivity extends AppCompatActivity  {
     // Firebase Authentication instance.
     private FirebaseAuth mAuth;
+
+    //Progress Dialog instance.
+    private ProgressDialog progressDialog ;
+
+
 
     // Handles initialization during view creation.
     @Override
@@ -46,6 +53,12 @@ public class LoginActivity extends AppCompatActivity  {
         final TextView registerLink = (TextView) findViewById(R.id.logRegister);
         final TextView passResetLink = (TextView) findViewById(R.id.logResetPass);
 
+        //Progress Bar.
+      // final ProgressBar loginProgress = (ProgressBar) findViewById(R.id.login_progress);
+        progressDialog = new ProgressDialog(this);
+
+
+
         // Set on click listener for the login button.
         loginButton.setOnClickListener(new OnClickListener() {
             @Override
@@ -54,6 +67,16 @@ public class LoginActivity extends AppCompatActivity  {
                 if (Format.checkEmailFormat(emailView) && Format.checkPasswordFormat(passwordView)) {
                     // Attempt to login.
                     tryLogin(emailView.getText().toString(), passwordView.getText().toString());
+
+                    //Show Progress Dialog
+                   if(progressDialog.getProgress() != 1){
+                        progressDialog.setIndeterminate(true);
+                        progressDialog.setMessage("Authenticating...");
+                        progressDialog.show();
+
+
+                    }
+
                 }
             }
         });
@@ -92,6 +115,15 @@ public class LoginActivity extends AppCompatActivity  {
             transitionToMain();
         }
     }
+
+    //Set Progress Dialog invisible on when go back to Activity
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        progressDialog.dismiss();
+    }
+
 
     // Overrides the default action on back button being pressed by redirecting to device's home.
     @Override

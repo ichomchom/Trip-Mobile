@@ -1,5 +1,6 @@
 package com.csusb.cse455.trip.ui;
 
+import android.app.ProgressDialog;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -24,6 +25,9 @@ public class RegisterActivity extends AppCompatActivity {
     // Firebase Authentication instance.
     private FirebaseAuth mAuth;
 
+    //Progress Dialog instance.
+    private ProgressDialog progressDialog;
+
     // Handles initialization during view creation.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +47,9 @@ public class RegisterActivity extends AppCompatActivity {
         final EditText rePasswordView = (EditText) findViewById(R.id.regRePassword);
         final Button regButton = (Button) findViewById(R.id.regBtn);
         final Button backArrowButton = (Button) findViewById(R.id.regBackBtn);
+
+        //Set Progress Dialog
+        progressDialog = new ProgressDialog(this);
 
         // Set on click listener for the back button
         backArrowButton.setOnClickListener(new View.OnClickListener() {
@@ -66,9 +73,25 @@ public class RegisterActivity extends AppCompatActivity {
                             passwordView.getText().toString(),
                             firstNameView.getText().toString(),
                             lastNameView.getText().toString());
+                    //Set Progress Dialog Visible
+                    if (progressDialog.getProgress() != 1) {
+                        progressDialog.setIndeterminate(true);
+                        progressDialog.setMessage("Creating Account...");
+                        progressDialog.show();
+
+
+                    }
                 }
             }
         });
+    }
+
+    //Set Progress Dialog invisible on when go back to Activity
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        progressDialog.dismiss();
     }
 
     // Attempts to register a user.  If successful, sends out email verification.  If not,
