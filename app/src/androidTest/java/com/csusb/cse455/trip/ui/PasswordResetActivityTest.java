@@ -9,6 +9,14 @@ import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 
+// Added for Toast Message Testing
+import static android.support.test.espresso.matcher.RootMatchers.withDecorView;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
+
+
 import android.content.Intent;
 import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.filters.LargeTest;
@@ -26,7 +34,7 @@ import static org.junit.Assert.*;
 @RunWith(AndroidJUnit4.class)
 
 @LargeTest
-public class LoginActivityTest {
+public class PasswordResetActivityTest {
 
     private void launchActivityWithIntent()
     {
@@ -35,47 +43,30 @@ public class LoginActivityTest {
     }
 
     @Rule
-    public ActivityTestRule<LoginActivity> mActivityRule = new IntentsTestRule<>(LoginActivity.class, true, false);
+    public ActivityTestRule<PasswordResetActivity> mActivityRule = new IntentsTestRule<>(PasswordResetActivity.class, true, false);
 
 
     @Test
-    public void LoginAttempt() throws Exception {
+    public void PasswordResetScreenToLoginScreenTransistion() throws Exception {
 
         launchActivityWithIntent();
 
-        onView(withId(R.id.logEmail)).perform(typeText("name@email.com"));
-
-        onView(withId(R.id.logPassword)).perform(typeText("Password"));
-
-        // Close the Soft Keyboard that shows up. It blocks Espresso from
-        // using the button.
-
-        closeSoftKeyboard();
-
-        onView(withId(R.id.logBtn)).perform(click());
-
-        // Create ToastTextMatcher Class to detect Toast Output
+        onView(withId(R.id.regBackBtn)).perform(click());
 
     }
+
 
     @Test
-    public void DoubleAtSymbolLoginFailure() throws Exception {
+    public void PasswordResetAttempt() throws Exception {
 
         launchActivityWithIntent();
 
-        onView(withId(R.id.logEmail)).perform(typeText("name@@email.com"));
-
-        onView(withId(R.id.logPassword)).perform(typeText("Password"));
+        onView(withId(R.id.recoveryEmail)).perform(typeText("name@email.com"));
 
         closeSoftKeyboard();
 
-        onView(withId(R.id.logBtn)).perform(click());
-
-        onView(withId(R.id.logEmail)).check(matches(hasErrorText("Invalid email address format.")));
+        onView(withId(R.id.recoveryBtn)).perform(click());
 
     }
-
-    // Include Test Cases for Spaces, Special Characters,
-    // Multiple "@' and "." Delimiters, Combinations, etc.
 
 }
