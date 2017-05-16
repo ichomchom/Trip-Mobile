@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.csusb.cse455.trip.ui.NewTripLocationsFragment">
+    tools:context="com.csusb.cse455.trip.ui.NewTripRouteFragment">
 
     <android.support.v7.widget.LinearLayoutCompat
         android:layout_width="match_parent"
@@ -11,16 +11,14 @@
         android:focusable="true"
         android:focusableInTouchMode="true">
 
-        <TextView
-            android:id="@+id/test_text"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/items_list"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Locations contents." />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Enter Text"/>
+            android:layout_height="match_parent"
+            android:paddingTop="8dp"
+            android:clipToPadding="false"
+            android:layout_weight="1"
+            android:background="#F1F1F1" />
 
     </android.support.v7.widget.LinearLayoutCompat>
 

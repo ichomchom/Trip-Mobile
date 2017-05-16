@@ -1,8 +1,6 @@
 package com.csusb.cse455.trip.model;
 
 import android.media.Image;
-import java.util.ArrayList;
-import java.util.List;
 
 // User's trip data item.
 public class Trip {
@@ -16,14 +14,17 @@ public class Trip {
     private String mOwnerId;
     // Snapshot image, which is a visual overview of the trip.
     private Image mSnapshot;
-    // Locations on the trip route (markers/waypoints).
-    private List<Location> mLocations;
+    // Trip route.
+    private Route mRoute;
 
     // Default constructor.
     public Trip() {
         // To avoid having a null locations list.
-        mLocations = new ArrayList<>();
+        mRoute = new Route();
     }
+
+    // Overloaded constructor.
+    public Trip(Route route) { mRoute = route; }
 
     // Returns trip ID.
     public String getId() {
@@ -67,48 +68,9 @@ public class Trip {
     // Sets trip snapshot.
     public void setSnapshot(Image snapshot) { mSnapshot = snapshot; }
 
-    // Returns a list of locations/markers/waypoints for the trip route.
-    public List<Location> getLocations() { return mLocations; }
+    // Returns trip route.
+    public Route getLocations() { return mRoute; }
 
-    // Sets a list of locations/markers/waypoints for the trip route.
-    public void setLocations(List<Location> locations) { mLocations = locations; }
-
-    // Gets a location from the route by its label.
-    public Location getLocation(String label) {
-        // Try to find a match.
-        for (int i = 0; i < mLocations.size(); i++) {
-            Location loc = (Location) mLocations.get(i);
-            if (loc.getLabel().equals(label)) {
-                return loc;
-            }
-        }
-        // No matches were found.
-        return null;
-    }
-
-    // Gets a location from the route by its id.
-    public Location getLocationById(String id) {
-        // Try to find a match.
-        for (int i = 0; i < mLocations.size(); i++) {
-            Location loc = (Location) mLocations.get(i);
-            if (loc.getId().equals(id)) {
-                return loc;
-            }
-        }
-        // No matches were found.
-        return null;
-    }
-
-    // Gets a location from the route by its position.
-    public Location getLocationByPosition(int position) {
-        // Try to find a match.
-        for (int i = 0; i < mLocations.size(); i++) {
-            Location loc = (Location) mLocations.get(i);
-            if (loc.getPosition() == position) {
-                return loc;
-            }
-        }
-        // No matches were found.
-        return null;
-    }
+    // Sets trip route.
+    public void setLocations(Route route) { mRoute = route; }
 }

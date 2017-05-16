@@ -137,7 +137,7 @@ public class NewTripActivity extends AppCompatActivity
 
         // Create tab fragments.
         ArrayList<FragmentTab> fragmentTabs = new ArrayList<>();
-        fragmentTabs.add(new FragmentTab(NewTripLocationsFragment.class, "Route"));
+        fragmentTabs.add(new FragmentTab(NewTripRouteFragment.class, "Route"));
         fragmentTabs.add(new FragmentTab(NewTripSubscribersFragment.class, "Subscribers"));
 
         // Hook up tab fragments with the adapter and set the adapter in view pager.
@@ -216,7 +216,7 @@ public class NewTripActivity extends AppCompatActivity
     // Handles suspension of the connection to the Google Play services client.
     @Override
     public void onConnectionSuspended(int cause) {
-        Log.d(TAG, "Play services connection suspended");
+        Log.d(TAG, "Play services connection suspended.");
     }
 
 

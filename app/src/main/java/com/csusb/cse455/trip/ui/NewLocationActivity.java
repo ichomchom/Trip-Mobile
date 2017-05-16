@@ -11,8 +11,10 @@ public class NewLocationActivity extends AppCompatActivity {
     // Tag used for logging.
     private static final String TAG = NewSubscriptionActivity.class.getSimpleName();
 
+    // Handles the necessary intitialiation during creation.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Super propagation call.
         super.onCreate(savedInstanceState);
 
         // Retrieve the content view that renders the map.
