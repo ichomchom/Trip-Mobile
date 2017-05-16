@@ -1,6 +1,7 @@
 package com.csusb.cse455.trip.data;
 
 import com.csusb.cse455.trip.model.Location;
+import com.csusb.cse455.trip.model.Subscription;
 import com.csusb.cse455.trip.model.Trip;
 
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ import java.util.Random;
 public class MockDataSource {
     // Keeps static counts of number of items -- good for getting fresh items during testing.
     private static int mMyTripCount = 0;
+    private static int mSubscriptionCount = 0;
     private static int mLocationCount = 0;
 
     // Constants.
@@ -22,7 +24,6 @@ public class MockDataSource {
     private static final double minLng = -119.11;
     // Maximum longitude.
     private static final double maxLng = -115.21;
-
 
     // Returns a specified number of Trip data items as a list.
     public static List<Trip> getMyTripsList(int count) {
@@ -49,11 +50,44 @@ public class MockDataSource {
 
         // Generate new trip.
         Trip item = new Trip();
-        item.setId(String.format("Trip ID #%d ID.", mMyTripCount));
-        item.setLabel(String.format("Trip ID #%d label.", mMyTripCount));
-        item.setDescription(String.format("Trip ID #%d description.", mMyTripCount));
+        item.setId(String.format("Trip #%d ID.", mMyTripCount));
+        item.setLabel(String.format("Trip #%d label.", mMyTripCount));
+        item.setDescription(String.format("Trip #%d description.", mMyTripCount));
 
         // Return new Trip.
+        return item;
+    }
+
+    // Returns a specified number of Subscription data items as a list.
+    public static List<Subscription> getSubscriptionsList(int count) {
+        // Create a new list.
+        List<Subscription> data = new ArrayList<>();
+
+        // Populate list with random data.
+        for (int i = 0; i < count; i++) {
+            mSubscriptionCount++;
+            Subscription item = new Subscription();
+            item.setId(String.format("Subscription #%d ID.", mSubscriptionCount));
+            item.setLabel(String.format("Subscription #%d label.", mSubscriptionCount));
+            item.setDescription(String.format("Subscription #%d description.", mSubscriptionCount));
+            data.add(item);
+        }
+
+        // Return the list.
+        return data;
+    }
+
+    // Returns a single randomly generated Subscription data item.
+    public static Subscription getSubscription() {
+        mSubscriptionCount++;
+
+        // Generate new subscription.
+        Subscription item = new Subscription();
+        item.setId(String.format("Subscription #%d ID.", mSubscriptionCount));
+        item.setLabel(String.format("Subscription #%d label.", mSubscriptionCount));
+        item.setDescription(String.format("Subscription #%d description.", mSubscriptionCount));
+
+        // Return new subscription.
         return item;
     }
 
@@ -69,6 +103,7 @@ public class MockDataSource {
         for (int i = 0; i < count; i++) {
             mLocationCount++;
             Location item = new Location();
+            item.setId(String.format("Location #%d ID.", mLocationCount));
             item.setLabel(String.format("Location #%d Label.", mLocationCount));
             item.setDescription(String.format("Location #%d description.", mLocationCount));
             item.setLatitude(minLat + (maxLat - minLat) * r.nextDouble());
@@ -90,6 +125,7 @@ public class MockDataSource {
 
         // Generate new location.
         Location item = new Location();
+        item.setId(String.format("Location #%d ID.", mLocationCount));
         item.setLabel(String.format("Location #%d Label.", mLocationCount));
         item.setDescription(String.format("Location #%d description.", mLocationCount));
         item.setLatitude(minLat + (maxLat - minLat) * r.nextDouble());

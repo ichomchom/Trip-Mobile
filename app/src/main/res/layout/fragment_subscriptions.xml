@@ -1,17 +1,32 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.csusb.cse455.trip.ui.SubscriptionsFragment">
 
 
-    <TextView
-        android:id="@+id/textView"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/items_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="8dp"
+        android:clipToPadding="false"
+        android:layout_weight="1"
+        android:background="#F1F1F1" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/btn_add_item"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="226dp"
-        android:text="Subscriptions"
-        android:textSize="30sp" />
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:background="@color/colorAccent"
+        app:srcCompat="@drawable/ic_add_white_24px"
+        android:textColor="@android:color/white"
+        app:useCompatPadding="true" />
+
 </RelativeLayout>

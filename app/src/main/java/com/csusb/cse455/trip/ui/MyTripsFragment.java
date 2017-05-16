@@ -18,6 +18,7 @@ import com.csusb.cse455.trip.data.MockDataSource;
 import com.csusb.cse455.trip.model.Trip;
 import java.util.ArrayList;
 
+// My Trips fragment, which handles the display of My Trip cards.
 public class MyTripsFragment extends Fragment implements OnMyTripCardClickCallback {
     // Fragment initialization parameters.
     private static final String EXTRA_ID = "EXTRA_ID";

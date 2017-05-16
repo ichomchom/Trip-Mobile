@@ -8,47 +8,45 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.csusb.cse455.trip.R;
-import com.csusb.cse455.trip.model.Trip;
+import com.csusb.cse455.trip.model.Subscription;
+
 import java.util.List;
 
-// MyTrips data adapter.
-public class MyTripsDataAdapter extends RecyclerView.Adapter<MyTripsDataAdapter.DataViewHolder> {
+// Subscriptions data adapter.
+public class SubscriptionsDataAdapter extends RecyclerView.Adapter<SubscriptionsDataAdapter.DataViewHolder> {
     // Data.
-    private List<Trip> mListData;
+    private List<Subscription> mListData;
 
     // Layout inflater for recycler view.
     private LayoutInflater mInflater;
 
     // Main activity communication interface.
-    private OnMyTripCardClickCallback mCardClickCallback;
+    private OnSubscriptionCardClickCallback mCardClickCallback;
 
     // Constructor.
-    public MyTripsDataAdapter(List<Trip> listData, Context context) {
+    public SubscriptionsDataAdapter(List<Subscription> listData, Context context) {
         mInflater = LayoutInflater.from(context);
         mListData = listData;
     }
 
     // Sets item click callback.
-    public void setCardClickCallback(final OnMyTripCardClickCallback callback) {
+    public void setCardClickCallback(final OnSubscriptionCardClickCallback callback) {
         mCardClickCallback = callback;
     }
 
     // Inflates view.
     @Override
     public DataViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.card_my_trip, parent, false);
+        View view = mInflater.inflate(R.layout.card_subscription, parent, false);
         return new DataViewHolder(view);
     }
 
     // Binds data.
     @Override
     public void onBindViewHolder(DataViewHolder holder, int position) {
-        Trip item = mListData.get(position);
+        Subscription item = mListData.get(position);
         holder.mLabel.setText(item.getLabel());
         holder.mDescription.setText(item.getDescription());
-        //String imgSource = item.getImageSource();
-        //ImageLoader imgLoader = new ImageLoader(getApplicationContext());
-        //imgLoader.DisplayImage(imgSource, R.drawable.trip_snapshot_placeholder, holder.mSnapshot);
     }
 
     // Returns the number of itmes.
@@ -77,11 +75,9 @@ public class MyTripsDataAdapter extends RecyclerView.Adapter<MyTripsDataAdapter.
             mDescription = (TextView) v.findViewById(R.id.card_description);
             mSnapshot = (ImageView) v.findViewById(R.id.card_snapshot);
             mViewAction = (TextView) v.findViewById(R.id.card_action_view);
-            mShareAction = (TextView) v.findViewById(R.id.card_action_share);
 
             // Set click listeners.
             mViewAction.setOnClickListener(this);
-            mShareAction.setOnClickListener(this);
         }
 
         // On click event handler.
@@ -99,8 +95,6 @@ public class MyTripsDataAdapter extends RecyclerView.Adapter<MyTripsDataAdapter.
             // Take action based on ID.
             if (id == R.id.card_action_view) {
                 mCardClickCallback.onViewActionClick(getAdapterPosition());
-            } else if (id == R.id.card_action_share) {
-                mCardClickCallback.onShareActionClick(getAdapterPosition());
             }
         }
     }

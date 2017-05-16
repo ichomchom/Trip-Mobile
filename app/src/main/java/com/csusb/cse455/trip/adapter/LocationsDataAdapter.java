@@ -8,47 +8,45 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.csusb.cse455.trip.R;
-import com.csusb.cse455.trip.model.Trip;
+import com.csusb.cse455.trip.model.Location;
+
 import java.util.List;
 
-// MyTrips data adapter.
-public class MyTripsDataAdapter extends RecyclerView.Adapter<MyTripsDataAdapter.DataViewHolder> {
+// Location data adapter.
+public class LocationsDataAdapter extends RecyclerView.Adapter<LocationsDataAdapter.DataViewHolder> {
     // Data.
-    private List<Trip> mListData;
+    private List<Location> mListData;
 
     // Layout inflater for recycler view.
     private LayoutInflater mInflater;
 
     // Main activity communication interface.
-    private OnMyTripCardClickCallback mCardClickCallback;
+    private OnLocationCardClickCallback mCardClickCallback;
 
     // Constructor.
-    public MyTripsDataAdapter(List<Trip> listData, Context context) {
+    public LocationsDataAdapter(List<Location> listData, Context context) {
         mInflater = LayoutInflater.from(context);
         mListData = listData;
     }
 
     // Sets item click callback.
-    public void setCardClickCallback(final OnMyTripCardClickCallback callback) {
+    public void setCardClickCallback(final OnLocationCardClickCallback callback) {
         mCardClickCallback = callback;
     }
 
     // Inflates view.
     @Override
     public DataViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.card_my_trip, parent, false);
+        View view = mInflater.inflate(R.layout.card_location, parent, false);
         return new DataViewHolder(view);
     }
 
     // Binds data.
     @Override
     public void onBindViewHolder(DataViewHolder holder, int position) {
-        Trip item = mListData.get(position);
+        Location item = mListData.get(position);
         holder.mLabel.setText(item.getLabel());
         holder.mDescription.setText(item.getDescription());
-        //String imgSource = item.getImageSource();
-        //ImageLoader imgLoader = new ImageLoader(getApplicationContext());
-        //imgLoader.DisplayImage(imgSource, R.drawable.trip_snapshot_placeholder, holder.mSnapshot);
     }
 
     // Returns the number of itmes.
@@ -58,7 +56,7 @@ public class MyTripsDataAdapter extends RecyclerView.Adapter<MyTripsDataAdapter.
     }
 
 
-    // Data view holder for MyTrips data adapter.
+    // Data view holder for Location data adapter.
     class DataViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         // UI components.
         private TextView mLabel;

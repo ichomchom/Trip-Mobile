@@ -1,7 +1,6 @@
 package com.csusb.cse455.trip.model;
 
 import android.media.Image;
-
 import java.util.ArrayList;
 import java.util.List;
 
