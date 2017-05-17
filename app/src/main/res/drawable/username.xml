@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="333dp"
+    android:height="27dp"
+    android:viewportWidth="333"
+    android:viewportHeight="27">
+
+    <group
+            android:name="Trip"
+            android:translateX="-27.000000"
+            android:translateY="-300.000000">
+        <group
+                android:name="username"
+                android:translateX="27.000000"
+                android:translateY="300.000000">
+            <path
+                android:name="line"
+                android:fillAlpha="0.2"
+                android:strokeColor="#FFFFFF"
+                android:strokeAlpha="0.2"
+                android:strokeWidth="2"
+                android:strokeLineCap="square"
+                android:pathData="M-0.5,23.6h334" />
+            <group
+                    android:translateX="17.000000">
+                <group
+                        android:name="group"
+                        android:translateX="2.398881"
+                        android:translateY="0.859574">
+                    <path
+                        android:name="path-1_1_"
+                        android:fillAlpha="0.6"
+                        android:strokeColor="#FFFFFF"
+                        android:strokeAlpha="0.6"
+                        android:strokeWidth="4"
+                        android:pathData="M8.1,10.3c-3.2,0-9.6,1.4-9.6,4.4v2.2h19.2v-2.2C17.7,11.7,11.3,10.3,8.1,10.3L8.1,10.3z
+M8.1,8.6c2.4,0,4.3-1.7,4.3-3.8s-1.9-3.8-4.3-3.8S3.8,2.6,3.8,4.7S5.7,8.6,8.1,8.6L8.1,8.6z" />
+                </group>
+                <path
+                    android:name="bounds"
+                    android:fillAlpha="0.6"
+                    android:strokeAlpha="0.6"
+                    android:strokeWidth="1"
+                    android:pathData="M -1.5 7.2 H 22.5 V 28.4 H -1.5 V 7.2 Z" />
+            </group>
+        </group>
+    </group>
+</vector>

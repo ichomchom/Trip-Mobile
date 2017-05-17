@@ -42,7 +42,7 @@
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColorHint="@android:color/white" >
+            android:textColorHint="@android:color/white">
 
             <AutoCompleteTextView
                 android:id="@+id/logEmail"
@@ -54,6 +54,8 @@
                 android:theme="@style/EditTextTheme"
                 android:maxLines="1"
                 android:imeOptions="actionNext"
+                android:drawableLeft="@drawable/emailicon"
+                android:drawablePadding="20dp"
 
                 android:singleLine="true" />
 
@@ -76,6 +78,8 @@
                 android:textColor="@android:color/white"
                 android:theme="@style/EditTextTheme"
                 android:maxLines="1"
+                android:drawableLeft="@drawable/passwordicon"
+                android:drawablePadding="20dp"
                 android:singleLine="true" />
 
         </android.support.design.widget.TextInputLayout>
@@ -92,9 +96,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:textColor="@android:color/white"
             android:text="Register Here"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:textColor="@android:color/white" />
 
         <TextView
             android:id="@+id/logResetPass"
