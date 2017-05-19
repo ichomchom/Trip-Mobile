@@ -33,7 +33,7 @@
         android:id="@+id/login_logo"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:layout_marginTop="27dp"
+        android:layout_marginTop="34dp"
         android:contentDescription="Trip Logo"
         app:srcCompat="@drawable/logo"
         android:layout_alignParentTop="true"
@@ -65,7 +65,7 @@
                 android:theme="@style/EditTextTheme"
                 android:maxLines="1"
                 android:imeOptions="actionNext"
-                android:drawableLeft="@drawable/emailicon"
+                android:drawableLeft="@drawable/username_icon"
                 android:drawablePadding="20dp"
                 android:paddingLeft="@dimen/activity_horizontal_margin"
 
@@ -92,10 +92,13 @@
                 android:textColor="@android:color/white"
                 android:theme="@style/EditTextTheme"
                 android:maxLines="1"
-                android:drawableLeft="@drawable/passwordicon"
+                android:drawableLeft="@drawable/password_icon"
                 android:drawablePadding="20dp"
                 android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:drawableRight="@drawable/forgotpassword_icon"
                 android:singleLine="true" />
+
+
 
         </android.support.design.widget.TextInputLayout>
 
