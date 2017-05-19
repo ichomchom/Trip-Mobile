@@ -8,4 +8,6 @@
     <dimen name="map_sliding_panel_tab_height">76dp</dimen>
     <dimen name="map_sliding_panel_extended_height">200dp</dimen>
     <dimen name="map_sliding_panel_shadow_height">4dp</dimen>
+    <dimen name="textButton">16sp</dimen>
+    <dimen name="textEditText">16sp</dimen>
 </resources>

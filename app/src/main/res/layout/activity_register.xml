@@ -12,6 +12,16 @@
     android:background="@drawable/bg"
     tools:context="com.csusb.cse455.trip.ui.LoginActivity">
 
+    <!-- Transparent layer -->
+    <RelativeLayout
+        android:id="@+id/transparentOverlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:background="@color/purple_transparent"/>
+
     <!-- Login progress -->
     <ProgressBar
         android:id="@+id/login_progress"
