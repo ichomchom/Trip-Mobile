@@ -1,5 +1,7 @@
 package com.csusb.cse455.trip.ui;
 
+import android.app.ProgressDialog;
+import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.content.Intent;
@@ -38,6 +40,11 @@ public class MainActivity extends AppCompatActivity
 
     // Navigation view from the drawer menu.
     private NavigationView mNavigationView;
+
+
+    //Instance MyAsyncTask
+    MyAsyncTask myAsyncTask;
+
 
     // Push a title onto the stack.
     public void pushTitle(String title) {
@@ -160,6 +167,65 @@ public class MainActivity extends AppCompatActivity
         finish();
     }
 
+//Set up MyAsyncTask for Progress Dialog
+
+    class MyAsyncTask extends AsyncTask<Void, Integer, Void>{
+
+        boolean running;
+        ProgressDialog progressDialog;
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            int i = 10;
+            while(running){
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                if(i-- == 0){
+                    running = false;
+                }
+
+                publishProgress(i);
+
+            }
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            super.onProgressUpdate(values);
+
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            running = true;
+
+            progressDialog = ProgressDialog.show(MainActivity.this,"","Please wait...",true,false);
+
+            progressDialog.setCanceledOnTouchOutside(true);
+
+
+
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+
+
+            progressDialog.dismiss();
+        }
+
+    }
+
+
+
+
     // onBackPressed event handler.
     @Override
     public void onBackPressed() {
@@ -216,6 +282,9 @@ public class MainActivity extends AppCompatActivity
     // Handles navigation actions from the drawer menu.
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        myAsyncTask = new MyAsyncTask();
+
+
         // Get item id.
         int id = item.getItemId();
 
@@ -233,34 +302,42 @@ public class MainActivity extends AppCompatActivity
             title = "Dashboard";
             fragment = new DashboardFragment();
             tag = "DASHBOARD_FRAGMENT";
+            myAsyncTask.execute();
         } else if (id == R.id.nav_notifications) {
             title = "Notifications";
             fragment = new NotificationsFragment();
             tag = "NOTIFICATIONS_FRAGMENT";
+            myAsyncTask.execute();
         } else if (id == R.id.nav_contacts) {
             title = "Contacts";
             fragment = new ContactsFragment();
             tag = "CONTACTS_FRAGMENT";
+            myAsyncTask.execute();
         } else if (id == R.id.nav_locations) {
             title = "Locations";
             fragment = new LocationsFragment();
             tag = "LOCATIONS_FRAGMENT";
+            myAsyncTask.execute();
         } else if (id == R.id.nav_mytrips) {
             title = "My Trips";
             fragment = new MyTripsFragment();
             tag = "MY_TRIPS_FRAGMENT";
+            myAsyncTask.execute();
         } else if (id == R.id.nav_subscriptions) {
             title = "Subscriptions";
             fragment = new SubscriptionsFragment();
             tag = "SUBSCRIPTIONS_FRAGMENT";
+            myAsyncTask.execute();
         } else if (id == R.id.nav_settings) {
             title = "Settings";
             tag = "SETTINGS_FRAGMENT";
+            myAsyncTask.execute();
             //TODO: fragment = new SettingsFragment(); <-- Should this be Activity or Fragment?
         } else if (id == R.id.nav_contactus) {
             title = "Contact Us";
             fragment = new ContactUsFragment();
             tag = "CONTACT_US_FRAGMENT";
+            myAsyncTask.execute();
         }
 
         // If fragment is not null, replace content frame with it.

@@ -1,5 +1,6 @@
 package com.csusb.cse455.trip.ui;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -31,6 +32,8 @@ public class LocationsFragment extends Fragment implements OnLocationCardClickCa
     private LocationsDataAdapter mAdapter;
     // Data list.
     private ArrayList<Location> mListData;
+    //Progress Dialog instance.
+    private ProgressDialog newLocationDialog = null ;
 
     // Required empty public constructor.
     public LocationsFragment() { }
@@ -66,6 +69,10 @@ public class LocationsFragment extends Fragment implements OnLocationCardClickCa
         mRecView.setAdapter(mAdapter);
         mAdapter.setCardClickCallback(this);
 
+        //Instance newTripDialog
+        newLocationDialog = new ProgressDialog(getActivity());
+
+
         // Set up item touch helper.
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(createHelperCallback());
         itemTouchHelper.attachToRecyclerView(mRecView);
@@ -75,6 +82,10 @@ public class LocationsFragment extends Fragment implements OnLocationCardClickCa
         addItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                newLocationDialog.setIndeterminate(true);
+                newLocationDialog.setTitle("Adding New Location");
+                newLocationDialog.setMessage("Please wait...");
+                newLocationDialog.show();
                 addNewLocation();
             }
         });
@@ -98,6 +109,15 @@ public class LocationsFragment extends Fragment implements OnLocationCardClickCa
                 // Do nothing.
             }
         };
+    }
+
+    //Dismiss Progress Dialog when return to activity
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(newLocationDialog!= null) {
+            newLocationDialog.dismiss();
+        }
     }
 
     // Opens a new location creation view.

@@ -1,5 +1,6 @@
 package com.csusb.cse455.trip.ui;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -32,6 +33,9 @@ public class SubscriptionsFragment extends Fragment implements OnSubscriptionCar
     private SubscriptionsDataAdapter mAdapter;
     // Data list.
     private ArrayList<Subscription> mListData;
+
+    //Progress Dialog
+    private ProgressDialog newSubscriptionDialog;
 
     // Required empty public constructor.
     public SubscriptionsFragment() { }
@@ -67,6 +71,9 @@ public class SubscriptionsFragment extends Fragment implements OnSubscriptionCar
         mRecView.setAdapter(mAdapter);
         mAdapter.setCardClickCallback(this);
 
+        //Instance Progress Dialog
+        newSubscriptionDialog = new ProgressDialog(getActivity());
+
         // Set up item touch helper.
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(createHelperCallback());
         itemTouchHelper.attachToRecyclerView(mRecView);
@@ -76,6 +83,10 @@ public class SubscriptionsFragment extends Fragment implements OnSubscriptionCar
         addItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                newSubscriptionDialog.setIndeterminate(true);
+                newSubscriptionDialog.setMessage("Please wait...");
+                newSubscriptionDialog.setTitle("Adding New Subscription");
+                newSubscriptionDialog.show();
                 addSubscription();
             }
         });
@@ -114,6 +125,15 @@ public class SubscriptionsFragment extends Fragment implements OnSubscriptionCar
             mListData.remove(oldPos);
             mListData.add(newPos, item);
             mAdapter.notifyItemMoved(oldPos, newPos);
+        }
+    }
+
+    //Dismiss Progress Dialog when return to Fragment
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(newSubscriptionDialog!=null){
+            newSubscriptionDialog.dismiss();
         }
     }
 

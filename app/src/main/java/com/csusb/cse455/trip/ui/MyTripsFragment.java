@@ -35,7 +35,7 @@ public class MyTripsFragment extends Fragment implements OnMyTripCardClickCallba
     private ArrayList<Trip> mListData;
     //Progress Dialog instance.
     private ProgressDialog newTripDialog = null ;
-    private ProgressDialog myTripDialog = null;
+
 
     // Required empty public constructor.
     public MyTripsFragment() { }
@@ -59,13 +59,8 @@ public class MyTripsFragment extends Fragment implements OnMyTripCardClickCallba
         // TODO: Change to real data.
         mListData = (ArrayList<Trip>) MockDataSource.getMyTripsList(30);
 
-        //Show Progress Dialog
-        // this.progressDialog = ProgressDialog.show(getActivity(),"My Trips","Loading...Please wait...",true,false);
+        //Instance newTripDialog
         newTripDialog = new ProgressDialog(getActivity());
-//        myTripDialog = new ProgressDialog(getActivity());
-//        myTripDialog.setIndeterminate(true);
-//        myTripDialog.setMessage("Please wait...");
-//        myTripDialog.show();
 
 
 
@@ -98,6 +93,7 @@ public class MyTripsFragment extends Fragment implements OnMyTripCardClickCallba
 
                 //Show New Trip Progress Dialog
                 newTripDialog.setIndeterminate(true);
+                newTripDialog.setTitle("Adding New Trip");
                 newTripDialog.setMessage("Please wait...");
                 newTripDialog.show();
                 addNewTrip();
@@ -141,25 +137,16 @@ public class MyTripsFragment extends Fragment implements OnMyTripCardClickCallba
         }
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-      //  myTripDialog = new ProgressDialog(getActivity());
 
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-
-    }
 
     //Set New Trip Progress Dialog disappear when go back to Activity
     @Override
     public void onResume() {
         super.onResume();
-        newTripDialog.dismiss();
-       // myTripDialog.dismiss();
+        if(newTripDialog!= null) {
+            newTripDialog.dismiss();
+        }
+
     }
 
 
