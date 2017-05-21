@@ -29,7 +29,7 @@ public class LoginActivity extends AppCompatActivity  {
     private FirebaseAuth mAuth;
 
     //Progress Dialog instance.
-    private ProgressDialog progressDialog ;
+    private ProgressDialog progressDialog = null ;
 
 
 
@@ -117,13 +117,19 @@ public class LoginActivity extends AppCompatActivity  {
     }
 
     //Set Progress Dialog invisible on when go back to Activity
-    @Override
+  /*  @Override
     protected void onPause() {
         super.onPause();
 
         progressDialog.dismiss();
     }
+*/
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        progressDialog.dismiss();
+    }
 
     // Overrides the default action on back button being pressed by redirecting to device's home.
     @Override

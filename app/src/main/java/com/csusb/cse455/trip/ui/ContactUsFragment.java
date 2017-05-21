@@ -155,9 +155,19 @@ public class ContactUsFragment extends Fragment {
             startActivityForResult(Intent.createChooser(sendEmail, "Send mail..."),1);
             Log.i("Email sent...","");
 
+
         }catch (android.content.ActivityNotFoundException ex){
             Toast.makeText(getActivity(), "There are no email clients installed.", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Toast.makeText(getActivity(),
+                "We have received your email and will be responding to you soon.",
+                Toast.LENGTH_LONG).show();
+
     }
 
   /*  public void onActivityResult(int requestCode, int resultCode, Intent data){

@@ -1,6 +1,8 @@
 package com.csusb.cse455.trip.ui;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -31,6 +33,9 @@ public class MyTripsFragment extends Fragment implements OnMyTripCardClickCallba
     private MyTripsDataAdapter mAdapter;
     // Data list.
     private ArrayList<Trip> mListData;
+    //Progress Dialog instance.
+    private ProgressDialog newTripDialog = null ;
+    private ProgressDialog myTripDialog = null;
 
     // Required empty public constructor.
     public MyTripsFragment() { }
@@ -54,9 +59,22 @@ public class MyTripsFragment extends Fragment implements OnMyTripCardClickCallba
         // TODO: Change to real data.
         mListData = (ArrayList<Trip>) MockDataSource.getMyTripsList(30);
 
+        //Show Progress Dialog
+        // this.progressDialog = ProgressDialog.show(getActivity(),"My Trips","Loading...Please wait...",true,false);
+        newTripDialog = new ProgressDialog(getActivity());
+//        myTripDialog = new ProgressDialog(getActivity());
+//        myTripDialog.setIndeterminate(true);
+//        myTripDialog.setMessage("Please wait...");
+//        myTripDialog.show();
+
+
+
+
         // Initialize adapter.
         if (mListData != null) {
+
             mAdapter = new MyTripsDataAdapter(mListData, getActivity().getBaseContext());
+
         }
 
         // Setup Recycler view.
@@ -65,6 +83,8 @@ public class MyTripsFragment extends Fragment implements OnMyTripCardClickCallba
         mRecView.setLayoutManager(new LinearLayoutManager(getActivity().getBaseContext()));
         mRecView.setAdapter(mAdapter);
         mAdapter.setCardClickCallback(this);
+
+
 
         // Set up item touch helper.
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(createHelperCallback());
@@ -75,6 +95,11 @@ public class MyTripsFragment extends Fragment implements OnMyTripCardClickCallba
         addItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                //Show New Trip Progress Dialog
+                newTripDialog.setIndeterminate(true);
+                newTripDialog.setMessage("Please wait...");
+                newTripDialog.show();
                 addNewTrip();
             }
         });
@@ -115,6 +140,29 @@ public class MyTripsFragment extends Fragment implements OnMyTripCardClickCallba
             mAdapter.notifyItemMoved(oldPos, newPos);
         }
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+      //  myTripDialog = new ProgressDialog(getActivity());
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+    }
+
+    //Set New Trip Progress Dialog disappear when go back to Activity
+    @Override
+    public void onResume() {
+        super.onResume();
+        newTripDialog.dismiss();
+       // myTripDialog.dismiss();
+    }
+
+
 
     // Handles on click event by showing details.
     @Override
