@@ -106,7 +106,9 @@
                 android:maxLines="1"
                 android:imeOptions="actionNext"
                 android:singleLine="true"
-                android:nextFocusDown="@+id/regPassword"/>
+                android:nextFocusDown="@+id/regPassword"
+                android:drawableLeft="@drawable/username_icon"
+                android:drawablePadding="20dp"/>
 
         </android.support.design.widget.TextInputLayout>
 
@@ -126,7 +128,9 @@
                 android:maxLines="1"
                 android:imeOptions="actionNext"
                 android:singleLine="true"
-                android:nextFocusDown="@+id/regRePassword"/>
+                android:nextFocusDown="@+id/regRePassword"
+                android:drawableLeft="@drawable/password_icon"
+                android:drawablePadding="20dp"/>
 
         </android.support.design.widget.TextInputLayout>
 
@@ -145,7 +149,9 @@
                 android:theme="@style/EditTextTheme"
                 android:maxLines="1"
                 android:imeOptions="actionDone"
-                android:singleLine="true" />
+                android:singleLine="true"
+                android:drawableLeft="@drawable/password_icon"
+                android:drawablePadding="20dp"/>
 
         </android.support.design.widget.TextInputLayout>
 
