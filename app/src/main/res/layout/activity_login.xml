@@ -42,13 +42,13 @@
         android:layout_marginBottom="80dp"/>
 
 
+
     <LinearLayout
         android:id="@+id/email_login_form"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_below="@+id/login_logo"
-        >
+        android:layout_below="@+id/login_logo">
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
@@ -59,6 +59,7 @@
                 android:id="@+id/logEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
                 android:hint="@string/prompt_email"
                 android:inputType="textEmailAddress"
                 android:textColor="@android:color/white"
@@ -84,6 +85,7 @@
                 android:id="@+id/logPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
                 android:hint="Password"
                 android:imeActionId="@+id/login"
                 android:imeActionLabel="@string/action_sign_in_short"
@@ -95,18 +97,25 @@
                 android:drawableLeft="@drawable/password_icon"
                 android:drawablePadding="20dp"
                 android:paddingLeft="@dimen/activity_horizontal_margin"
-                android:drawableRight="@drawable/forgotpassword_icon"
                 android:singleLine="true" />
 
 
 
         </android.support.design.widget.TextInputLayout>
+        <Button
+            android:id="@+id/logResetPass"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginRight="8dp"
+            android:layout_gravity="right"
+            android:paddingTop="5dp"
+            android:background="@drawable/forgotpassword_icon"/>
 
         <Button
             android:id="@+id/logBtn"
             android:layout_width="match_parent"
             android:layout_height="70dp"
-            android:layout_marginTop="70dp"
+            android:layout_marginTop="120dp"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginRight="24dp"
@@ -114,26 +123,18 @@
             android:background="@drawable/signin"
             android:text="Sign in"
             android:textSize="@dimen/textButton"
-            android:textColor="@color/colorButtonText"/>
+            android:textColor="@color/colorButtonText"
+            android:textStyle="bold"/>
 
 
         <TextView
             android:id="@+id/logRegister"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="8dp"
             android:text="Register Here"
             android:textAlignment="center"
             android:textColor="@android:color/white" />
-
-        <TextView
-            android:id="@+id/logResetPass"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:textColor="@android:color/white"
-            android:text="Forgot your password?"
-            android:textAlignment="center" />
 
     </LinearLayout>
 </RelativeLayout>
