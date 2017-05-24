@@ -3,6 +3,7 @@ package com.csusb.cse455.trip.ui;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -28,10 +29,8 @@ public class LoginActivity extends AppCompatActivity  {
     // Firebase Authentication instance.
     private FirebaseAuth mAuth;
 
-    //Progress Dialog instance.
-    private ProgressDialog progressDialog = null ;
-
-
+    //Async Task
+    MyAsyncTask myAsyncTask;
 
     // Handles initialization during view creation.
     @Override
@@ -53,9 +52,7 @@ public class LoginActivity extends AppCompatActivity  {
         final TextView registerLink = (TextView) findViewById(R.id.logRegister);
         final TextView passResetLink = (TextView) findViewById(R.id.logResetPass);
 
-        //Progress Bar.
-      // final ProgressBar loginProgress = (ProgressBar) findViewById(R.id.login_progress);
-        progressDialog = new ProgressDialog(this);
+
 
 
 
@@ -67,15 +64,8 @@ public class LoginActivity extends AppCompatActivity  {
                 if (Format.checkEmailFormat(emailView) && Format.checkPasswordFormat(passwordView)) {
                     // Attempt to login.
                     tryLogin(emailView.getText().toString(), passwordView.getText().toString());
-
-                    //Show Progress Dialog
-                   if(progressDialog.getProgress() != 1){
-                        progressDialog.setIndeterminate(true);
-                        progressDialog.setMessage("Authenticating...");
-                        progressDialog.show();
-
-
-                    }
+                        myAsyncTask = new MyAsyncTask();
+                        myAsyncTask.execute();
 
                 }
             }
@@ -116,20 +106,7 @@ public class LoginActivity extends AppCompatActivity  {
         }
     }
 
-    //Set Progress Dialog invisible on when go back to Activity
-  /*  @Override
-    protected void onPause() {
-        super.onPause();
 
-        progressDialog.dismiss();
-    }
-*/
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        progressDialog.dismiss();
-    }
 
     // Overrides the default action on back button being pressed by redirecting to device's home.
     @Override
@@ -183,4 +160,61 @@ public class LoginActivity extends AppCompatActivity  {
                     .show();
         }
     }
+
+    //Set up MyAsyncTask for Progress Dialog
+
+    class MyAsyncTask extends AsyncTask<Void, Integer, Void> {
+
+        boolean running;
+        ProgressDialog progressDialog;
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            int i = 10;
+            while(running){
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                if(i-- == 0){
+                    running = false;
+                }
+
+                publishProgress(i);
+
+            }
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            super.onProgressUpdate(values);
+
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            running = true;
+
+            progressDialog = ProgressDialog.show(LoginActivity.this,"","Authenticating...",true,false);
+
+            progressDialog.setCanceledOnTouchOutside(true);
+
+
+
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+
+
+            progressDialog.dismiss();
+        }
+
+    }
+
 }
