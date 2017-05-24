@@ -70,6 +70,9 @@ public class MainActivity extends AppCompatActivity
         // Propagate to super.
         super.onStart();
 
+        myAsyncTask = new MyAsyncTask();
+        myAsyncTask.execute();
+
         // Check if user is signed in (non-null) and verified, and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser == null || !currentUser.isEmailVerified())
