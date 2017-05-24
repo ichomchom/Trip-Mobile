@@ -17,6 +17,8 @@ import com.csusb.cse455.trip.adapter.OnContactItemClickCallback;
 import com.csusb.cse455.trip.data.MockDataSource;
 import com.csusb.cse455.trip.model.Contact;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 // Contacts fragment, which handles the display of Contact items.
 public class ContactsFragment extends Fragment implements OnContactItemClickCallback {
@@ -53,6 +55,16 @@ public class ContactsFragment extends Fragment implements OnContactItemClickCall
         // Get data.
         // TODO: Change to real data.
         mListData = (ArrayList<Contact>) MockDataSource.getContactsList(30);
+        Collections.sort(mListData, new Comparator<Contact>() {
+            @Override
+            public int compare(Contact c1, Contact c2) {
+                int res = c1.getFirstName().compareToIgnoreCase(c2.getFirstName());
+                if (res != 0) {
+                    return res;
+                }
+                return c1.getLastName().compareToIgnoreCase(c2.getLastName());
+            }
+        });
 
         // Initialize adapter.
         if (mListData != null) {

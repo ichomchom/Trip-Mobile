@@ -19,6 +19,8 @@ import com.csusb.cse455.trip.adapter.OnLocationCardClickCallback;
 import com.csusb.cse455.trip.data.MockDataSource;
 import com.csusb.cse455.trip.model.Location;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 // Locations fragment, which handles the display of Location cards.
 public class LocationsFragment extends Fragment implements OnLocationCardClickCallback {
@@ -60,6 +62,12 @@ public class LocationsFragment extends Fragment implements OnLocationCardClickCa
         // Get data.
         // TODO: Change to real data.
         mListData = (ArrayList<Location>) MockDataSource.getFavoriteLocationsList(30);
+        Collections.sort(mListData, new Comparator<Location>() {
+            @Override
+            public int compare(Location l1, Location l2) {
+                return l1.getLabel().compareToIgnoreCase(l2.getLabel());
+            }
+        });
 
         // Initialize adapter.
         if (mListData != null) {
