@@ -6,10 +6,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import com.csusb.cse455.trip.R;
 
-// An activity that lets the user add a new location.
-public class NewLocationActivity extends AppCompatActivity {
+// An activity that lets the user add a new contact.
+public class NewContactActivity extends AppCompatActivity {
     // Tag used for logging.
-    private static final String TAG = NewSubscriptionActivity.class.getSimpleName();
+    private static final String TAG = NewContactActivity.class.getSimpleName();
 
     // Handles the necessary initialization during creation.
     @Override
@@ -18,7 +18,7 @@ public class NewLocationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         // Retrieve the content view that renders the map.
-        setContentView(R.layout.activity_new_location);
+        setContentView(R.layout.activity_new_contact);
 
         // Enable back button on action bar.
         ActionBar actionBar = getSupportActionBar();

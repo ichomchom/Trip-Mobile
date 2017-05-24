@@ -74,7 +74,9 @@
         <activity
             android:name=".ui.NewLocationActivity"
             android:label="@string/title_activity_new_location" />
-
+        <activity
+            android:name=".ui.NewContactActivity"
+            android:label="@string/title_activity_new_contact" />
     </application>
 
 </manifest>

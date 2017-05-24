@@ -2,29 +2,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.csusb.cse455.trip.ui.LocationDetailsFragment"
+    tools:context="com.csusb.cse455.trip.ui.NotificationDetailsFragment"
     android:paddingLeft="16dp">
 
     <TextView
-        android:id="@+id/item_id"
+        android:id="@+id/item_first_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="ID"
+        android:text="First Name"
         />
 
     <TextView
-        android:id="@+id/item_label"
+        android:id="@+id/item_last_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/item_id"
-        android:text="Label"
+        android:layout_below="@id/item_first_name"
+        android:text="Last Name"
         />
 
     <TextView
-        android:id="@+id/item_description"
+        android:id="@+id/item_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/item_label"
-        android:text="Description"
+        android:layout_below="@id/item_last_name"
+        android:text="Email Address"
         />
 </RelativeLayout>

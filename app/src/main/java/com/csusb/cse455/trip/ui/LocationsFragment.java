@@ -99,7 +99,7 @@ public class LocationsFragment extends Fragment implements OnLocationCardClickCa
     private ItemTouchHelper.Callback createHelperCallback() {
         return new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN, 0) {
 
-            // Allows rearrangement of cards.
+            // Allows rearrangement of items.
             @Override
             public boolean onMove(RecyclerView recyclerView,
                                   RecyclerView.ViewHolder viewHolder,
