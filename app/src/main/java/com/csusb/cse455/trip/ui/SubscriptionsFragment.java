@@ -2,6 +2,7 @@ package com.csusb.cse455.trip.ui;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -36,6 +37,9 @@ public class SubscriptionsFragment extends Fragment implements OnSubscriptionCar
 
     //Progress Dialog
     private ProgressDialog newSubscriptionDialog;
+
+    //Async Task
+    MyAsyncTask myAsyncTask;
 
     // Required empty public constructor.
     public SubscriptionsFragment() { }
@@ -143,6 +147,9 @@ public class SubscriptionsFragment extends Fragment implements OnSubscriptionCar
         // Get an item form the given position.
         Subscription item = mListData.get(position);
 
+        //Create new Async Task
+        myAsyncTask = new MyAsyncTask();
+
         // Create a bundle.
         Bundle extras = new Bundle();
         extras.putString(EXTRA_ID, item.getId());
@@ -158,6 +165,65 @@ public class SubscriptionsFragment extends Fragment implements OnSubscriptionCar
         // Load the new fragment.
         mMainActivity.loadFragment(this.getId(), "SUBSCRIPTION_DETAILS_FRAGMENT", newFragment,
                 true, "Subscription Details");
+
+        //Execute Async Task
+        myAsyncTask.execute();
+    }
+
+    //Set up MyAsyncTask for Progress Dialog
+
+    class MyAsyncTask extends AsyncTask<Void, Integer, Void> {
+
+        boolean running;
+        ProgressDialog progressDialog;
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            int i = 10;
+            while(running){
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                if(i-- == 0){
+                    running = false;
+                }
+
+                publishProgress(i);
+
+            }
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            super.onProgressUpdate(values);
+
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            running = true;
+
+            progressDialog = ProgressDialog.show(getActivity(),"","Please wait...",true,false);
+
+            progressDialog.setCanceledOnTouchOutside(true);
+
+
+
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+
+
+            progressDialog.dismiss();
+        }
+
     }
 }
 

@@ -2,6 +2,7 @@ package com.csusb.cse455.trip.ui;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -34,6 +35,9 @@ public class LocationsFragment extends Fragment implements OnLocationCardClickCa
     private ArrayList<Location> mListData;
     //Progress Dialog instance.
     private ProgressDialog newLocationDialog = null ;
+
+    //Async Task
+    MyAsyncTask myAsyncTask;
 
     // Required empty public constructor.
     public LocationsFragment() { }
@@ -142,6 +146,9 @@ public class LocationsFragment extends Fragment implements OnLocationCardClickCa
         // Get an item form the given position.
         Location item = mListData.get(position);
 
+        //Instance Async Task
+        myAsyncTask = new MyAsyncTask();
+
         // Create a bundle.
         Bundle extras = new Bundle();
         extras.putString(EXTRA_ID, item.getId());
@@ -157,12 +164,70 @@ public class LocationsFragment extends Fragment implements OnLocationCardClickCa
         // Load the new fragment.
         mMainActivity.loadFragment(this.getId(), "LOCATION_DETAILS_FRAGMENT", newFragment,
                 true, "Location Details");
+        //Execute Async Task
+        myAsyncTask.execute();
     }
 
     // Handles click on SHARE action.
     @Override
     public void onShareActionClick(int position) {
         // Get an item from the given position.
+
+    }
+
+    //Set up MyAsyncTask for Progress Dialog
+
+    class MyAsyncTask extends AsyncTask<Void, Integer, Void> {
+
+        boolean running;
+        ProgressDialog progressDialog;
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            int i = 10;
+            while(running){
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                if(i-- == 0){
+                    running = false;
+                }
+
+                publishProgress(i);
+
+            }
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            super.onProgressUpdate(values);
+
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            running = true;
+
+            progressDialog = ProgressDialog.show(getActivity(),"","Please wait...",true,false);
+
+            progressDialog.setCanceledOnTouchOutside(true);
+
+
+
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+
+
+            progressDialog.dismiss();
+        }
 
     }
 }
