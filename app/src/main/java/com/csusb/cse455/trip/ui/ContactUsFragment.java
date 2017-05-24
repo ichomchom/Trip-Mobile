@@ -1,8 +1,10 @@
 package com.csusb.cse455.trip.ui;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.annotation.Nullable;
@@ -26,6 +28,9 @@ import com.google.firebase.auth.FirebaseAuth;
  */
 public class ContactUsFragment extends Fragment {
     private FirebaseAuth mAuth;
+
+    //Async Task
+    MyAsyncTask myAsyncTask;
 
     public ContactUsFragment() {
         // Required empty public constructor
@@ -154,6 +159,8 @@ public class ContactUsFragment extends Fragment {
         try{
             startActivityForResult(Intent.createChooser(sendEmail, "Send mail..."),1);
             Log.i("Email sent...","");
+            myAsyncTask = new MyAsyncTask();
+            myAsyncTask.execute();
 
 
         }catch (android.content.ActivityNotFoundException ex){
@@ -161,14 +168,15 @@ public class ContactUsFragment extends Fragment {
         }
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        Toast.makeText(getActivity(),
-                "We have received your email and will be responding to you soon.",
-                Toast.LENGTH_LONG).show();
-
-    }
+//
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        Toast.makeText(getActivity(),
+//                "We have received your email and will be responding to you soon.",
+//                Toast.LENGTH_LONG).show();
+//
+//    }
 
   /*  public void onActivityResult(int requestCode, int resultCode, Intent data){
         if( requestCode == 1 && resultCode == getActivity().RESULT_OK){
@@ -180,4 +188,60 @@ public class ContactUsFragment extends Fragment {
         }
     }
 */
+    //Set up MyAsyncTask for Progress Dialog
+
+    class MyAsyncTask extends AsyncTask<Void, Integer, Void> {
+
+        boolean running;
+
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            int i = 10;
+            while(running){
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                if(i-- == 0){
+                    running = false;
+                }
+
+                publishProgress(i);
+
+            }
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            super.onProgressUpdate(values);
+
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            running = true;
+
+
+
+
+
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            Toast.makeText(getActivity(),
+                    "We have received your email and will be responding to you soon.",
+                    Toast.LENGTH_LONG).show();
+
+
+        }
+
+
+    }
 }
