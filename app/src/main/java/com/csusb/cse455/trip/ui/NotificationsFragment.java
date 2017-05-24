@@ -1,5 +1,7 @@
 package com.csusb.cse455.trip.ui;
 
+import android.app.ProgressDialog;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -32,6 +34,8 @@ public class NotificationsFragment extends Fragment implements OnNotificationIte
     private NotificationsDataAdapter mAdapter;
     // Data list.
     private ArrayList<Notification> mListData;
+    //Async Task
+    MyAsyncTask myAsyncTask;
 
     // Required empty public constructor.
     public NotificationsFragment() { }
@@ -126,5 +130,63 @@ public class NotificationsFragment extends Fragment implements OnNotificationIte
         // Load the new fragment.
         mMainActivity.loadFragment(this.getId(), "NOTIFICATION_DETAILS_FRAGMENT", newFragment,
                 true, "Notification Details");
+        //show Progress Dialog
+        myAsyncTask = new MyAsyncTask();
+        myAsyncTask.execute();
+    }
+    //Set up MyAsyncTask for Progress Dialog
+
+    class MyAsyncTask extends AsyncTask<Void, Integer, Void> {
+
+        boolean running;
+        ProgressDialog progressDialog;
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            int i = 10;
+            while(running){
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                if(i-- == 0){
+                    running = false;
+                }
+
+                publishProgress(i);
+
+            }
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            super.onProgressUpdate(values);
+
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            running = true;
+
+            progressDialog = ProgressDialog.show(getActivity(),"","Please wait...",true,false);
+
+            progressDialog.setCanceledOnTouchOutside(true);
+
+
+
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+
+
+            progressDialog.dismiss();
+        }
+
     }
 }

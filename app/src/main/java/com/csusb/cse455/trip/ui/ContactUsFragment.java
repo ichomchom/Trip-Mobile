@@ -168,26 +168,6 @@ public class ContactUsFragment extends Fragment {
         }
     }
 
-//
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-//        Toast.makeText(getActivity(),
-//                "We have received your email and will be responding to you soon.",
-//                Toast.LENGTH_LONG).show();
-//
-//    }
-
-  /*  public void onActivityResult(int requestCode, int resultCode, Intent data){
-        if( requestCode == 1 && resultCode == getActivity().RESULT_OK){
-            Toast.makeText(getActivity(),
-                    "We have received your email and will be responding to you soon.",
-                    Toast.LENGTH_LONG).show();
-            Intent mainIntent = new Intent(getActivity(), MainActivity.class);
-            startActivity(mainIntent);
-        }
-    }
-*/
     //Set up MyAsyncTask for Progress Dialog
 
     class MyAsyncTask extends AsyncTask<Void, Integer, Void> {
