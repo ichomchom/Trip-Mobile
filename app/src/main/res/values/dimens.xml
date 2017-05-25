@@ -10,7 +10,7 @@
     <dimen name="map_sliding_panel_shadow_height">4dp</dimen>
     <dimen name="textButton">16sp</dimen>
     <dimen name="textEditText">16sp</dimen>
-    <dimen name="textSize">14dp</dimen>
+    <dimen name="textSize">16sp</dimen>
     <dimen name="icon_size">20dp</dimen>
 
 </resources>

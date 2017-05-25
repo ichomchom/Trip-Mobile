@@ -2,8 +2,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:screenOrientation="portrait"
-    android:configChanges="orientation|keyboardHidden"
     android:background="@drawable/gradient"
     tools:context="com.csusb.cse455.trip.ui.LoginActivity">
 
@@ -35,11 +33,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="42dp">
+            android:layout_marginTop="30dp">
 
             <ImageView
-                android:layout_width="250dp"
-                android:layout_height="250dp"
+                android:layout_width="230dp"
+                android:layout_height="230dp"
                 android:src="@drawable/trip_logo"/>
         </FrameLayout>
 
@@ -53,7 +51,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp">
+                android:padding="5dp">
 
                 <!-- INPUT -->
                 <EditText
@@ -77,18 +75,19 @@
                     android:id="@+id/username_icon"
                     android:padding="3dp"
                     android:src="@drawable/username"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginLeft="8dp"/>
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="5.5dp"/>
 
             </RelativeLayout>
 
             <!-- Line 1 -->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0.5dp"
+                android:layout_height="0.3dp"
                 android:background="@color/divider"
-                android:layout_marginLeft="65dp">
+                android:layout_marginLeft="55dp">
 
             </LinearLayout>
 
@@ -96,7 +95,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp">
+                android:padding="5dp">
 
                 <!-- INPUT -->
                 <EditText
@@ -122,9 +121,10 @@
                     android:id="@+id/password_icon"
                     android:padding="3dp"
                     android:src="@drawable/password"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginLeft="8dp"/>
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="5.5dp"/>
 
             </RelativeLayout>
 
@@ -134,7 +134,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:background="@color/divider"
-                android:layout_marginLeft="65dp">
+                android:layout_marginLeft="55dp">
 
             </LinearLayout>
 
@@ -144,7 +144,7 @@
                 android:id="@+id/logResetPass"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Forgot Password"
+                android:text="Forgot Password?"
                 android:padding="12dp"
                 android:textColor="@color/dullWhite"
                 android:layout_gravity="right"
@@ -173,7 +173,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="16dp"
+                android:padding="25dp"
                 android:layout_gravity="center"
                 android:gravity="center">
 
