@@ -23,14 +23,12 @@ import android.widget.Toast;
 import com.csusb.cse455.trip.R;
 import com.google.firebase.auth.FirebaseAuth;
 
+
 /**
  * A simple {@link Fragment} subclass.
  */
 public class ContactUsFragment extends Fragment {
     private FirebaseAuth mAuth;
-
-    //Async Task
-    MyAsyncTask myAsyncTask;
 
     public ContactUsFragment() {
         // Required empty public constructor
@@ -155,73 +153,28 @@ public class ContactUsFragment extends Fragment {
         sendEmail.putExtra(Intent.EXTRA_SUBJECT,subject+" : "+bugSubject +otherSubject);
         sendEmail.putExtra(Intent.EXTRA_TEXT,
                 "name: "+userName+'\n'+"Email: "+userEmail+'\n'+"Message: "+'\n'+message);
-
         try{
             startActivityForResult(Intent.createChooser(sendEmail, "Send mail..."),1);
             Log.i("Email sent...","");
-            myAsyncTask = new MyAsyncTask();
-            myAsyncTask.execute();
-
-
         }catch (android.content.ActivityNotFoundException ex){
             Toast.makeText(getActivity(), "There are no email clients installed.", Toast.LENGTH_SHORT).show();
         }
     }
-
-    //Set up MyAsyncTask for Progress Dialog
-
-    class MyAsyncTask extends AsyncTask<Void, Integer, Void> {
-
-        boolean running;
-
-
-        @Override
-        protected Void doInBackground(Void... params) {
-            int i = 10;
-            while(running){
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-                if(i-- == 0){
-                    running = false;
-                }
-
-                publishProgress(i);
-
+    //Get Result from intent and show Toast
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.i("SS", "onActivityResult: " + requestCode + ", " + resultCode + ", "
+                + (data != null ? data.toString() : "empty intent"));
+        if(requestCode == 1) {
+            if(resultCode != getActivity().RESULT_OK) {
+                Toast.makeText(getActivity(),
+                        "We have received your email and will be responding to you soon.",
+                        Toast.LENGTH_LONG).show();
             }
-            return null;
         }
-
-        @Override
-        protected void onProgressUpdate(Integer... values) {
-            super.onProgressUpdate(values);
-
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            running = true;
-
-
-
-
-
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-            Toast.makeText(getActivity(),
-                    "We have received your email and will be responding to you soon.",
-                    Toast.LENGTH_LONG).show();
-
-
-        }
-
-
+        getActivity().finish();
     }
+
+
 }

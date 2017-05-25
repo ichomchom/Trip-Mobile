@@ -1,6 +1,7 @@
 package com.csusb.cse455.trip.ui;
 
 import android.app.ProgressDialog;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -20,8 +21,8 @@ public class PasswordResetActivity extends AppCompatActivity {
     // Firebase Authentication instance.
     private FirebaseAuth mAuth;
 
-    //Progress Dialog instance
-    private ProgressDialog progressDialog;
+    //Async Task
+    MyAsyncTask myAsyncTask;
 
     // Handles initialization during view creation.
     @Override
@@ -39,8 +40,6 @@ public class PasswordResetActivity extends AppCompatActivity {
         final Button resetButton = (Button) findViewById(R.id.recoveryBtn);
         final Button backArrowButton = (Button) findViewById(R.id.regBackBtn);
 
-        //Set Progress Dialog
-        progressDialog = new ProgressDialog(this);
 
         // Set on click listener for the back button
         backArrowButton.setOnClickListener(new View.OnClickListener() {
@@ -59,25 +58,14 @@ public class PasswordResetActivity extends AppCompatActivity {
                     tryReset(emailView.getText().toString());
 
                     //Set Progress Dialog Visible
-                    if (progressDialog.getProgress() != 1) {
-                        progressDialog.setIndeterminate(true);
-                        progressDialog.setMessage("Please Wait...");
-                        progressDialog.show();
-                    }
+                    myAsyncTask = new MyAsyncTask();
+                    myAsyncTask.execute();
 
                     // Finish this Activity.
                     finish();
                 }
             }
         });
-    }
-
-    //Set Progress Dialog invisible on when go back to Activity
-    @Override
-    protected void onPause() {
-        super.onPause();
-
-        progressDialog.dismiss();
     }
 
     // Attempts to reset the password for the provided email address.  We do not check if
@@ -88,6 +76,47 @@ public class PasswordResetActivity extends AppCompatActivity {
             Toast.makeText(PasswordResetActivity.this,
                     "An email with password reset instructions was sent.",
                     Toast.LENGTH_LONG).show();
+        }
+    }
+    //Set up MyAsyncTask for Progress Dialog
+    class MyAsyncTask extends AsyncTask<Void, Integer, Void> {
+        boolean running;
+        ProgressDialog progressDialog;
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            int i = 10;
+            while(running){
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                if(i-- == 0){
+                    running = false;
+                }
+                publishProgress(i);
+            }
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            super.onProgressUpdate(values);
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            running = true;
+            progressDialog = ProgressDialog.show(PasswordResetActivity.this,"","Please wait...",true,false);
+            progressDialog.setCanceledOnTouchOutside(true);
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            progressDialog.dismiss();
         }
     }
 }

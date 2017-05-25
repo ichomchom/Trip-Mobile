@@ -9,14 +9,6 @@ import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 
-// Added for Toast Message Testing
-import static android.support.test.espresso.matcher.RootMatchers.withDecorView;
-import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.not;
-
-
 import android.content.Intent;
 import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.filters.LargeTest;
@@ -43,7 +35,8 @@ public class PasswordResetActivityTest {
     }
 
     @Rule
-    public ActivityTestRule<PasswordResetActivity> mActivityRule = new IntentsTestRule<>(PasswordResetActivity.class, true, false);
+    public ActivityTestRule<PasswordResetActivity> mActivityRule =
+            new IntentsTestRule<>(PasswordResetActivity.class, true, false);
 
 
     @Test
@@ -55,7 +48,8 @@ public class PasswordResetActivityTest {
 
     }
 
-
+    // A Toast confirms with message that reset instructions were sent to email,
+    // even if email might not be registered.
     @Test
     public void PasswordResetAttempt() throws Exception {
 
@@ -66,6 +60,36 @@ public class PasswordResetActivityTest {
         closeSoftKeyboard();
 
         onView(withId(R.id.recoveryBtn)).perform(click());
+
+    }
+
+    @Test
+    public void PasswordResetAttemptWithEmptyEmail() throws Exception {
+
+        launchActivityWithIntent();
+
+        onView(withId(R.id.recoveryEmail)).perform(typeText(""));
+
+        closeSoftKeyboard();
+
+        onView(withId(R.id.recoveryBtn)).perform(click());
+
+        onView(withId(R.id.recoveryEmail)).check(matches(hasErrorText("Invalid email address format.")));
+
+    }
+
+    @Test
+    public void PasswordResetAttemptWithDoubleAtSymbolEmail() throws Exception {
+
+        launchActivityWithIntent();
+
+        onView(withId(R.id.recoveryEmail)).perform(typeText("name@@email.com"));
+
+        closeSoftKeyboard();
+
+        onView(withId(R.id.recoveryBtn)).perform(click());
+
+        onView(withId(R.id.recoveryEmail)).check(matches(hasErrorText("Invalid email address format.")));
 
     }
 

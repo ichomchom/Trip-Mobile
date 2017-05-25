@@ -134,10 +134,9 @@ public class NotificationsFragment extends Fragment implements OnNotificationIte
         myAsyncTask = new MyAsyncTask();
         myAsyncTask.execute();
     }
+
     //Set up MyAsyncTask for Progress Dialog
-
     class MyAsyncTask extends AsyncTask<Void, Integer, Void> {
-
         boolean running;
         ProgressDialog progressDialog;
 
@@ -150,13 +149,10 @@ public class NotificationsFragment extends Fragment implements OnNotificationIte
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-
                 if(i-- == 0){
                     running = false;
                 }
-
                 publishProgress(i);
-
             }
             return null;
         }
@@ -164,27 +160,19 @@ public class NotificationsFragment extends Fragment implements OnNotificationIte
         @Override
         protected void onProgressUpdate(Integer... values) {
             super.onProgressUpdate(values);
-
         }
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             running = true;
-
             progressDialog = ProgressDialog.show(getActivity(),"","Please wait...",true,false);
-
             progressDialog.setCanceledOnTouchOutside(true);
-
-
-
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-
-
             progressDialog.dismiss();
         }
 

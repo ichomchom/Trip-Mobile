@@ -94,6 +94,7 @@ public class LocationsFragment extends Fragment implements OnLocationCardClickCa
         addItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Set Progress Dialog for Adding New Location
                 newLocationDialog.setIndeterminate(true);
                 newLocationDialog.setTitle("Adding New Location");
                 newLocationDialog.setMessage("Please wait...");
@@ -123,7 +124,7 @@ public class LocationsFragment extends Fragment implements OnLocationCardClickCa
         };
     }
 
-    //Dismiss Progress Dialog when return to activity
+    //Dismiss Progress Dialog for Adding New Location when return to activity
     @Override
     public void onResume() {
         super.onResume();
@@ -172,6 +173,7 @@ public class LocationsFragment extends Fragment implements OnLocationCardClickCa
         // Load the new fragment.
         mMainActivity.loadFragment(this.getId(), "LOCATION_DETAILS_FRAGMENT", newFragment,
                 true, "Location Details");
+
         //Execute Async Task
         myAsyncTask.execute();
     }
@@ -186,10 +188,8 @@ public class LocationsFragment extends Fragment implements OnLocationCardClickCa
     //Set up MyAsyncTask for Progress Dialog
 
     class MyAsyncTask extends AsyncTask<Void, Integer, Void> {
-
         boolean running;
         ProgressDialog progressDialog;
-
         @Override
         protected Void doInBackground(Void... params) {
             int i = 10;
@@ -199,13 +199,10 @@ public class LocationsFragment extends Fragment implements OnLocationCardClickCa
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-
                 if(i-- == 0){
                     running = false;
                 }
-
                 publishProgress(i);
-
             }
             return null;
         }
@@ -213,29 +210,20 @@ public class LocationsFragment extends Fragment implements OnLocationCardClickCa
         @Override
         protected void onProgressUpdate(Integer... values) {
             super.onProgressUpdate(values);
-
         }
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             running = true;
-
             progressDialog = ProgressDialog.show(getActivity(),"","Please wait...",true,false);
-
             progressDialog.setCanceledOnTouchOutside(true);
-
-
-
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-
-
             progressDialog.dismiss();
         }
-
     }
 }

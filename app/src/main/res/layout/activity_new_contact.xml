@@ -5,4 +5,44 @@
     android:layout_height="match_parent"
     tools:context="com.csusb.cse455.trip.ui.NewContactActivity">
 
+    <LinearLayout
+        android:id="@+id/new_contact_form"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:layout_marginRight="24dp"
+            android:layout_marginLeft="24dp">
+
+            <AutoCompleteTextView
+                android:id="@+id/contact_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/prompt_email"
+                android:inputType="textEmailAddress"
+                android:maxLines="1"
+                android:imeOptions="actionDone"
+                android:drawablePadding="20dp"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <Button
+            android:id="@+id/btn_add"
+            style="?android:textAppearanceSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:layout_marginRight="24dp"
+            android:layout_marginLeft="24dp"
+            android:background="@drawable/button"
+            android:text="Add Contact"
+            android:textAllCaps="false"
+            android:textSize="@dimen/textButton"
+            android:textColor="@color/colorButtonText"/>
+
+    </LinearLayout>
+
 </RelativeLayout>
