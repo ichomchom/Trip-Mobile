@@ -17,6 +17,12 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+        // Debug section included for physical Android device testing.
+        // Comment out if not in use.
+        debug {
+            debuggable true
+        }
+
     }
 }
 
