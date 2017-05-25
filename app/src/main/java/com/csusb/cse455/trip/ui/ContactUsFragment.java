@@ -153,7 +153,6 @@ public class ContactUsFragment extends Fragment {
         sendEmail.putExtra(Intent.EXTRA_SUBJECT,subject+" : "+bugSubject +otherSubject);
         sendEmail.putExtra(Intent.EXTRA_TEXT,
                 "name: "+userName+'\n'+"Email: "+userEmail+'\n'+"Message: "+'\n'+message);
-
         try{
             startActivityForResult(Intent.createChooser(sendEmail, "Send mail..."),1);
             Log.i("Email sent...","");
@@ -161,7 +160,6 @@ public class ContactUsFragment extends Fragment {
             Toast.makeText(getActivity(), "There are no email clients installed.", Toast.LENGTH_SHORT).show();
         }
     }
-
     //Get Result from intent and show Toast
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
