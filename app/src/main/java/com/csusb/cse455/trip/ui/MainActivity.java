@@ -171,12 +171,9 @@ public class MainActivity extends AppCompatActivity
     }
 
 //Set up MyAsyncTask for Progress Dialog
-
     class MyAsyncTask extends AsyncTask<Void, Integer, Void>{
-
         boolean running;
         ProgressDialog progressDialog;
-
         @Override
         protected Void doInBackground(Void... params) {
             int i = 10;
@@ -186,48 +183,30 @@ public class MainActivity extends AppCompatActivity
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-
                 if(i-- == 0){
                     running = false;
                 }
-
                 publishProgress(i);
-
             }
             return null;
         }
-
         @Override
         protected void onProgressUpdate(Integer... values) {
             super.onProgressUpdate(values);
-
         }
-
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             running = true;
-
             progressDialog = ProgressDialog.show(MainActivity.this,"","Please wait...",true,false);
-
             progressDialog.setCanceledOnTouchOutside(true);
-
-
-
         }
-
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-
-
             progressDialog.dismiss();
         }
-
     }
-
-
-
 
     // onBackPressed event handler.
     @Override
@@ -285,9 +264,8 @@ public class MainActivity extends AppCompatActivity
     // Handles navigation actions from the drawer menu.
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        //create Async Task
         myAsyncTask = new MyAsyncTask();
-
-
         // Get item id.
         int id = item.getItemId();
 
@@ -305,41 +283,49 @@ public class MainActivity extends AppCompatActivity
             title = "Dashboard";
             fragment = new DashboardFragment();
             tag = "DASHBOARD_FRAGMENT";
+            //execute Async Task for Progress Dialog
             myAsyncTask.execute();
         } else if (id == R.id.nav_notifications) {
             title = "Notifications";
             fragment = new NotificationsFragment();
             tag = "NOTIFICATIONS_FRAGMENT";
+            //execute Async Task for Progress Dialog
             myAsyncTask.execute();
         } else if (id == R.id.nav_contacts) {
             title = "Contacts";
             fragment = new ContactsFragment();
             tag = "CONTACTS_FRAGMENT";
+            //execute Async Task for Progress Dialog
             myAsyncTask.execute();
         } else if (id == R.id.nav_locations) {
             title = "Locations";
             fragment = new LocationsFragment();
             tag = "LOCATIONS_FRAGMENT";
+            //execute Async Task for Progress Dialog
             myAsyncTask.execute();
         } else if (id == R.id.nav_mytrips) {
             title = "My Trips";
             fragment = new MyTripsFragment();
             tag = "MY_TRIPS_FRAGMENT";
+            //execute Async Task for Progress Dialog
             myAsyncTask.execute();
         } else if (id == R.id.nav_subscriptions) {
             title = "Subscriptions";
             fragment = new SubscriptionsFragment();
             tag = "SUBSCRIPTIONS_FRAGMENT";
+            //execute Async Task for Progress Dialog
             myAsyncTask.execute();
         } else if (id == R.id.nav_settings) {
             title = "Settings";
             tag = "SETTINGS_FRAGMENT";
+            //execute Async Task for Progress Dialog
             myAsyncTask.execute();
             //TODO: fragment = new SettingsFragment(); <-- Should this be Activity or Fragment?
         } else if (id == R.id.nav_contactus) {
             title = "Contact Us";
             fragment = new ContactUsFragment();
             tag = "CONTACT_US_FRAGMENT";
+            //execute Async Task for Progress Dialog
             myAsyncTask.execute();
         }
 

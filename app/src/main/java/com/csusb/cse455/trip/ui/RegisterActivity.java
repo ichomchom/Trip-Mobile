@@ -49,8 +49,6 @@ public class RegisterActivity extends AppCompatActivity {
         final Button regButton = (Button) findViewById(R.id.regBtn);
         final Button backArrowButton = (Button) findViewById(R.id.regBackBtn);
 
-
-
         // Set on click listener for the back button
         backArrowButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,8 +79,6 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
     }
-
-
 
     // Attempts to register a user.  If successful, sends out email verification.  If not,
     // notifies the user.
@@ -116,9 +112,7 @@ public class RegisterActivity extends AppCompatActivity {
                 });
     }
     //Set up MyAsyncTask for Progress Dialog
-
     class MyAsyncTask extends AsyncTask<Void, Integer, Void> {
-
         boolean running;
         ProgressDialog progressDialog;
 
@@ -131,13 +125,10 @@ public class RegisterActivity extends AppCompatActivity {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-
                 if(i-- == 0){
                     running = false;
                 }
-
                 publishProgress(i);
-
             }
             return null;
         }
@@ -145,29 +136,20 @@ public class RegisterActivity extends AppCompatActivity {
         @Override
         protected void onProgressUpdate(Integer... values) {
             super.onProgressUpdate(values);
-
         }
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             running = true;
-
             progressDialog = ProgressDialog.show(RegisterActivity.this,"","Creating Account...",true,false);
-
             progressDialog.setCanceledOnTouchOutside(true);
-
-
-
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-
-
             progressDialog.dismiss();
         }
-
     }
 }

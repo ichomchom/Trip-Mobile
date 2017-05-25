@@ -64,6 +64,7 @@ public class LoginActivity extends AppCompatActivity  {
                 if (Format.checkEmailFormat(emailView) && Format.checkPasswordFormat(passwordView)) {
                     // Attempt to login.
                     tryLogin(emailView.getText().toString(), passwordView.getText().toString());
+                    //execute Async Task for Progress Dialog
                         myAsyncTask = new MyAsyncTask();
                         myAsyncTask.execute();
 
@@ -164,7 +165,6 @@ public class LoginActivity extends AppCompatActivity  {
     //Set up MyAsyncTask for Progress Dialog
 
     class MyAsyncTask extends AsyncTask<Void, Integer, Void> {
-
         boolean running;
         ProgressDialog progressDialog;
 
@@ -177,13 +177,10 @@ public class LoginActivity extends AppCompatActivity  {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-
                 if(i-- == 0){
                     running = false;
                 }
-
                 publishProgress(i);
-
             }
             return null;
         }
@@ -191,27 +188,19 @@ public class LoginActivity extends AppCompatActivity  {
         @Override
         protected void onProgressUpdate(Integer... values) {
             super.onProgressUpdate(values);
-
         }
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             running = true;
-
             progressDialog = ProgressDialog.show(LoginActivity.this,"","Authenticating...",true,false);
-
             progressDialog.setCanceledOnTouchOutside(true);
-
-
-
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-
-
             progressDialog.dismiss();
         }
 

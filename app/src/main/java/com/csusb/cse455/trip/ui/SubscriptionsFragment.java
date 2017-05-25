@@ -87,6 +87,7 @@ public class SubscriptionsFragment extends Fragment implements OnSubscriptionCar
         addItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Subscription Dialog for Adding New Subscription
                 newSubscriptionDialog.setIndeterminate(true);
                 newSubscriptionDialog.setMessage("Please wait...");
                 newSubscriptionDialog.setTitle("Adding New Subscription");
@@ -132,7 +133,7 @@ public class SubscriptionsFragment extends Fragment implements OnSubscriptionCar
         }
     }
 
-    //Dismiss Progress Dialog when return to Fragment
+    //Dismiss Progress Dialog for Adding New Subscription when return to Fragment
     @Override
     public void onResume() {
         super.onResume();
@@ -171,9 +172,7 @@ public class SubscriptionsFragment extends Fragment implements OnSubscriptionCar
     }
 
     //Set up MyAsyncTask for Progress Dialog
-
     class MyAsyncTask extends AsyncTask<Void, Integer, Void> {
-
         boolean running;
         ProgressDialog progressDialog;
 
@@ -186,13 +185,10 @@ public class SubscriptionsFragment extends Fragment implements OnSubscriptionCar
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-
                 if(i-- == 0){
                     running = false;
                 }
-
                 publishProgress(i);
-
             }
             return null;
         }
@@ -200,30 +196,21 @@ public class SubscriptionsFragment extends Fragment implements OnSubscriptionCar
         @Override
         protected void onProgressUpdate(Integer... values) {
             super.onProgressUpdate(values);
-
         }
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             running = true;
-
             progressDialog = ProgressDialog.show(getActivity(),"","Please wait...",true,false);
-
             progressDialog.setCanceledOnTouchOutside(true);
-
-
-
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-
-
             progressDialog.dismiss();
         }
-
     }
 }
 

@@ -157,11 +157,12 @@ public class ContactsFragment extends Fragment implements OnContactItemClickCall
                 true, "Contact Details");
         //show Progress Dialog
         myAsyncTask = new MyAsyncTask();
+        //execute Async Task for Progress Dialog
         myAsyncTask.execute();
     }
 
+    //Async Task for Progress Bar
     class MyAsyncTask extends AsyncTask<Void, Integer, Void> {
-
         boolean running;
         ProgressDialog progressDialog;
 
@@ -174,13 +175,10 @@ public class ContactsFragment extends Fragment implements OnContactItemClickCall
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-
                 if(i-- == 0){
                     running = false;
                 }
-
                 publishProgress(i);
-
             }
             return null;
         }
@@ -188,29 +186,20 @@ public class ContactsFragment extends Fragment implements OnContactItemClickCall
         @Override
         protected void onProgressUpdate(Integer... values) {
             super.onProgressUpdate(values);
-
         }
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             running = true;
-
             progressDialog = ProgressDialog.show(getActivity(),"","Please wait...",true,false);
-
             progressDialog.setCanceledOnTouchOutside(true);
-
-
-
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-
-
             progressDialog.dismiss();
         }
-
     }
 }

@@ -36,7 +36,7 @@ public class MyTripsFragment extends Fragment implements OnMyTripCardClickCallba
     //Progress Dialog instance.
     private ProgressDialog newTripDialog = null ;
 
-    //Asycn Task instance
+    //Async Task instance
     MyAsyncTask myAsyncTask;
 
 
@@ -93,7 +93,6 @@ public class MyTripsFragment extends Fragment implements OnMyTripCardClickCallba
         addItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 //Show New Trip Progress Dialog
                 newTripDialog.setIndeterminate(true);
                 newTripDialog.setTitle("Adding New Trip");
@@ -140,8 +139,6 @@ public class MyTripsFragment extends Fragment implements OnMyTripCardClickCallba
         }
     }
 
-
-
     //Set New Trip Progress Dialog disappear when go back to Activity
     @Override
     public void onResume() {
@@ -149,10 +146,7 @@ public class MyTripsFragment extends Fragment implements OnMyTripCardClickCallba
         if(newTripDialog!= null) {
             newTripDialog.dismiss();
         }
-
     }
-
-
 
     // Handles on click event by showing details.
     @Override
@@ -192,10 +186,8 @@ public class MyTripsFragment extends Fragment implements OnMyTripCardClickCallba
 
     }
 
-    //Set up MyAsyncTask for Progress Dialog
-
+    //Set up MyAsyncTask Progress Dialog for View Trips
     class MyAsyncTask extends AsyncTask<Void, Integer, Void>{
-
         boolean running;
         ProgressDialog progressDialog;
 
@@ -208,13 +200,10 @@ public class MyTripsFragment extends Fragment implements OnMyTripCardClickCallba
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-
                 if(i-- == 0){
                     running = false;
                 }
-
                 publishProgress(i);
-
             }
             return null;
         }
@@ -222,29 +211,20 @@ public class MyTripsFragment extends Fragment implements OnMyTripCardClickCallba
         @Override
         protected void onProgressUpdate(Integer... values) {
             super.onProgressUpdate(values);
-
         }
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             running = true;
-
             progressDialog = ProgressDialog.show(getActivity(),"","Please wait...",true,false);
-
             progressDialog.setCanceledOnTouchOutside(true);
-
-
-
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-
-
             progressDialog.dismiss();
         }
-
     }
 }
