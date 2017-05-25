@@ -35,13 +35,13 @@ public class FirebaseDb {
         // Get the database instance.
         FirebaseDatabase db = FirebaseDatabase.getInstance();
         // Get a user's tree reference.
-        DatabaseReference dbRef = db.getReference("users");
+        DatabaseReference dbRef = db.getReference("contacts");
 
         // Replace periods with commas, because periods are not allowed.
         contactEmail = contactEmail.replace('.', ',');
 
         // Store information.
-        dbRef.child(user.getUid()).child("contacts").child(contactEmail).setValue(true);
+        dbRef.child(user.getUid()).child(contactEmail).setValue(true);
     }
 
     // Adds subscription.
@@ -49,13 +49,12 @@ public class FirebaseDb {
         // Get the database instance.
         FirebaseDatabase db = FirebaseDatabase.getInstance();
         // Get a user's tree reference.
-        DatabaseReference dbRef = db.getReference("users");
+        DatabaseReference dbRef = db.getReference("subscriptions");
 
         // Replace periods with commas, because periods are not allowed.
         contactEmail = contactEmail.replace('.', ',');
 
         // Store information.
-        dbRef.child(user.getUid()).child("subscriptions")
-                .child(contactEmail).child(label).setValue(true);
+        dbRef.child(user.getUid()).child(contactEmail).child(label).setValue(true);
     }
 }
