@@ -48,12 +48,13 @@ public class NewContactActivity extends AppCompatActivity {
         // Get contact email view.
         mEmailView = (TextView) findViewById(R.id.contact_email);
 
-        // Attach for the button.
+        // Attach the button click listener.
         this.findViewById(R.id.btn_add).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Close soft keyboard.
-                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                InputMethodManager imm = (InputMethodManager)getSystemService(
+                        Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
 
                 // Validate format.
