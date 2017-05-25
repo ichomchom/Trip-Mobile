@@ -1,5 +1,6 @@
 package com.csusb.cse455.trip.data;
 
+import com.csusb.cse455.trip.model.Location;
 import com.csusb.cse455.trip.model.User;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -44,7 +45,7 @@ public class FirebaseDb {
         dbRef.child(user.getUid()).child(contactEmail).setValue(true);
     }
 
-    // Adds subscription.
+    // Adds new subscription.
     public static void addSubscription(FirebaseUser user, String contactEmail, String label) {
         // Get the database instance.
         FirebaseDatabase db = FirebaseDatabase.getInstance();
@@ -56,5 +57,19 @@ public class FirebaseDb {
 
         // Store information.
         dbRef.child(user.getUid()).child(contactEmail).child(label).setValue(true);
+    }
+
+    // Adds new location.
+    public static void addLocation(FirebaseUser user, Location location) {
+        // Get the database instance.
+        FirebaseDatabase db = FirebaseDatabase.getInstance();
+        // Get a user's tree reference.
+        DatabaseReference dbRef = db.getReference("locations");
+
+        // Store information.
+        DatabaseReference child = dbRef.child(user.getUid()).child(location.getLabel());
+        child.child("description").setValue(location.getDescription());
+        child.child("latitude").setValue(location.getLatitude());
+        child.child("longitude").setValue(location.getLongitude());
     }
 }

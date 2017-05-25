@@ -60,7 +60,7 @@ public class NewSubscriptionActivity extends AppCompatActivity {
                 imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
 
                 // Validate format.
-                if (Format.checkEmailFormat(mEmailView) && Format.isTextViewEmpty(mTripLabel)) {
+                if (Format.checkEmailFormat(mEmailView) && !Format.isTextViewEmpty(mTripLabel)) {
                     // Get current user.
                     FirebaseUser user = mAuth.getCurrentUser();
                     // Get the contact email.

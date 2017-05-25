@@ -5,6 +5,9 @@ import android.util.Patterns;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 // Formatting and format validation utilities.
 public class Format {
     // Minimum number of characters in a password.
@@ -78,15 +81,43 @@ public class Format {
         return !TextUtils.isEmpty(password) && password.length() >= PASSWORD_LENGTH;
     }
 
-    // Chceks if a generic text view is empty.  Returns true if it is; otherwise, false.
+    // Checks if a generic text view is empty.  Returns true if it is; otherwise, false.
     public static boolean isTextViewEmpty(TextView view) {
-        // If the field is empty, return false.
+        // If the field is empty, return true.
         if (TextUtils.isEmpty(view.getText().toString())) {
             view.setError("This field is required.");
             view.requestFocus();
+            return true;
+        }
+        // Otherwise, return false.
+        return false;
+    }
+
+    // Checks if latitude is valid.
+    public static boolean isValidLatitude(TextView view) {
+        String lat = view.getText().toString();
+        String p = "[-+]?([1-8]?\\d(\\.\\d+)?|90(\\.0+)?)";
+        Pattern pattern = Pattern.compile(p);
+        Matcher m = pattern.matcher(lat);
+        if (!m.matches()) {
+            view.setError("Invalid latitude value.");
+            view.requestFocus();
             return false;
         }
-        // Otherwise, return true.
+        return true;
+    }
+
+    // Checks if longitude is valid.
+    public static boolean isValidLongitude(TextView view) {
+        String lng = view.getText().toString();
+        String p = "[-+]?(180(\\.0+)?|((1[0-7]\\d)|([1-9]?\\d))(\\.\\d+)?)";
+        Pattern pattern = Pattern.compile(p);
+        Matcher m = pattern.matcher(lng);
+        if (!m.matches()) {
+            view.setError("Invalid longitude value.");
+            view.requestFocus();
+            return false;
+        }
         return true;
     }
 

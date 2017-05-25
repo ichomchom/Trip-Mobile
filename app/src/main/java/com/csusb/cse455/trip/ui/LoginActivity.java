@@ -52,10 +52,6 @@ public class LoginActivity extends AppCompatActivity  {
         final TextView registerLink = (TextView) findViewById(R.id.logRegister);
         final TextView passResetLink = (TextView) findViewById(R.id.logResetPass);
 
-
-
-
-
         // Set on click listener for the login button.
         loginButton.setOnClickListener(new OnClickListener() {
             @Override
@@ -106,8 +102,6 @@ public class LoginActivity extends AppCompatActivity  {
             transitionToMain();
         }
     }
-
-
 
     // Overrides the default action on back button being pressed by redirecting to device's home.
     @Override
@@ -163,7 +157,6 @@ public class LoginActivity extends AppCompatActivity  {
     }
 
     //Set up MyAsyncTask for Progress Dialog
-
     class MyAsyncTask extends AsyncTask<Void, Integer, Void> {
         boolean running;
         ProgressDialog progressDialog;
