@@ -44,7 +44,9 @@
         <activity
             android:name=".ui.LoginActivity"
             android:label="Trip"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|keyboardHidden">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -56,11 +58,15 @@
             android:name=".ui.RegisterActivity"
             android:label="Registration"
             android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|keyboardHidden"
             />
         <activity
             android:name=".ui.PasswordResetActivity"
             android:label="Password Reset"
             android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|keyboardHidden"
             />
         <activity
             android:name=".ui.SettingsActivity"

@@ -2,9 +2,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:gravity="center_horizontal"
-    android:orientation="vertical"
+    android:layout_height="match_parent"
+    android:screenOrientation="portrait"
+    android:configChanges="orientation|keyboardHidden"
     android:background="@drawable/gradient"
     tools:context="com.csusb.cse455.trip.ui.LoginActivity">
 
@@ -16,7 +16,7 @@
         android:background="@drawable/login_bg">
 
 
-    <!-- Login progress -->
+    <!-- Login username block -->
     <ProgressBar
         android:id="@+id/login_progress"
         style="?android:attr/progressBarStyleLarge"
@@ -26,142 +26,172 @@
         android:visibility="gone"
         android:layout_height="wrap_content" />
 
-    <ImageView
-        android:id="@+id/login_logo"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_marginTop="34dp"
-        android:contentDescription="Trip Logo"
-        app:srcCompat="@drawable/logo"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="80dp"/>
 
-
-
-    <LinearLayout
-        android:id="@+id/email_login_form"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_below="@+id/login_logo">
-
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColorHint="@android:color/white">
-
-
-            <AutoCompleteTextView
-                android:id="@+id/logEmail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="24dp"
-                android:paddingTop="15dp"
-                android:hint="@string/prompt_email"
-                android:lineSpacingMultiplier = "40"
-                android:inputType="textEmailAddress"
-                android:textColor="@android:color/white"
-                android:theme="@style/EditTextTheme"
-                android:maxLines="1"
-                android:imeOptions="actionNext"
-                android:drawableLeft="@drawable/username_icon"
-                android:drawablePadding="20dp"
-                android:paddingLeft="@dimen/activity_horizontal_margin"
-
-
-                android:singleLine="true" />
-
-        </android.support.design.widget.TextInputLayout>
-
-
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColorHint="@android:color/white">
-
-            <EditText
-                android:id="@+id/logPassword"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="24dp"
-                android:paddingTop="15dp"
-                android:hint="Password"
-                android:imeActionId="@+id/login"
-                android:imeActionLabel="@string/action_sign_in_short"
-                android:imeOptions="actionDone"
-                android:inputType="textPassword"
-                android:textColor="@android:color/white"
-                android:theme="@style/EditTextTheme"
-                android:maxLines="1"
-                android:drawableLeft="@drawable/password_icon"
-                android:drawablePadding="20dp"
-                android:paddingLeft="@dimen/activity_horizontal_margin"
-                android:singleLine="true" />
-
-
-
-        </android.support.design.widget.TextInputLayout>
-
-        <TextView
-            android:id="@+id/logResetPass"
+        <!-- Logo Block -->
+        <FrameLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="8dp"
-            android:layout_gravity="right"
-            android:paddingTop="5dp"
-            android:textColor="@android:color/white"
-            android:text="Forgot your password?" />
-
-        <Button
-            android:id="@+id/logBtn"
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:layout_marginTop="90dp"
-            android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginRight="24dp"
-            android:layout_marginLeft="24dp"
-            android:background="@drawable/button"
-            android:text="Sign in"
-            android:textSize="@dimen/textButton"
-            android:textColor="@color/colorButtonText"
-            android:textStyle="bold"/>
+            android:layout_marginTop="42dp">
 
-
+            <ImageView
+                android:layout_width="250dp"
+                android:layout_height="250dp"
+                android:src="@drawable/trip_logo"/>
+        </FrameLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:paddingTop="15dp"
-            android:layout_alignParentBottom="true"
-            android:orientation="horizontal" >
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_alignParentBottom="true">
+
+            <!-- USERNAME INPUT -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp">
+
+                <!-- INPUT -->
+                <EditText
+                    android:id="@+id/logEmail"
+                    android:layout_marginLeft="5dp"
+                    android:layout_toRightOf="@+id/username_icon"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/fullTransparent"
+                    android:hint="Email"
+                    android:imeOptions="actionNext"
+                    android:inputType="textEmailAddress"
+                    android:padding="12dp"
+                    android:textColor="@android:color/white"
+                    android:textColorHint="@color/white"
+                    android:textSize="@dimen/textSize"
+                    android:theme="@style/EditTextTheme"/>
+
+                <!-- ICON -->
+                <ImageView
+                    android:id="@+id/username_icon"
+                    android:padding="3dp"
+                    android:src="@drawable/username"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="8dp"/>
+
+            </RelativeLayout>
+
+            <!-- Line 1 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/divider"
+                android:layout_marginLeft="65dp">
+
+            </LinearLayout>
+
+            <!-- USERNAME INPUT -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp">
+
+                <!-- INPUT -->
+                <EditText
+                    android:id="@+id/logPassword"
+                    android:layout_marginLeft="5dp"
+                    android:layout_toRightOf="@+id/password_icon"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Password"
+                    android:imeActionId="@+id/login"
+                    android:imeActionLabel="@string/action_sign_in_short"
+                    android:imeOptions="actionDone"
+                    android:inputType="textPassword"
+                    android:textColorHint="@color/white"
+                    android:textColor="@android:color/white"
+                    android:background="@color/fullTransparent"
+                    android:padding="12dp"
+                    android:textSize="@dimen/textSize"
+                    android:theme="@style/EditTextTheme"/>
+
+                <!-- ICON -->
+                <ImageView
+                    android:id="@+id/password_icon"
+                    android:padding="3dp"
+                    android:src="@drawable/password"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="8dp"/>
+
+            </RelativeLayout>
+
+
+            <!-- Line 2 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/divider"
+                android:layout_marginLeft="65dp">
+
+            </LinearLayout>
+
+
 
             <TextView
-                android:id="@+id/textView1"
-                android:layout_width="wrap_content"
+                android:id="@+id/logResetPass"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@android:color/darker_gray"
-                android:textAlignment="center"
-                android:singleLine="true"
-                android:text="Don't have an account? " />
+                android:text="Forgot Password"
+                android:padding="12dp"
+                android:textColor="@color/dullWhite"
+                android:layout_gravity="right"
+                android:gravity="right"
+                android:textSize="@dimen/textSize"
+                android:layout_marginBottom="32dp"/>
 
-            <TextView
-                android:id="@+id/logRegister"
-                android:layout_width="wrap_content"
+            <Button
+                android:id="@+id/logBtn"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@android:color/white"
-                android:textAlignment="center"
-                android:singleLine="true"
-                android:text=" Register" />
+                android:layout_marginRight="24dp"
+                android:layout_marginLeft="24dp"
+                android:background="@drawable/button"
+                android:textAllCaps="false"
+                android:text="Sign In"
+                android:textSize="@dimen/textButton"
+                android:textColor="@color/colorButtonText"
+                android:padding="20dp"
+                android:layout_gravity="center"
+                android:gravity="center"/>
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="16dp"
+                android:layout_gravity="center"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Don't have an account ?"
+                    android:textColor="@color/dullWhite"
+                    android:layout_gravity="center"
+                    android:gravity="center"/>
+
+                <TextView
+                    android:id="@+id/logRegister"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="  Register"
+                    android:textColor="@color/white"
+                    android:layout_gravity="center"
+                    android:gravity="center"/>
+            </LinearLayout>
 
         </LinearLayout>
-
-
-
-
-    </LinearLayout>
     </RelativeLayout>
-</RelativeLayout>
+    </RelativeLayout>
