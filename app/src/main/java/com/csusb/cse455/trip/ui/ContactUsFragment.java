@@ -174,7 +174,6 @@ public class ContactUsFragment extends Fragment {
                         "We have received your email and will be responding to you soon.",
                         Toast.LENGTH_LONG).show();
             }
-
         }
         getActivity().finish();
     }
