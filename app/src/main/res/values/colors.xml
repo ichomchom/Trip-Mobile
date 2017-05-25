@@ -4,8 +4,8 @@
     <color name="colorPrimaryDark">#4B4097</color>
     <color name="colorAccent">#ff3366</color>
     <color name="gradient_start">#4B4097</color>
-    <color name="gradient_center">#974B4097</color>
-    <color name="gradient_end">#90000000</color>
+    <color name="gradient_center">#4B4097</color>
+    <color name="gradient_end">#000000</color>
     <color name="purple_transparent">#504B4097</color>
     <color name="colorButtonText">#FFFFFF</color>
     <color name="colorEditText">#FFFFFF</color>

@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    android:background="@drawable/login_bg"
+    android:background="@drawable/gradient"
     tools:context="com.csusb.cse455.trip.ui.LoginActivity">
 
     <!-- Transparent layer -->
@@ -13,7 +13,7 @@
         android:layout_height="match_parent"
         android:layout_width="wrap_content"
         android:orientation="vertical"
-        android:background="@drawable/gradient">
+        android:background="@drawable/login_bg">
 
 
     <!-- Login progress -->
@@ -123,7 +123,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginRight="24dp"
             android:layout_marginLeft="24dp"
-            android:background="@drawable/signin"
+            android:background="@drawable/button"
             android:text="Sign in"
             android:textSize="@dimen/textButton"
             android:textColor="@color/colorButtonText"
