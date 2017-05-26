@@ -26,7 +26,7 @@ public class RegisterActivity extends AppCompatActivity {
     // Firebase Authentication instance.
     private FirebaseAuth mAuth;
 
-   //Async Task
+    //Async Task
     MyAsyncTask myAsyncTask;
 
     // Handles initialization during view creation.

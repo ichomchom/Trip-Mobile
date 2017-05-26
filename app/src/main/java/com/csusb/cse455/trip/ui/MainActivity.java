@@ -317,9 +317,13 @@ public class MainActivity extends AppCompatActivity
             myAsyncTask.execute();
         } else if (id == R.id.nav_settings) {
             title = "Settings";
+            Intent i = new Intent(this,SettingsActivity.class);
+            startActivity(i);
             tag = "SETTINGS_FRAGMENT";
+
             //execute Async Task for Progress Dialog
             myAsyncTask.execute();
+
             //TODO: fragment = new SettingsFragment(); <-- Should this be Activity or Fragment?
         } else if (id == R.id.nav_contactus) {
             title = "Contact Us";

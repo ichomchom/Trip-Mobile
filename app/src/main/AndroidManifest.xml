@@ -43,11 +43,10 @@
         </activity>
         <activity
             android:name=".ui.LoginActivity"
+            android:configChanges="orientation|keyboardHidden"
             android:label="Trip"
-            android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"
-            android:configChanges="orientation|keyboardHidden">
-
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -56,38 +55,36 @@
         </activity>
         <activity
             android:name=".ui.RegisterActivity"
-            android:label="Registration"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden"
-            />
+            android:label="Registration"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.PasswordResetActivity"
-            android:label="Password Reset"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden"
-            />
+            android:label="Password Reset"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.SettingsActivity"
-            android:windowSoftInputMode="stateHidden"
-            android:label="@string/title_activity_settings" />
+            android:label="@string/title_activity_settings"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".ui.NewTripActivity"
-            android:windowSoftInputMode="stateHidden"
-            android:label="@string/title_activity_new_trip" />
+            android:label="@string/title_activity_new_trip"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".ui.NewSubscriptionActivity"
-            android:windowSoftInputMode="stateHidden"
-            android:label="@string/title_activity_new_subscription" />
+            android:label="@string/title_activity_new_subscription"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".ui.NewLocationActivity"
-            android:windowSoftInputMode="stateHidden"
-            android:label="@string/title_activity_new_location" />
+            android:label="@string/title_activity_new_location"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".ui.NewContactActivity"
-            android:windowSoftInputMode="stateHidden"
-            android:label="@string/title_activity_new_contact" />
+            android:label="@string/title_activity_new_contact"
+            android:windowSoftInputMode="stateHidden" />
     </application>
 
 </manifest>
