@@ -38,7 +38,7 @@ public class PasswordResetActivity extends AppCompatActivity {
         // Get UI references.
         final TextView emailView = (TextView) findViewById(R.id.recoveryEmail);
         final Button resetButton = (Button) findViewById(R.id.recoveryBtn);
-        final Button backArrowButton = (Button) findViewById(R.id.regBackBtn);
+        final Button backArrowButton = (Button) findViewById(R.id.backBtn);
 
 
         // Set on click listener for the back button

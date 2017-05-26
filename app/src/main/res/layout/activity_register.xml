@@ -28,19 +28,23 @@
             android:layout_height="wrap_content" />
 
 
-        <!-- Logo Block -->
+        <!-- Header Block -->
         <FrameLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="30dp">
+            android:textAlignment="center"
+            android:layout_marginTop="100dp"
+            android:layout_marginBottom="64dp">
 
             <TextView
+                android:id="@+id/logResetPass"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Register"
+                android:text="Registration"
+                android:gravity="center"
                 android:textSize="35dp"
-                android:textColor="@color/white"/>
+                android:textColor="@color/white"
+                />
         </FrameLayout>
 
         <LinearLayout
@@ -358,9 +362,6 @@
             </LinearLayout>
 
 
-
-
-
             <Button
                 android:id="@+id/regBtn"
                 style="?android:textAppearanceSmall"
@@ -376,10 +377,21 @@
                 android:padding="20dp"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:layout_marginTop="70dp"
-                android:layout_marginBottom="20dp"/>
+                android:layout_marginTop="56dp"
+                android:layout_marginBottom="36dp"/>
 
 
         </LinearLayout>
     </RelativeLayout>
+    <Button
+        android:id="@+id/backBtn"
+        style="?android:textAppearanceSmall"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/ic_arrow_back_white_24px" />
 </RelativeLayout>

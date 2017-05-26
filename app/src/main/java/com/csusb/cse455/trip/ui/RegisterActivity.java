@@ -47,7 +47,7 @@ public class RegisterActivity extends AppCompatActivity {
         final EditText passwordView = (EditText) findViewById(R.id.regPassword);
         final EditText rePasswordView = (EditText) findViewById(R.id.regRePassword);
         final Button regButton = (Button) findViewById(R.id.regBtn);
-        final Button backArrowButton = (Button) findViewById(R.id.regBackBtn);
+        final Button backArrowButton = (Button) findViewById(R.id.backBtn);
 
         // Set on click listener for the back button
         backArrowButton.setOnClickListener(new View.OnClickListener() {
