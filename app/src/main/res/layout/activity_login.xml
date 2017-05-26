@@ -86,7 +86,7 @@
                 <ImageView
                     android:id="@+id/username_icon"
                     android:padding="3dp"
-                    android:src="@drawable/username"
+                    android:src="@drawable/email"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:layout_marginLeft="8dp"

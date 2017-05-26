@@ -30,7 +30,11 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
+
 import java.util.ArrayList;
+import java.util.List;
 
 import static android.view.MotionEvent.ACTION_DOWN;
 import static android.view.MotionEvent.ACTION_MOVE;
@@ -40,6 +44,8 @@ public class NewTripActivity extends AppCompatActivity
         implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
+        GoogleMap.OnMapClickListener,
+        GoogleMap.OnMapLongClickListener,
         View.OnTouchListener,
         OnFragmentInteractionListener<Object> {
 
@@ -65,6 +71,10 @@ public class NewTripActivity extends AppCompatActivity
     private CameraPosition mCameraPosition;
     // The entry point to Google Play services, used by the Places API and Fused Location Provider.
     private GoogleApiClient mGoogleApiClient;
+    // Marker options.
+    private MarkerOptions mMarkerOptions;
+    // List of route markers.
+    private List<Marker> mMarker;
 
     // A default location (CSUSB) and default zoom to use when location permission is
     // not granted.
@@ -83,7 +93,6 @@ public class NewTripActivity extends AppCompatActivity
     // Keys for storing activity state.
     private static final String KEY_CAMERA_POSITION = "camera_position";
     private static final String KEY_LOCATION = "location";
-
 
     // Sets up camera position and last known location (if saved), view, and Google API Client.
     @Override
@@ -219,7 +228,6 @@ public class NewTripActivity extends AppCompatActivity
         Log.d(TAG, "Play services connection suspended.");
     }
 
-
     // Manipulates the map when it's available. This callback is triggered when the map is
     // ready to be used.
     @Override
@@ -230,6 +238,18 @@ public class NewTripActivity extends AppCompatActivity
         updateLocationUI();
         // Get the current location of the device and set the position of the map.
         getDeviceLocation();
+    }
+
+    // Click listener callback.
+    @Override
+    public void onMapClick(LatLng point) {
+
+    }
+
+    // Long click listener callback.
+    @Override
+    public void onMapLongClick(LatLng point) {
+
     }
 
     // Gets the current location of the device, and positions the map's camera.
@@ -291,7 +311,6 @@ public class NewTripActivity extends AppCompatActivity
         if (mMap == null) {
             return;
         }
-
         // Request location permission, so that we can get the location of the
         // device. The result of the permission request is handled by a callback,
         // onRequestPermissionsResult.
