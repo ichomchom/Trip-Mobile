@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="178dp"
+    android:layout_height="140dp"
     android:gravity="bottom"
     android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
@@ -14,25 +14,18 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginRight="250dp"
-            android:layout_above="@+id/nav_header_first_name"
-            android:paddingBottom="16dp"
-            app:srcCompat="@drawable/nav_header_avatar_icon" />
+        android:orientation="horizontal"
+        >
 
         <TextView
             android:id="@+id/nav_header_first_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_above="@+id/nav_header_email"
+            android:layout_alignLeft="@+id/nav_header_email"
             android:text="FirstName"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textSize="16sp" />
+            android:textColor="@android:color/black"
+            android:textSize="28sp" />
 
         <TextView
             android:id="@+id/nav_header_last_name"
@@ -42,19 +35,23 @@
             android:layout_marginLeft="8dp"
             android:layout_toRightOf="@+id/nav_header_first_name"
             android:text="LastName"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textSize="16sp" />
+            android:textColor="@android:color/black"
+            android:textSize="28sp" />
 
         <TextView
             android:id="@+id/nav_header_email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="2dp"
+            android:paddingLeft="1dp"
+            android:paddingStart="1dp"
             android:text="email_address"
+            android:textColor="@android:color/secondary_text_dark"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
 
+        <!--
         <TextView
             android:id="@+id/nav_header_sign_out"
             android:layout_width="wrap_content"
@@ -64,6 +61,7 @@
             android:text="Sign out"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             android:textColor="@color/colorAccent" />
+            -->
 
     </RelativeLayout>
 

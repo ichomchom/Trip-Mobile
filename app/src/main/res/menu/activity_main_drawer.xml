@@ -4,32 +4,37 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_dashboard"
-            android:icon="@drawable/home"
+            android:icon="@drawable/icon_dashboard_light"
             android:title="Dashboard" />
         <item
             android:id="@+id/nav_notifications"
-            android:icon="@drawable/notifications"
+            android:icon="@drawable/icon_notification_light"
             android:title="Notifications" />
         <item
             android:id="@+id/nav_mytrips"
-            android:icon="@drawable/timeline"
+            android:icon="@drawable/icon_navigation_light"
             android:title="My Trips" />
         <item
             android:id="@+id/nav_subscriptions"
-            android:icon="@drawable/lists"
+            android:icon="@drawable/icon_list_light"
             android:title="Subscriptions" />
         <item
             android:id="@+id/nav_locations"
-            android:icon="@drawable/location"
+            android:icon="@drawable/icon_location_light"
             android:title="Locations"/>
         <item
             android:id="@+id/nav_contacts"
-            android:icon="@drawable/contacts"
+            android:icon="@drawable/icon_contact_light"
             android:title="Contacts"/>
         <item
             android:id="@+id/nav_settings"
-            android:icon="@drawable/settings"
+            android:icon="@drawable/icon_settings_light"
             android:title="Settings" />
+
+        <item
+            android:id="@+id/nav_signout"
+            android:icon="@drawable/icon_signout_light"
+            android:title="Sign out" />
     </group>
 
     <item
@@ -39,7 +44,7 @@
 
             <item
                 android:id="@+id/nav_contactus"
-                android:icon="@drawable/ic_email_black_24dp"
+                android:icon="@drawable/icon_email_light"
                 android:title="Contact Us" />
         </menu>
     </item>

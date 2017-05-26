@@ -153,6 +153,7 @@ public class MainActivity extends AppCompatActivity
         }
 
         // Get the logout link.
+        /*
         final TextView logoutLink = (TextView) navHeader.findViewById(R.id.nav_header_sign_out);
         // Set logout callback to sign out and return to the login screen.
         logoutLink.setOnClickListener(new View.OnClickListener() {
@@ -161,6 +162,7 @@ public class MainActivity extends AppCompatActivity
                 signOut();
             }
         });
+        */
     }
 
     // Signs out the current user.
@@ -331,6 +333,8 @@ public class MainActivity extends AppCompatActivity
             tag = "CONTACT_US_FRAGMENT";
             //execute Async Task for Progress Dialog
             myAsyncTask.execute();
+        } else if (id == R.id.nav_signout) {
+            signOut();
         }
 
         // If fragment is not null, replace content frame with it.
