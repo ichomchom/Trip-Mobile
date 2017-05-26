@@ -40,7 +40,7 @@ public class NotificationDetailsFragment extends Fragment {
         if (extras != null)
         {
             // Get UI elements.
-            TextView id = (TextView) view.findViewById(R.id.item_id);
+            //TextView id = (TextView) view.findViewById(R.id.item_id);
             TextView title = (TextView) view.findViewById(R.id.item_title);
             TextView source = (TextView) view.findViewById(R.id.item_source);
             TextView date = (TextView) view.findViewById(R.id.item_date);
@@ -48,7 +48,7 @@ public class NotificationDetailsFragment extends Fragment {
             TextView content = (TextView) view.findViewById(R.id.item_content);
 
             // Set data.
-            id.setText(extras.getString(EXTRA_ID));
+            //id.setText(extras.getString(EXTRA_ID));
             title.setText(extras.getString(EXTRA_TITLE));
             source.setText(extras.getString(EXTRA_SOURCE));
             date.setText(extras.getString(EXTRA_DATE));

@@ -149,7 +149,6 @@
                 android:textColor="@color/dullWhite"
                 android:layout_gravity="right"
                 android:gravity="right"
-                android:textSize="@dimen/textSize"
                 android:layout_marginBottom="32dp"/>
 
             <Button
