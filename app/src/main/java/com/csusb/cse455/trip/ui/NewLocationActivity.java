@@ -276,7 +276,7 @@ public class NewLocationActivity extends AppCompatActivity
     public void onMapReady(GoogleMap map) {
         // Assign the Google map.
         mMap = map;
-        mMap.setPadding(0, 0, 0, 400);
+        mMap.setPadding(0, 0, 0, 600);
 
         // Set click listeners.
         map.setOnMapClickListener(this);

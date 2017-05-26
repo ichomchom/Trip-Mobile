@@ -25,9 +25,10 @@ import java.util.Comparator;
 // Locations fragment, which handles the display of Location cards.
 public class LocationsFragment extends Fragment implements OnLocationCardClickCallback {
     // Fragment initialization parameters.
-    private static final String EXTRA_ID = "EXTRA_ID";
     private static final String EXTRA_LABEL = "EXTRA_LABEL";
     private static final String EXTRA_DESCRIPTION = "EXTRA_DESCRIPTION";
+    private static final String EXTRA_LATITUDE = "EXTRA_LATITUDE";
+    private static final String EXTRA_LONGITUDE = "EXTRA_LONGITUDE";
 
     // Main activity.
     private MainActivity mMainActivity;
@@ -160,9 +161,10 @@ public class LocationsFragment extends Fragment implements OnLocationCardClickCa
 
         // Create a bundle.
         Bundle extras = new Bundle();
-        extras.putString(EXTRA_ID, item.getId());
         extras.putString(EXTRA_LABEL, item.getLabel());
         extras.putString(EXTRA_DESCRIPTION, item.getDescription());
+        extras.putDouble(EXTRA_LATITUDE, item.getLatitude());
+        extras.putDouble(EXTRA_LONGITUDE, item.getLongitude());
 
         // Create a new details fragment.
         Fragment newFragment = new LocationDetailsFragment();
