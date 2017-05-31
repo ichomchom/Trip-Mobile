@@ -41,11 +41,13 @@
         android:id="@+id/nav_help"
         android:title="Help">
         <menu>
+            <group android:checkableBehavior="single">
 
-            <item
-                android:id="@+id/nav_contactus"
-                android:icon="@drawable/icon_email_light"
-                android:title="Contact Us" />
+                <item
+                    android:id="@+id/nav_contactus"
+                    android:icon="@drawable/icon_email_light"
+                    android:title="Contact Us" />
+            </group>
         </menu>
     </item>
 
