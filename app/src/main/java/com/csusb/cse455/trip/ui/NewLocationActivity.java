@@ -1,9 +1,13 @@
 package com.csusb.cse455.trip.ui;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -33,8 +37,20 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.util.Date;
 
 import static android.view.MotionEvent.ACTION_DOWN;
 import static android.view.MotionEvent.ACTION_MOVE;
@@ -53,6 +69,8 @@ public class NewLocationActivity extends AppCompatActivity
 
     // Firebase Authentication instance.
     private FirebaseAuth mAuth;
+    //Storage instance
+    private StorageReference mStorageRef;
 
     // Location label view.
     TextView mLocationLabel;
@@ -188,6 +206,10 @@ public class NewLocationActivity extends AppCompatActivity
 
                     // Add location.
                     FirebaseDb.addLocation(user, location);
+
+                    //Add Screenshot
+                          takeScreenShot();
+
                     Toast.makeText(v.getContext(), "Added new location.",
                             Toast.LENGTH_SHORT).show();
                     finish();
@@ -426,4 +448,53 @@ public class NewLocationActivity extends AppCompatActivity
             mLastKnownLocation = null;
         }
     }
+    private void takeScreenShot(){
+        Date now = new Date();
+        android.text.format.DateFormat.format("yyyy-MM-dd_hh:mm:ss", now);
+        try {
+            String mPath = Environment.getExternalStorageDirectory().toString() + "/PICTURES/Screenshots/" + now + ".jpg";
+            View screenView = getWindow().getDecorView().getRootView();
+            screenView.setDrawingCacheEnabled(true);
+            Bitmap bitmap = Bitmap.createBitmap(screenView.getDrawingCache());
+            screenView.setDrawingCacheEnabled(false);
+
+            File imageFile = new File(mPath);
+
+            FileOutputStream outputStream = new FileOutputStream(imageFile);
+            int quality = 100;
+            bitmap.compress(Bitmap.CompressFormat.JPEG,quality,outputStream);
+            outputStream.flush();
+            outputStream.close();
+
+        // Uri file = Uri.fromFile(imageFile);
+//            Uri file = Uri.fromFile(new File(mPath));
+            InputStream inputStream = new FileInputStream(new File(mPath));
+            //Get Storage instance
+            FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
+            mStorageRef = firebaseStorage.getReferenceFromUrl("gs://trip-e1c18.appspot.com/");
+
+            StorageReference imageStoreage = mStorageRef.child("Locations/" + "file");//file.getLastPathSegment());
+        //   UploadTask uploadTask = imageStoreage.putFile(file);
+            UploadTask uploadTask = imageStoreage.putStream(inputStream);
+            uploadTask.addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.d("mdas","fail");
+
+                }
+            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                    Log.d("mysete","suc");
+                }
+            });
+
+        //    openScreenshot(imageFile);
+
+        }catch (Throwable e){
+            e.printStackTrace();
+        }
+    }
+
 }

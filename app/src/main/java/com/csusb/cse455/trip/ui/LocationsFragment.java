@@ -2,14 +2,18 @@ package com.csusb.cse455.trip.ui;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,9 +22,20 @@ import com.csusb.cse455.trip.adapter.LocationsDataAdapter;
 import com.csusb.cse455.trip.adapter.OnLocationCardClickCallback;
 import com.csusb.cse455.trip.data.MockDataSource;
 import com.csusb.cse455.trip.model.Location;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 
 // Locations fragment, which handles the display of Location cards.
 public class LocationsFragment extends Fragment implements OnLocationCardClickCallback {
@@ -38,7 +53,7 @@ public class LocationsFragment extends Fragment implements OnLocationCardClickCa
     private ArrayList<Location> mListData;
     //Progress Dialog instance.
     private ProgressDialog newLocationDialog = null ;
-
+    StorageReference mStorageRef;
     //Async Task
     MyAsyncTask myAsyncTask;
 
@@ -101,6 +116,7 @@ public class LocationsFragment extends Fragment implements OnLocationCardClickCa
                 newLocationDialog.setMessage("Please wait...");
                 newLocationDialog.show();
                 addNewLocation();
+                takeScreenShot();
             }
         });
     }
@@ -226,6 +242,54 @@ public class LocationsFragment extends Fragment implements OnLocationCardClickCa
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             progressDialog.dismiss();
+        }
+    }
+    private void takeScreenShot(){
+        Date now = new Date();
+        android.text.format.DateFormat.format("yyyy-MM-dd_hh:mm:ss", now);
+        try {
+            String mPath = Environment.getExternalStorageDirectory().toString() + "/PICTURES/Screenshots/" + now + ".jpg";
+            View screenView = getActivity().getWindow().getDecorView().getRootView();
+            screenView.setDrawingCacheEnabled(true);
+            Bitmap bitmap = Bitmap.createBitmap(screenView.getDrawingCache());
+            screenView.setDrawingCacheEnabled(false);
+
+            File imageFile = new File(mPath);
+
+            FileOutputStream outputStream = new FileOutputStream(imageFile);
+            int quality = 100;
+            bitmap.compress(Bitmap.CompressFormat.JPEG,quality,outputStream);
+            outputStream.flush();
+            outputStream.close();
+
+            // Uri file = Uri.fromFile(imageFile);
+//            Uri file = Uri.fromFile(new File(mPath));
+            InputStream inputStream = new FileInputStream(new File(mPath));
+            //Get Storage instance
+            FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
+            mStorageRef = firebaseStorage.getReferenceFromUrl("gs://trip-e1c18.appspot.com/");
+
+            StorageReference imageStoreage = mStorageRef.child("Locations/" + "file");//file.getLastPathSegment());
+            //   UploadTask uploadTask = imageStoreage.putFile(file);
+            UploadTask uploadTask = imageStoreage.putStream(inputStream);
+            uploadTask.addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.d("mdas","fail");
+
+                }
+            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                    Log.d("mysete","suc");
+                }
+            });
+
+            //    openScreenshot(imageFile);
+
+        }catch (Throwable e){
+            e.printStackTrace();
         }
     }
 }
