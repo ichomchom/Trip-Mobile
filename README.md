@@ -12,6 +12,8 @@ An Android Application built with Google Map API, and Firebase Database. Trip mo
 
 * [Test Plan Result](https://docs.google.com/document/d/11_sf98HyYTf1AalMmprh0el6SCuTTcgjvQjCdSHm4-U/edit?usp=sharing)
 
+* [Packages](https://bkboggy.github.io/Trip/)
+
 ## Screenshots
 ![](blah.gif)
 ![](drawer.gif)
